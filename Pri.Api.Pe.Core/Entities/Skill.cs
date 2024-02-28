@@ -9,5 +9,7 @@ namespace Pri.Api.Pe.Core.Entities
     public class Skill : BaseEntity
     {
         public string Name { get; set; }
+        public ICollection<Job> Jobs { get; set; }
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

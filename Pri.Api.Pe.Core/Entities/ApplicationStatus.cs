@@ -9,5 +9,7 @@ namespace Pri.Api.Pe.Core.Entities
     public class ApplicationStatus : BaseEntity
     {
         public string Name { get; set; }
+        public ICollection<Application> Applications { get; set; }
+
     }
 }

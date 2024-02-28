@@ -13,5 +13,7 @@ namespace Pri.Api.Pe.Core.Entities
         public double Salary { get; set; }
         public Guid EmployerId { get; set; }
         public ApplicationUser Employer { get; set; }
+        public ICollection<Application> Applications { get; set; }
+        public ICollection<Skill> Skills { get; set; }
     }
 }

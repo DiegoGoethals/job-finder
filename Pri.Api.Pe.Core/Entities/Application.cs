@@ -13,5 +13,7 @@ namespace Pri.Api.Pe.Core.Entities
         public Job Job { get; set; }
         public Guid CandidateId { get; set; }
         public ApplicationUser Candidate { get; set; }
+        public Guid StatusId { get; set; }
+        public ApplicationStatus Status { get; set; }
     }
 }
