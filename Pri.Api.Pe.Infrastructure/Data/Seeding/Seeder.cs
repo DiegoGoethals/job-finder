@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Pri.Api.Pe.Core.Entities;
 
@@ -34,9 +29,9 @@ namespace Pri.Api.Pe.Infrastructure.Data.Seeding
             var employeeRole = new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = "Employee", NormalizedName = "EMPLOYEE" };
             modelBuilder.Entity<IdentityRole<Guid>>().HasData(employerRole, employeeRole);
 
-            var firstUser = users.FirstOrDefault();
-            var employerUserRole = firstUser != null
-                ? new IdentityUserRole<Guid> { UserId = firstUser.Id, RoleId = employerRole.Id }
+            var employer = users.FirstOrDefault();
+            var employerUserRole = employer != null
+                ? new IdentityUserRole<Guid> { UserId = employer.Id, RoleId = employerRole.Id }
                 : null;
 
             var employeeUserRoles = users.Skip(1)
@@ -63,6 +58,27 @@ namespace Pri.Api.Pe.Infrastructure.Data.Seeding
             };
 
             modelBuilder.Entity<Skill>().HasData(skills);
+
+            var jobs = GenerateJobs(employer);
+            modelBuilder.Entity<Job>().HasData(jobs);
+
+            var statuses = new List<ApplicationStatus>
+            {
+                new() { Id = Guid.NewGuid(), Name = "Pending" },
+                new() { Id = Guid.NewGuid(), Name = "Accepted" },
+                new() { Id = Guid.NewGuid(), Name = "Rejected" }
+            };
+            modelBuilder.Entity<ApplicationStatus>()
+                .HasData(statuses);
+
+            var applications = GenerateApplications(users.Skip(1).ToList(), jobs, statuses);
+            modelBuilder.Entity<Application>().HasData(applications);
+
+            var messages = GenerateMessages(users);
+            modelBuilder.Entity<Message>().HasData(messages);
+
+            var reviews = GenerateReviews(users);
+            modelBuilder.Entity<Review>().HasData(reviews);
         }
 
         private static List<ApplicationUser> GenerateUsers()
@@ -80,6 +96,72 @@ namespace Pri.Api.Pe.Infrastructure.Data.Seeding
                 });
             }
             return users;
+        }
+
+        private static List<Job> GenerateJobs(ApplicationUser employer)
+        {
+            var jobs = new List<Job>();
+            for (int i = 0; i < 10; i++)
+            {
+                jobs.Add(new Job
+                {
+                    Id = Guid.NewGuid(),
+                    Name = $"Job{i + 1}",
+                    Description = $"Job{i + 1} description",
+                    EmployerId = employer.Id,
+                    Salary = 10 * (i + 1)
+                });
+            }
+            return jobs;
+        }
+
+        private static List<Application> GenerateApplications(List<ApplicationUser> employees, List<Job> jobs, List<ApplicationStatus> statuses)
+        {
+            var applications = new List<Application>();
+            for (int i = 0; i < 10; i++)
+            {
+                applications.Add(new Application
+                {
+                    Id = Guid.NewGuid(),
+                    CandidateId = employees[i % employees.Count].Id,
+                    JobId = jobs[i].Id,
+                    StatusId = statuses[i % statuses.Count].Id
+                });
+            }
+            return applications;
+        }
+
+        private static List<Message> GenerateMessages(List<ApplicationUser> users)
+        {
+            var messages = new List<Message>();
+            for (int i = 0; i < 10; i++)
+            {
+                messages.Add(new Message
+                {
+                    Id = Guid.NewGuid(),
+                    SenderId = users[i].Id,
+                    ReceiverId = users[(i + 1) % users.Count].Id,
+                    Content = $"Seeded message"
+                });
+            }
+            return messages;
+        }
+
+        private static List<Review> GenerateReviews(List<ApplicationUser> users)
+        {
+            var reviews = new List<Review>();
+            for (int i = 0; i < 10; i++)
+            {
+                reviews.Add(new Review
+                {
+                    Id = Guid.NewGuid(),
+                    Rating = (i + 1) % 5,
+                    ReviewerId = users[i].Id,
+                    RevieweeId = users[(i + 1) % users.Count].Id,
+                    Comment = $"Seeded review"
+                });
+            }
+            return reviews;
         }
     }
 }
