@@ -33,6 +33,18 @@ namespace Pri.Api.Pe.Infrastructure.Data.Seeding
             var employerRole = new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = "Employer", NormalizedName = "EMPLOYER" };
             var employeeRole = new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = "Employee", NormalizedName = "EMPLOYEE" };
             modelBuilder.Entity<IdentityRole<Guid>>().HasData(employerRole, employeeRole);
+
+            var firstUser = users.FirstOrDefault();
+            var employerUserRole = firstUser != null
+                ? new IdentityUserRole<Guid> { UserId = firstUser.Id, RoleId = employerRole.Id }
+                : null;
+
+            var employeeUserRoles = users.Skip(1)
+                .Select(u => new IdentityUserRole<Guid> { UserId = u.Id, RoleId = employeeRole.Id })
+                .ToList();
+
+            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(employeeUserRoles.Concat(new[] { employerUserRole })
+            );
         }
 
         private static List<ApplicationUser> GenerateUsers()
@@ -43,10 +55,10 @@ namespace Pri.Api.Pe.Infrastructure.Data.Seeding
                 users.Add(new ApplicationUser
                 {
                     Id = Guid.NewGuid(),
-                    UserName = $"user{i}",
+                    UserName = $"user{i + 1}",
                     Firstname = $"User",
-                    Lastname = $"{i}",
-                    Email = $"user{i}@test.com"
+                    Lastname = $"{i + 1}",
+                    Email = $"user{i + 1}@test.com"
                 });
             }
             return users;
