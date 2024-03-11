@@ -62,9 +62,26 @@ namespace Pri.Api.Pe.Infrastructure.Data
                 .HasMany(j => j.Skills)
                 .WithMany(s => s.Jobs);
 
+            modelBuilder.Entity<Job>()
+                .HasMany(j => j.Applications)
+                .WithOne(a => a.Job)
+                .HasForeignKey(a => a.JobId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Skills)
                 .WithMany(s => s.Users);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(u => u.SendMessages)
+                .WithOne(m => m.Sender)
+                .HasForeignKey(m => m.SenderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(u => u.ReceivedMessages)
+                .WithOne(m => m.Receiver)
+                .HasForeignKey(m => m.ReceiverId);
 
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Sender)
@@ -76,6 +93,17 @@ namespace Pri.Api.Pe.Infrastructure.Data
                 .WithMany(u => u.ReceivedMessages)
                 .HasForeignKey(m => m.ReceiverId);
 
+            modelBuilder.Entity<ApplicationUser>()
+                 .HasMany(u => u.MadeReviews)
+                .WithOne(r => r.Reviewer)
+                .HasForeignKey(r => r.ReviewerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(u => u.ReceivedReviews)
+                .WithOne(r => r.Reviewee)
+                .HasForeignKey(r => r.RevieweeId);
+
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Reviewer)
                 .WithMany(u => u.MadeReviews)
@@ -85,6 +113,8 @@ namespace Pri.Api.Pe.Infrastructure.Data
                 .HasOne(r => r.Reviewee)
                 .WithMany(u => u.ReceivedReviews)
                 .HasForeignKey(r => r.RevieweeId);
+
+            Seeding.Seeder.Seed(modelBuilder);
         }
     }
 }

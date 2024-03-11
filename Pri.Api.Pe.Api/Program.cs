@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using Pri.Api.Pe.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//Add database service
+builder.Services.AddDbContext<ApplicationDbContext>
+    (options => options
+    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultDb")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
