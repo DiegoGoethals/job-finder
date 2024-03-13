@@ -7,7 +7,7 @@ namespace Pri.Api.Pe.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
-        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Message> Messages { get; set; }

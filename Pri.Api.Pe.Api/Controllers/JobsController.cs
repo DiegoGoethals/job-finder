@@ -15,6 +15,7 @@ namespace Pri.Api.Pe.Api.Controllers
             _jobService = jobService;
         }
 
+        // To do : Check if user is employer
         [HttpPost]
         public async Task<IActionResult> Create(JobRequestDto jobRequestDto)
         { 
@@ -29,6 +30,65 @@ namespace Pri.Api.Pe.Api.Controllers
                     Salary = result.Value.Salary,
                     EmployerId = result.Value.EmployerId
                 });
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _jobService.DeleteAsync(id);
+            if (result.IsSucces)
+            {
+                return Ok("Job removed!");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _jobService.GetAllAsync();
+            if (result.IsSucces)
+            {
+                return Ok(result.Value.Select(job => new JobResponseDto
+                {
+                    Id = job.Id,
+                    Name = job.Name,
+                    Description = job.Description,
+                    Salary = job.Salary,
+                    EmployerId = job.EmployerId
+                }));
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
+        [HttpGet("skills")]
+        public async Task<IActionResult> GetBySkills([FromQuery] IEnumerable<string> skills)
+        {
+            var result = await _jobService.GetBySkills(skills);
+            if (result.IsSucces)
+            {
+                return Ok(result.Value.Select(job => new JobResponseDto
+                {
+                    Id = job.Id,
+                    Name = job.Name,
+                    Description = job.Description,
+                    Salary = job.Salary,
+                    EmployerId = job.EmployerId
+                }));
             }
             foreach (var error in result.Errors)
             {

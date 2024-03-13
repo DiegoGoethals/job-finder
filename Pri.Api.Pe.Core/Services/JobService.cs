@@ -1,4 +1,5 @@
-﻿using Pri.Api.Pe.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Core.Interfaces.Services;
 using Pri.Api.Pe.Core.Services.Models;
@@ -49,6 +50,71 @@ namespace Pri.Api.Pe.Core.Services
             {
                 IsSucces = false,
                 Errors = new List<string> { "Error creating job" }
+            };
+        }
+
+        public async Task<ResultModel<Job>> DeleteAsync(Guid id)
+        {
+            var job = await _jobRepository.GetByIdAsync(id);
+            if (job == null)
+            {
+                return new ResultModel<Job>
+                {
+                    IsSucces = false,
+                    Errors = new List<string> { "Job not found" }
+                };
+            }
+            if (await _jobRepository.DeleteAsync(job))
+            {
+                return new ResultModel<Job>
+                {
+                    IsSucces = true
+                };
+            }
+            return new ResultModel<Job>
+            {
+                IsSucces = false,
+                Errors = new List<string> { "Error deleting job" }
+            };
+        }
+
+        public async Task<ResultModel<IEnumerable<Job>>> GetAllAsync()
+        {
+            var jobs = await _jobRepository.GetAllAsync();
+            if (jobs.Any())
+            {
+                return new ResultModel<IEnumerable<Job>>
+                {
+                    Value = jobs,
+                    IsSucces = true
+                };
+            }
+            return new ResultModel<IEnumerable<Job>>
+            {
+                IsSucces = false,
+                Errors = new List<string>() { "No jobs found!" }
+            };
+        }
+
+        public async Task<ResultModel<IEnumerable<Job>>> GetBySkills(IEnumerable<string> skills)
+        {
+            var jobs = _jobRepository.GetAll();
+            var jobsWithSkills = jobs.Include(job => job.Skills).ToList();
+            var filteredJobs = jobsWithSkills
+                .Where(job => job.Skills != null && job.Skills.Any(s => skills.Contains(s.Name)))
+                .ToList();
+            if (filteredJobs.Any())
+            {
+                return new ResultModel<IEnumerable<Job>>
+                {
+                    Value = filteredJobs,
+                    IsSucces = true
+                };
+            }
+            return new ResultModel<IEnumerable<Job>>
+            {
+                IsSucces = false,
+                Errors = new List<string> { "No jobs found with the specified skills" }
             };
         }
     }

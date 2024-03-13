@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Infrastructure.Data;
@@ -15,6 +16,12 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
         public SkillRepository(ApplicationDbContext applicationDbContext, ILogger<IBaseRepository<Skill>> logger)
             : base(applicationDbContext, logger)
         {
+        }
+
+        public async Task<Skill> GetByName(string name)
+        {
+            return await _table
+                .FirstOrDefaultAsync(t => t.Name == name);
         }
     }
 }

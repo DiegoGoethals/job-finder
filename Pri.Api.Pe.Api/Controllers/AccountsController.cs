@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Pri.Api.Pe.Api.Dtos;
 using Pri.Api.Pe.Core.Entities;
-using Pri.Api.Pe.Infrastructure.Data;
+using Pri.Api.Pe.Core.Interfaces.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -16,13 +15,13 @@ namespace Pri.Api.Pe.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IAccountService _accountService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountsController(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountsController(IAccountService accountService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
-            _applicationDbContext = applicationDbContext;
+            _accountService = accountService;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -41,14 +40,14 @@ namespace Pri.Api.Pe.Api.Controllers
                 ModelState.AddModelError("", "Wrong credentials!");
                 return BadRequest(ModelState);
             }
-            var user = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.UserName == accountRequestDto.UserName);
+            var user = await _accountService.GetByUserNameAsync(accountRequestDto.UserName);
 
             return Ok(
                 new AccountResponseDto
                 {
-                    Id = user.Id,
-                    UserName = user.UserName,
-                    Token = GenerateJwtToken(user)
+                    Id = user.Value.Id,
+                    UserName = user.Value.UserName,
+                    Token = GenerateJwtToken((ApplicationUser)user.Value)
                 }
             );
         }
@@ -75,7 +74,7 @@ namespace Pri.Api.Pe.Api.Controllers
             return tokenHandler.WriteToken(token);
         }
 
-        private string GenerateSecretKey(int keyLength)
+        private static string GenerateSecretKey(int keyLength)
         {
             byte[] keyBytes = new byte[keyLength];
             using (var rng = RandomNumberGenerator.Create())
@@ -101,32 +100,33 @@ namespace Pri.Api.Pe.Api.Controllers
                     UserName = registrationRequestDto.UserName,
                     Email = registrationRequestDto.Email,
                     Firstname = registrationRequestDto.Firstname,
-                    Lastname = registrationRequestDto.Lastname
+                    Lastname = registrationRequestDto.Lastname,
+                    Skills = new List<Skill>()
                 };
-                var result = await _userManager.CreateAsync(user, registrationRequestDto.Password);
 
-                if (result.Succeeded)
+                var registrationResult = await _accountService.Register(user, registrationRequestDto.Skills);
+
+                if (registrationResult.IsSucces)
                 {
-                    await _userManager.AddToRoleAsync(user, registrationRequestDto.Role);
-
-                    foreach (var skillName in registrationRequestDto.Skills)
+                    var result = await _userManager.CreateAsync(user, registrationRequestDto.Password);
+                    if (result.Succeeded)
                     {
-                        var skill = _applicationDbContext.Skills.FirstOrDefault(sk => sk.Name == skillName);
-                        if (skill != null)
+                        _ = await _userManager.AddToRoleAsync(user, registrationRequestDto.Role);
+
+                        return CreatedAtAction(nameof(Register), new { id = registrationResult.Value.Id }, new RegistrationResponseDto
                         {
-                            user.Skills.Add(skill);
-                        }
+                            Id = registrationResult.Value.Id,
+                            UserName = registrationResult.Value.UserName
+                        });
                     }
-                    await _applicationDbContext.SaveChangesAsync();
-                    return CreatedAtAction(nameof(Register), new { id = user.Id }, user); // To do, change this to return a DTO
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
+                    else
                     {
-                        ModelState.AddModelError("", error.Description);
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+                        return BadRequest(ModelState);
                     }
-                    return BadRequest(ModelState);
                 }
             }
             return BadRequest();

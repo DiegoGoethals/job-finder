@@ -12,8 +12,8 @@ using Pri.Api.Pe.Infrastructure.Data;
 namespace Pri.Api.Pe.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240311182248_seededData")]
-    partial class seededData
+    [Migration("20240313154217_renamedDbSetCorrectly")]
+    partial class renamedDbSetCorrectly
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,15 +84,15 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ac1fc180-682b-4e47-a9fa-7eaed458dd50"),
-                            ConcurrencyStamp = "d3c4c9e1-95e2-4a28-853c-9020064a376a",
+                            Id = new Guid("fdf53031-87c4-44f5-bb6c-a8149cb18042"),
+                            ConcurrencyStamp = "f9092f0b-b753-4acf-8083-4732e1425a1c",
                             Name = "Employer",
                             NormalizedName = "EMPLOYER"
                         },
                         new
                         {
-                            Id = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9"),
-                            ConcurrencyStamp = "9b2b0b25-261e-40bc-9023-03cc9acd5d15",
+                            Id = new Guid("408fbf17-984e-43c5-8794-5be95044ea17"),
+                            ConcurrencyStamp = "f3a5c0fa-05dd-4e71-bc21-227f2c6a8d30",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -184,53 +184,53 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("d5138d37-773e-494c-9e3b-149f4bf9e9c1"),
-                            RoleId = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9")
+                            UserId = new Guid("3bc600f9-9d3b-41f2-8fdc-7ddb0e992bb0"),
+                            RoleId = new Guid("408fbf17-984e-43c5-8794-5be95044ea17")
                         },
                         new
                         {
-                            UserId = new Guid("c3478c11-1d4f-427c-80bb-c7de61ddac6c"),
-                            RoleId = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9")
+                            UserId = new Guid("516bfea4-50f2-484b-9263-06543721980c"),
+                            RoleId = new Guid("408fbf17-984e-43c5-8794-5be95044ea17")
                         },
                         new
                         {
-                            UserId = new Guid("3913ba19-ed63-4480-9c6b-4dac2cee6fb0"),
-                            RoleId = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9")
+                            UserId = new Guid("bead2b7a-449f-4ae3-9d63-6512573e43d4"),
+                            RoleId = new Guid("408fbf17-984e-43c5-8794-5be95044ea17")
                         },
                         new
                         {
-                            UserId = new Guid("9a2e9cf2-7de5-48f0-ba28-9150e335fa60"),
-                            RoleId = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9")
+                            UserId = new Guid("d6a3334a-463e-4381-a503-afdfaf25f113"),
+                            RoleId = new Guid("408fbf17-984e-43c5-8794-5be95044ea17")
                         },
                         new
                         {
-                            UserId = new Guid("1585f7aa-fd5f-42a5-a6c6-b340a0c052a5"),
-                            RoleId = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9")
+                            UserId = new Guid("97137476-aff3-4719-b14f-35d5718a628b"),
+                            RoleId = new Guid("408fbf17-984e-43c5-8794-5be95044ea17")
                         },
                         new
                         {
-                            UserId = new Guid("58be952f-8294-4428-8d39-c123a686e3ce"),
-                            RoleId = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9")
+                            UserId = new Guid("b8cf6d3d-a5d8-4a22-b97e-ebd5855a4733"),
+                            RoleId = new Guid("408fbf17-984e-43c5-8794-5be95044ea17")
                         },
                         new
                         {
-                            UserId = new Guid("cd0fba66-bf5c-4624-84f2-f7af13a7ea9a"),
-                            RoleId = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9")
+                            UserId = new Guid("1cadb656-4da5-4a3a-983d-b7ea4201f50f"),
+                            RoleId = new Guid("408fbf17-984e-43c5-8794-5be95044ea17")
                         },
                         new
                         {
-                            UserId = new Guid("854b2992-8b8e-4b58-aefa-dab3eb7d9c66"),
-                            RoleId = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9")
+                            UserId = new Guid("d722f79f-93e9-480e-b070-728955029e23"),
+                            RoleId = new Guid("408fbf17-984e-43c5-8794-5be95044ea17")
                         },
                         new
                         {
-                            UserId = new Guid("a9140311-167f-438d-adb6-6349ca165e01"),
-                            RoleId = new Guid("80a5cc24-b3d1-424f-a7e7-cec18b09baa9")
+                            UserId = new Guid("f2890345-d8d9-455a-bbd0-62c7a4c8be36"),
+                            RoleId = new Guid("408fbf17-984e-43c5-8794-5be95044ea17")
                         },
                         new
                         {
-                            UserId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
-                            RoleId = new Guid("ac1fc180-682b-4e47-a9fa-7eaed458dd50")
+                            UserId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
+                            RoleId = new Guid("fdf53031-87c4-44f5-bb6c-a8149cb18042")
                         });
                 });
 
@@ -290,102 +290,102 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b024f123-c20c-49ca-a646-e018eecd9fc5"),
-                            CandidateId = new Guid("d5138d37-773e-494c-9e3b-149f4bf9e9c1"),
+                            Id = new Guid("f043dec9-0aa8-406b-bb80-5e54f064ece2"),
+                            CandidateId = new Guid("3bc600f9-9d3b-41f2-8fdc-7ddb0e992bb0"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("35e01063-1ce1-4b0b-aa6b-1e096128cf3f"),
+                            JobId = new Guid("a94f3130-9fa8-464f-b3fc-ea1541a4327c"),
                             Salary = 0.0,
-                            StatusId = new Guid("af772102-1331-4ea1-a516-62fb0eaa6e67"),
+                            StatusId = new Guid("ed1bf698-df1c-429e-8759-eaef61241f2e"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("0ef0b567-b0dd-487c-a8db-8fb6f471c063"),
-                            CandidateId = new Guid("c3478c11-1d4f-427c-80bb-c7de61ddac6c"),
+                            Id = new Guid("6e2f2665-f135-40fd-ad31-553b5cbc5608"),
+                            CandidateId = new Guid("516bfea4-50f2-484b-9263-06543721980c"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("2320310e-49cb-4774-9e7d-0092cb186ff7"),
+                            JobId = new Guid("017ad50d-efc1-47ef-a799-0e74c4c1e330"),
                             Salary = 0.0,
-                            StatusId = new Guid("1b0211e1-cbcc-4978-9760-726269a94c31"),
+                            StatusId = new Guid("e2a3809f-b985-48bc-8769-bb435a3204f7"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("e007f2e1-8ee3-4d5e-87b4-cad0d6d586c4"),
-                            CandidateId = new Guid("3913ba19-ed63-4480-9c6b-4dac2cee6fb0"),
+                            Id = new Guid("baecb136-f3f7-4e00-b8bf-80b7b19c1c73"),
+                            CandidateId = new Guid("bead2b7a-449f-4ae3-9d63-6512573e43d4"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("a0786985-34dd-4cf3-ad93-4532fdb9a43b"),
+                            JobId = new Guid("d495591e-b0bc-4010-9ee0-ce537589e82d"),
                             Salary = 0.0,
-                            StatusId = new Guid("8d84ecb0-c0a5-4016-a247-516993ef7437"),
+                            StatusId = new Guid("5a3fe95e-b371-44d1-86e2-b6bf5fb97886"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("ec68daaf-24c7-4589-bd2d-3e8572c5bf7e"),
-                            CandidateId = new Guid("9a2e9cf2-7de5-48f0-ba28-9150e335fa60"),
+                            Id = new Guid("9461ac78-2c5f-4577-bbeb-cd2551d2fd3c"),
+                            CandidateId = new Guid("d6a3334a-463e-4381-a503-afdfaf25f113"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("104bf1a3-c708-4c0a-9d97-102956d4e9a9"),
+                            JobId = new Guid("d5fa2f0b-0eda-406b-9c3d-c6813ee1dded"),
                             Salary = 0.0,
-                            StatusId = new Guid("af772102-1331-4ea1-a516-62fb0eaa6e67"),
+                            StatusId = new Guid("ed1bf698-df1c-429e-8759-eaef61241f2e"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("3a600fc3-18e0-4246-8a9d-fa506df6814a"),
-                            CandidateId = new Guid("1585f7aa-fd5f-42a5-a6c6-b340a0c052a5"),
+                            Id = new Guid("643b31d2-1b7b-4817-80ac-7c83e6bd8a7c"),
+                            CandidateId = new Guid("97137476-aff3-4719-b14f-35d5718a628b"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("51b0e977-3982-4e2e-b86e-8bda2d2f3b27"),
+                            JobId = new Guid("69f40e2f-c64f-42e9-ac3d-841fb92b0ed2"),
                             Salary = 0.0,
-                            StatusId = new Guid("1b0211e1-cbcc-4978-9760-726269a94c31"),
+                            StatusId = new Guid("e2a3809f-b985-48bc-8769-bb435a3204f7"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("1db21d58-a38b-4822-b5de-88291af8de74"),
-                            CandidateId = new Guid("58be952f-8294-4428-8d39-c123a686e3ce"),
+                            Id = new Guid("ff518c73-1b8d-40a9-9ec3-6b539dfe5624"),
+                            CandidateId = new Guid("b8cf6d3d-a5d8-4a22-b97e-ebd5855a4733"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("c7b3674b-1132-44bc-ab24-51bc7e2473c8"),
+                            JobId = new Guid("fdb1c55e-e631-4445-a59a-ed3b466e0caa"),
                             Salary = 0.0,
-                            StatusId = new Guid("8d84ecb0-c0a5-4016-a247-516993ef7437"),
+                            StatusId = new Guid("5a3fe95e-b371-44d1-86e2-b6bf5fb97886"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("f3e32823-6123-4e98-8a76-48e8c5078090"),
-                            CandidateId = new Guid("cd0fba66-bf5c-4624-84f2-f7af13a7ea9a"),
+                            Id = new Guid("9921d7bd-95fd-422a-94bf-6cca3ba7193f"),
+                            CandidateId = new Guid("1cadb656-4da5-4a3a-983d-b7ea4201f50f"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("0b3b1e7c-90e8-4c8f-bcd7-d24d4b5b0c0b"),
+                            JobId = new Guid("412e2398-0488-45aa-88ee-4ae03981f54e"),
                             Salary = 0.0,
-                            StatusId = new Guid("af772102-1331-4ea1-a516-62fb0eaa6e67"),
+                            StatusId = new Guid("ed1bf698-df1c-429e-8759-eaef61241f2e"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("e58af8b4-e4c2-4ea9-b071-24b90df9fd13"),
-                            CandidateId = new Guid("854b2992-8b8e-4b58-aefa-dab3eb7d9c66"),
+                            Id = new Guid("d5aeb192-a9ce-4721-8f49-4778232e2fd7"),
+                            CandidateId = new Guid("d722f79f-93e9-480e-b070-728955029e23"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("79868ef1-4886-41ac-96f0-814789e574db"),
+                            JobId = new Guid("5fe23f48-b440-4fd0-a132-3db8437feda6"),
                             Salary = 0.0,
-                            StatusId = new Guid("1b0211e1-cbcc-4978-9760-726269a94c31"),
+                            StatusId = new Guid("e2a3809f-b985-48bc-8769-bb435a3204f7"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("f322608f-2166-4aed-9238-36b610fa0824"),
-                            CandidateId = new Guid("a9140311-167f-438d-adb6-6349ca165e01"),
+                            Id = new Guid("ac4cb22b-6cf9-4137-8714-32873499cd0b"),
+                            CandidateId = new Guid("f2890345-d8d9-455a-bbd0-62c7a4c8be36"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("5bd157d1-3a3e-43d6-a4b4-e65729852f90"),
+                            JobId = new Guid("c4e34fcc-1514-4dbc-9124-aa569dc51a28"),
                             Salary = 0.0,
-                            StatusId = new Guid("8d84ecb0-c0a5-4016-a247-516993ef7437"),
+                            StatusId = new Guid("5a3fe95e-b371-44d1-86e2-b6bf5fb97886"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("6fa20086-f4ed-4c8f-8c17-be46087dde7c"),
-                            CandidateId = new Guid("d5138d37-773e-494c-9e3b-149f4bf9e9c1"),
+                            Id = new Guid("200f88bd-b2d2-40d6-911a-298ed3e45f88"),
+                            CandidateId = new Guid("3bc600f9-9d3b-41f2-8fdc-7ddb0e992bb0"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            JobId = new Guid("1e09a542-14d7-482b-baee-578b39ae2feb"),
+                            JobId = new Guid("1a41b746-a5e0-4e52-8cee-ee8c02271f5c"),
                             Salary = 0.0,
-                            StatusId = new Guid("af772102-1331-4ea1-a516-62fb0eaa6e67"),
+                            StatusId = new Guid("ed1bf698-df1c-429e-8759-eaef61241f2e"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -412,21 +412,21 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("af772102-1331-4ea1-a516-62fb0eaa6e67"),
+                            Id = new Guid("ed1bf698-df1c-429e-8759-eaef61241f2e"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Pending",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("1b0211e1-cbcc-4978-9760-726269a94c31"),
+                            Id = new Guid("e2a3809f-b985-48bc-8769-bb435a3204f7"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Accepted",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("8d84ecb0-c0a5-4016-a247-516993ef7437"),
+                            Id = new Guid("5a3fe95e-b371-44d1-86e2-b6bf5fb97886"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Rejected",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -515,9 +515,9 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            Id = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "36eac91c-81bd-4bbc-9f98-85494bcfd33e",
+                            ConcurrencyStamp = "bb168ba2-15a7-4c09-9c9c-3022d3d06e75",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user1@test.com",
                             EmailConfirmed = true,
@@ -526,18 +526,18 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER1@TEST.COM",
                             NormalizedUserName = "USER1",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJHx3qgCO0ZM3dGdN1nGgdliRGUYUCJeyGd916gtqyZ012czN9oEi+PDNmt5RUZUoQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECygkabIwdD2CACrxnEEyWoN0JSW7J4dEbsU7jZTRE9KoW7oNi3wLHFvzxS4FHAE4Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "41115456-50ad-48af-b4ef-342a67cc68da",
+                            SecurityStamp = "9b1be47a-9480-466d-8513-b529dd2c6332",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user1"
                         },
                         new
                         {
-                            Id = new Guid("d5138d37-773e-494c-9e3b-149f4bf9e9c1"),
+                            Id = new Guid("3bc600f9-9d3b-41f2-8fdc-7ddb0e992bb0"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "248d8b82-0933-41e5-948a-73df51089794",
+                            ConcurrencyStamp = "cacae661-0ec2-41a0-9742-fa823705ae6a",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user2@test.com",
                             EmailConfirmed = true,
@@ -546,18 +546,18 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER2@TEST.COM",
                             NormalizedUserName = "USER2",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPttxXkpdbDZF81Gu5sAwLBdoFYE4QaFq62XzoS+o7pPG1hmHp7zUpuiII9mJPkGBw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPb74XlWHeifWN1McfZ9kHlZVFO62mxdIyNKGJD2NPKS+zKtzzVgTVea8NZdPTm1iA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "86600bfd-43b5-4e3f-a18c-d2f4626c6ee6",
+                            SecurityStamp = "f13cb576-8b38-47a2-a4d9-03d0b43b7b09",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user2"
                         },
                         new
                         {
-                            Id = new Guid("c3478c11-1d4f-427c-80bb-c7de61ddac6c"),
+                            Id = new Guid("516bfea4-50f2-484b-9263-06543721980c"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "08cd6781-959c-43a7-b493-db35931c3b6d",
+                            ConcurrencyStamp = "8da9e0d2-92d0-4da6-8927-0f29f8c4f18b",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user3@test.com",
                             EmailConfirmed = true,
@@ -566,18 +566,18 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER3@TEST.COM",
                             NormalizedUserName = "USER3",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHcbCyt+HXxjmmCBE8U+ko8MZNgJhKtdffTspyvM48QeHZffvQA4IjjkT0XgLE2SKw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEpgHSOgxD85m3d0GFVUGLK+dUyrpPayj0+cx7PHrfhxDvc/HBbLZLsI5AEHVAPvqQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9b1c5cb5-086c-46ce-9f78-1b871c0be11c",
+                            SecurityStamp = "8b2a773f-a326-43c8-89ef-5d185aab8753",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user3"
                         },
                         new
                         {
-                            Id = new Guid("3913ba19-ed63-4480-9c6b-4dac2cee6fb0"),
+                            Id = new Guid("bead2b7a-449f-4ae3-9d63-6512573e43d4"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a7db1cc0-5330-4e38-a5a8-fe3935f208a2",
+                            ConcurrencyStamp = "c0e576d3-72b7-4e79-aa2a-6981017d1ed6",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user4@test.com",
                             EmailConfirmed = true,
@@ -586,18 +586,18 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER4@TEST.COM",
                             NormalizedUserName = "USER4",
-                            PasswordHash = "AQAAAAEAACcQAAAAED12Gk1hmyr7rmvnSI4nWq+9l1spdnxl70ZAYN4dzzAgsyVoc1HoG0rHQKks/mALlw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAED3dpYMFwccu2g+oFGEbrWCU4YzPl1B5N5W7+X42yLo1pY7y8SdCxjXxBoIRJxlClw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "705cf664-a292-4238-835b-ab2d8d27b89f",
+                            SecurityStamp = "afd6ceca-6892-44fe-b7b7-4fd14a4fb8fe",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user4"
                         },
                         new
                         {
-                            Id = new Guid("9a2e9cf2-7de5-48f0-ba28-9150e335fa60"),
+                            Id = new Guid("d6a3334a-463e-4381-a503-afdfaf25f113"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "eea83f73-9071-44ff-bca7-9a6290499f44",
+                            ConcurrencyStamp = "f09d7003-9af5-409f-96ea-6a8d1e688073",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user5@test.com",
                             EmailConfirmed = true,
@@ -606,18 +606,18 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER5@TEST.COM",
                             NormalizedUserName = "USER5",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFh/KVpAagkKfD3APcKJJ3zIMA3DzOSPOq6RDldHopDAG8jFz/UZN7jEQsUL9udjJQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELI7w1c09McdMvahaXZogJWJXZEhgT2TehZ5we2FEhFTQZpbZ7d18T+JHB87UxxqrA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "94a835ed-2d03-4779-8be6-af63e6ba3819",
+                            SecurityStamp = "3e5b949b-29bb-41de-84aa-a8b2b0126052",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user5"
                         },
                         new
                         {
-                            Id = new Guid("1585f7aa-fd5f-42a5-a6c6-b340a0c052a5"),
+                            Id = new Guid("97137476-aff3-4719-b14f-35d5718a628b"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1d783ed1-ffbd-48fe-b093-b4fbb3d782b9",
+                            ConcurrencyStamp = "4dbec063-18c5-418b-8133-c4e89901e9be",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user6@test.com",
                             EmailConfirmed = true,
@@ -626,18 +626,18 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER6@TEST.COM",
                             NormalizedUserName = "USER6",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPMlABuHkWJXPiwtoVafXyn23HfEZCSiz8NY+wmmstwEzmF2onj1ezCwE7UnTaHLww==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAPo7H5Q0KsClVW8Ypa2oaFoOh1PEZLJdDeey0XBKx/AeOFqNqaYzz+CTH/WSfyGrA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6783d745-19fa-44bd-9eb0-4446e6443bf2",
+                            SecurityStamp = "6e5ca000-3de1-4d54-92ff-19a08b727ff4",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user6"
                         },
                         new
                         {
-                            Id = new Guid("58be952f-8294-4428-8d39-c123a686e3ce"),
+                            Id = new Guid("b8cf6d3d-a5d8-4a22-b97e-ebd5855a4733"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b8281462-f6b7-4e89-9786-258a18c4f24f",
+                            ConcurrencyStamp = "704dad85-01a7-4484-913a-f09b380f6778",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user7@test.com",
                             EmailConfirmed = true,
@@ -646,18 +646,18 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER7@TEST.COM",
                             NormalizedUserName = "USER7",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPXmtt5pJ5i4KLL+5ctiTtTpjLh/aSDTNEe3Kz51n4ny3ZeZgoQjwJETVajlDbk0+Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOF85YU6Ec4yxH27c4F5YS693KMNZ9ZylzdljJiHSBGCa6Nq71a5ZPuCeSCLZKi3ug==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "444f1916-f3dd-400c-bd65-efe47f167aa5",
+                            SecurityStamp = "eec5af2b-eb32-4991-ab41-07c86f2dc38b",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user7"
                         },
                         new
                         {
-                            Id = new Guid("cd0fba66-bf5c-4624-84f2-f7af13a7ea9a"),
+                            Id = new Guid("1cadb656-4da5-4a3a-983d-b7ea4201f50f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "08b44ecf-ef29-43d7-8b5f-2ee41254db4c",
+                            ConcurrencyStamp = "ef30a85c-0b73-4f5c-9fb4-5e9d5418c13e",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user8@test.com",
                             EmailConfirmed = true,
@@ -666,18 +666,18 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER8@TEST.COM",
                             NormalizedUserName = "USER8",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFa0yZuj2izd5l5STQwfky7rgrfZIs6nI4R17RShRo4geP+g+LbS6vx2MKIJPj6amw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHKCBKdL+D6tWP7vOZk/vCsCAapcMRXR1hq4KnwGERFVDmvl2V1cKmFa9KrlV3AUGA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b43abceb-e5c6-48da-bb93-5e695ad0049a",
+                            SecurityStamp = "234b6822-e91f-4c36-a548-82998e4d3869",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user8"
                         },
                         new
                         {
-                            Id = new Guid("854b2992-8b8e-4b58-aefa-dab3eb7d9c66"),
+                            Id = new Guid("d722f79f-93e9-480e-b070-728955029e23"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac92d149-df33-4547-8ca9-b7da6e3af788",
+                            ConcurrencyStamp = "653048e7-02e9-416f-82aa-8fdb3e3b36f9",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user9@test.com",
                             EmailConfirmed = true,
@@ -686,18 +686,18 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER9@TEST.COM",
                             NormalizedUserName = "USER9",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHM00UYkflefiyLVII0fTLUlvmg6gKz0BThv15NtbLNI/T4HVkLaT48GQ+YcNuWSLA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJBaG6FeMCZJE2BRiv3pXUnZkgX2Mz7Nf4BOQDmtPQO2FY976cZcC2gDYNtllcmvpw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5863928b-c516-4c16-aabf-6940077dd430",
+                            SecurityStamp = "53130005-7144-415e-8a43-da474dd64c26",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user9"
                         },
                         new
                         {
-                            Id = new Guid("a9140311-167f-438d-adb6-6349ca165e01"),
+                            Id = new Guid("f2890345-d8d9-455a-bbd0-62c7a4c8be36"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8a9fca63-8304-4b21-8560-23697d050742",
+                            ConcurrencyStamp = "d7acefd1-5450-4904-b533-5407c17a68ad",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "user10@test.com",
                             EmailConfirmed = true,
@@ -706,9 +706,9 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER10@TEST.COM",
                             NormalizedUserName = "USER10",
-                            PasswordHash = "AQAAAAEAACcQAAAAELhqZ3gWUI67W8qull6bGPUrewjAyNKqizAM92zuuru94m+EzgWTjJEyZOs7tqiWSA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAED7V1TRnqVfQxsv0tboOvJ2+hTsRmO1BoFcsJ/8zGTmiapp1wlhT86Yloky1z6PBKQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "64b5981a-ca70-4581-8b8e-f42412273413",
+                            SecurityStamp = "bc33f8ed-c3d0-4b7c-8f30-1e0880a7ce29",
                             TwoFactorEnabled = false,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserName = "user10"
@@ -749,100 +749,100 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("35e01063-1ce1-4b0b-aa6b-1e096128cf3f"),
+                            Id = new Guid("a94f3130-9fa8-464f-b3fc-ea1541a4327c"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job1 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job1",
                             Salary = 10.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("2320310e-49cb-4774-9e7d-0092cb186ff7"),
+                            Id = new Guid("017ad50d-efc1-47ef-a799-0e74c4c1e330"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job2 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job2",
                             Salary = 20.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("a0786985-34dd-4cf3-ad93-4532fdb9a43b"),
+                            Id = new Guid("d495591e-b0bc-4010-9ee0-ce537589e82d"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job3 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job3",
                             Salary = 30.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("104bf1a3-c708-4c0a-9d97-102956d4e9a9"),
+                            Id = new Guid("d5fa2f0b-0eda-406b-9c3d-c6813ee1dded"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job4 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job4",
                             Salary = 40.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("51b0e977-3982-4e2e-b86e-8bda2d2f3b27"),
+                            Id = new Guid("69f40e2f-c64f-42e9-ac3d-841fb92b0ed2"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job5 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job5",
                             Salary = 50.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("c7b3674b-1132-44bc-ab24-51bc7e2473c8"),
+                            Id = new Guid("fdb1c55e-e631-4445-a59a-ed3b466e0caa"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job6 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job6",
                             Salary = 60.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("0b3b1e7c-90e8-4c8f-bcd7-d24d4b5b0c0b"),
+                            Id = new Guid("412e2398-0488-45aa-88ee-4ae03981f54e"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job7 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job7",
                             Salary = 70.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("79868ef1-4886-41ac-96f0-814789e574db"),
+                            Id = new Guid("5fe23f48-b440-4fd0-a132-3db8437feda6"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job8 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job8",
                             Salary = 80.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("5bd157d1-3a3e-43d6-a4b4-e65729852f90"),
+                            Id = new Guid("c4e34fcc-1514-4dbc-9124-aa569dc51a28"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job9 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job9",
                             Salary = 90.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("1e09a542-14d7-482b-baee-578b39ae2feb"),
+                            Id = new Guid("1a41b746-a5e0-4e52-8cee-ee8c02271f5c"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Job10 description",
-                            EmployerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            EmployerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Name = "Job10",
                             Salary = 100.0,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -881,92 +881,92 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7bef0f64-ab98-4adc-8f9c-1b28ef6a2763"),
+                            Id = new Guid("0d22757f-37fa-4000-9002-9e77f5610008"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("d5138d37-773e-494c-9e3b-149f4bf9e9c1"),
-                            SenderId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            ReceiverId = new Guid("3bc600f9-9d3b-41f2-8fdc-7ddb0e992bb0"),
+                            SenderId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("415c84dc-f9a8-43a2-a582-0b2c2da0507f"),
+                            Id = new Guid("eb1e1522-d985-49c9-8a81-05ddd080b835"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("c3478c11-1d4f-427c-80bb-c7de61ddac6c"),
-                            SenderId = new Guid("d5138d37-773e-494c-9e3b-149f4bf9e9c1"),
+                            ReceiverId = new Guid("516bfea4-50f2-484b-9263-06543721980c"),
+                            SenderId = new Guid("3bc600f9-9d3b-41f2-8fdc-7ddb0e992bb0"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("c510b276-ce7d-4ddb-8040-99c571c1cdaf"),
+                            Id = new Guid("c31ebeab-26d4-4891-966b-e56120acee20"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("3913ba19-ed63-4480-9c6b-4dac2cee6fb0"),
-                            SenderId = new Guid("c3478c11-1d4f-427c-80bb-c7de61ddac6c"),
+                            ReceiverId = new Guid("bead2b7a-449f-4ae3-9d63-6512573e43d4"),
+                            SenderId = new Guid("516bfea4-50f2-484b-9263-06543721980c"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("3bf02b86-46c5-4f72-879a-c3d1e9dda8c5"),
+                            Id = new Guid("0a9230c7-b555-42e8-9531-2c43741b2d9e"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("9a2e9cf2-7de5-48f0-ba28-9150e335fa60"),
-                            SenderId = new Guid("3913ba19-ed63-4480-9c6b-4dac2cee6fb0"),
+                            ReceiverId = new Guid("d6a3334a-463e-4381-a503-afdfaf25f113"),
+                            SenderId = new Guid("bead2b7a-449f-4ae3-9d63-6512573e43d4"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("f7749618-ed85-4b1c-ae54-75bdf3baac44"),
+                            Id = new Guid("f0dfbd91-230b-42d6-b94b-578dcf777b16"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("1585f7aa-fd5f-42a5-a6c6-b340a0c052a5"),
-                            SenderId = new Guid("9a2e9cf2-7de5-48f0-ba28-9150e335fa60"),
+                            ReceiverId = new Guid("97137476-aff3-4719-b14f-35d5718a628b"),
+                            SenderId = new Guid("d6a3334a-463e-4381-a503-afdfaf25f113"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("88c7fc6f-6ff0-44a0-81a9-16168bc39e5e"),
+                            Id = new Guid("5132de27-cad5-4ca6-9c5f-225b6273f17f"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("58be952f-8294-4428-8d39-c123a686e3ce"),
-                            SenderId = new Guid("1585f7aa-fd5f-42a5-a6c6-b340a0c052a5"),
+                            ReceiverId = new Guid("b8cf6d3d-a5d8-4a22-b97e-ebd5855a4733"),
+                            SenderId = new Guid("97137476-aff3-4719-b14f-35d5718a628b"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("75e2b60e-e1c6-466c-bc20-3cca908e6dd0"),
+                            Id = new Guid("41abd2fa-bd36-43ee-a043-340034366718"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("cd0fba66-bf5c-4624-84f2-f7af13a7ea9a"),
-                            SenderId = new Guid("58be952f-8294-4428-8d39-c123a686e3ce"),
+                            ReceiverId = new Guid("1cadb656-4da5-4a3a-983d-b7ea4201f50f"),
+                            SenderId = new Guid("b8cf6d3d-a5d8-4a22-b97e-ebd5855a4733"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("c7118ef0-42c9-4b05-acba-0fc5fa1cdebf"),
+                            Id = new Guid("37ec2304-81b2-4a7c-8edc-ec342dde029f"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("854b2992-8b8e-4b58-aefa-dab3eb7d9c66"),
-                            SenderId = new Guid("cd0fba66-bf5c-4624-84f2-f7af13a7ea9a"),
+                            ReceiverId = new Guid("d722f79f-93e9-480e-b070-728955029e23"),
+                            SenderId = new Guid("1cadb656-4da5-4a3a-983d-b7ea4201f50f"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("49179607-bc52-4628-88f2-952976ec74ca"),
+                            Id = new Guid("6505b212-3dc4-4b2d-9fc7-1d27ac049c0f"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("a9140311-167f-438d-adb6-6349ca165e01"),
-                            SenderId = new Guid("854b2992-8b8e-4b58-aefa-dab3eb7d9c66"),
+                            ReceiverId = new Guid("f2890345-d8d9-455a-bbd0-62c7a4c8be36"),
+                            SenderId = new Guid("d722f79f-93e9-480e-b070-728955029e23"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("ebd4316a-84a6-401c-9afa-294fc72e0d98"),
+                            Id = new Guid("e1d27203-6d4b-49bf-ac8a-ec6fc214f145"),
                             Content = "Seeded message",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ReceiverId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
-                            SenderId = new Guid("a9140311-167f-438d-adb6-6349ca165e01"),
+                            ReceiverId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
+                            SenderId = new Guid("f2890345-d8d9-455a-bbd0-62c7a4c8be36"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -1006,102 +1006,102 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6f2191ad-3e94-4404-a714-6f878ee67ba2"),
+                            Id = new Guid("4daa2a5a-0d6d-4b6d-bb87-383a7684071a"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 1,
-                            RevieweeId = new Guid("d5138d37-773e-494c-9e3b-149f4bf9e9c1"),
-                            ReviewerId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
+                            RevieweeId = new Guid("3bc600f9-9d3b-41f2-8fdc-7ddb0e992bb0"),
+                            ReviewerId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("9357a592-87be-416b-a5b4-6eb2365d5d80"),
+                            Id = new Guid("d4889cea-b60d-43e6-ab14-01ef58da30c7"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 2,
-                            RevieweeId = new Guid("c3478c11-1d4f-427c-80bb-c7de61ddac6c"),
-                            ReviewerId = new Guid("d5138d37-773e-494c-9e3b-149f4bf9e9c1"),
+                            RevieweeId = new Guid("516bfea4-50f2-484b-9263-06543721980c"),
+                            ReviewerId = new Guid("3bc600f9-9d3b-41f2-8fdc-7ddb0e992bb0"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("e0923a26-7a9b-4c5a-b654-cb199e3d902c"),
+                            Id = new Guid("a007117d-c9a4-4c7b-86ea-e1d280c722a8"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 3,
-                            RevieweeId = new Guid("3913ba19-ed63-4480-9c6b-4dac2cee6fb0"),
-                            ReviewerId = new Guid("c3478c11-1d4f-427c-80bb-c7de61ddac6c"),
+                            RevieweeId = new Guid("bead2b7a-449f-4ae3-9d63-6512573e43d4"),
+                            ReviewerId = new Guid("516bfea4-50f2-484b-9263-06543721980c"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("7db4a96f-4249-4e26-89df-fad534f0bd98"),
+                            Id = new Guid("32387935-5a13-4ba4-a4ed-02ee5172a406"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 4,
-                            RevieweeId = new Guid("9a2e9cf2-7de5-48f0-ba28-9150e335fa60"),
-                            ReviewerId = new Guid("3913ba19-ed63-4480-9c6b-4dac2cee6fb0"),
+                            RevieweeId = new Guid("d6a3334a-463e-4381-a503-afdfaf25f113"),
+                            ReviewerId = new Guid("bead2b7a-449f-4ae3-9d63-6512573e43d4"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("fbc9dafb-8dc2-489e-9707-60193de0c4cd"),
+                            Id = new Guid("934d946b-bc01-4a93-a298-2fbf7b191d0c"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 0,
-                            RevieweeId = new Guid("1585f7aa-fd5f-42a5-a6c6-b340a0c052a5"),
-                            ReviewerId = new Guid("9a2e9cf2-7de5-48f0-ba28-9150e335fa60"),
+                            RevieweeId = new Guid("97137476-aff3-4719-b14f-35d5718a628b"),
+                            ReviewerId = new Guid("d6a3334a-463e-4381-a503-afdfaf25f113"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("d98f53d9-6468-4454-9494-b3b42051155b"),
+                            Id = new Guid("937f5dd7-7d34-4aff-8b2c-5f0b82153efe"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 1,
-                            RevieweeId = new Guid("58be952f-8294-4428-8d39-c123a686e3ce"),
-                            ReviewerId = new Guid("1585f7aa-fd5f-42a5-a6c6-b340a0c052a5"),
+                            RevieweeId = new Guid("b8cf6d3d-a5d8-4a22-b97e-ebd5855a4733"),
+                            ReviewerId = new Guid("97137476-aff3-4719-b14f-35d5718a628b"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("5f7878bc-b881-472a-9963-f30d502d8841"),
+                            Id = new Guid("6b36f138-38d8-4ecc-b989-dd04b048c7bb"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 2,
-                            RevieweeId = new Guid("cd0fba66-bf5c-4624-84f2-f7af13a7ea9a"),
-                            ReviewerId = new Guid("58be952f-8294-4428-8d39-c123a686e3ce"),
+                            RevieweeId = new Guid("1cadb656-4da5-4a3a-983d-b7ea4201f50f"),
+                            ReviewerId = new Guid("b8cf6d3d-a5d8-4a22-b97e-ebd5855a4733"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("ea8537f9-247c-4767-8654-10beb351588e"),
+                            Id = new Guid("cb002623-5463-4a68-9494-1aaab4de2074"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 3,
-                            RevieweeId = new Guid("854b2992-8b8e-4b58-aefa-dab3eb7d9c66"),
-                            ReviewerId = new Guid("cd0fba66-bf5c-4624-84f2-f7af13a7ea9a"),
+                            RevieweeId = new Guid("d722f79f-93e9-480e-b070-728955029e23"),
+                            ReviewerId = new Guid("1cadb656-4da5-4a3a-983d-b7ea4201f50f"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("88dfe6e5-18c2-44bd-ae87-1ca49bad276a"),
+                            Id = new Guid("6cb99ba6-44dd-4a5a-a562-5306f43e9b28"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 4,
-                            RevieweeId = new Guid("a9140311-167f-438d-adb6-6349ca165e01"),
-                            ReviewerId = new Guid("854b2992-8b8e-4b58-aefa-dab3eb7d9c66"),
+                            RevieweeId = new Guid("f2890345-d8d9-455a-bbd0-62c7a4c8be36"),
+                            ReviewerId = new Guid("d722f79f-93e9-480e-b070-728955029e23"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("0a5c651f-676b-4e79-8836-bea000b31eb8"),
+                            Id = new Guid("cb233d74-deda-4a32-85c9-a0b679f2f7ad"),
                             Comment = "Seeded review",
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 0,
-                            RevieweeId = new Guid("08c80b26-4b3d-4b8c-828b-01bc7b62838d"),
-                            ReviewerId = new Guid("a9140311-167f-438d-adb6-6349ca165e01"),
+                            RevieweeId = new Guid("b115be95-4c8e-41a3-ba1e-899e73b2a87a"),
+                            ReviewerId = new Guid("f2890345-d8d9-455a-bbd0-62c7a4c8be36"),
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -1128,84 +1128,84 @@ namespace Pri.Api.Pe.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c64a777b-49d4-4b8e-b352-a6c513382916"),
+                            Id = new Guid("447abb77-d290-420d-b78f-c74b61394d8f"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Programming",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("6df87cc8-45df-4dd0-abad-5508a4aee37c"),
+                            Id = new Guid("00b1cd09-339c-42e9-9f59-6b721331eb65"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Gardening",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("ce74fe74-e002-4e01-99be-96426661e8ee"),
+                            Id = new Guid("2637d36d-4c9e-4e01-aca4-ab3866ae9744"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cooking",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("d372a2e7-3071-4547-a4bc-8fa8de471199"),
+                            Id = new Guid("e42cc64d-d081-494f-9f77-20be7de0922e"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Cleaning",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("a488656c-e6b9-4621-a74c-3191d486d49d"),
+                            Id = new Guid("468848a5-679b-4fe0-8b03-74e90fc0c751"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Driving",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("0e660e60-a3bb-43bd-a5a0-e778c0f46323"),
+                            Id = new Guid("c9bfda14-666a-41e8-a734-8f27fbd582fb"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Teaching",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("6db4cea2-d68e-42f2-81e5-3904f796bf5d"),
+                            Id = new Guid("e0204ca7-47e2-4d8f-ac46-869e8fd8b70d"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Writing",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("755bfb5f-38ff-47cb-8656-e47ecec598f9"),
+                            Id = new Guid("9932052f-3e95-418a-8942-5070d72eecd4"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Maths",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("c99c4370-fc97-4916-b64c-89d3cdcbf4de"),
+                            Id = new Guid("60f13d0a-0a51-4efc-8c73-dc7611b74e6d"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Language",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("03c62cb0-cc8d-4647-8792-726d5e533c6a"),
+                            Id = new Guid("4403bedc-0d89-4793-8f21-380fd9680c7e"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Painting",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("981a674c-92ea-4164-a260-95423b8d2046"),
+                            Id = new Guid("bbfcf658-f96b-4996-a6df-4bb43f851ee1"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Photography",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("efdd5ae5-a08c-401d-9586-6ed75c960117"),
+                            Id = new Guid("34d14ecb-33be-4696-bed9-0465398faf3c"),
                             Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sewing",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)

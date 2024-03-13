@@ -6,6 +6,7 @@ using Pri.Api.Pe.Core.Interfaces.Services;
 using Pri.Api.Pe.Core.Services;
 using Pri.Api.Pe.Infrastructure.Data;
 using Pri.Api.Pe.Infrastructure.Repositories;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +18,12 @@ builder.Services.AddDbContext<ApplicationDbContext>
 // Add repositories to the container.
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<IUserRepository<ApplicationUser>, UserRepository>();
 
 // Add services to the container.
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 // Add identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
