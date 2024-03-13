@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pri.Api.Pe.Core.Interfaces
+namespace Pri.Api.Pe.Core.Interfaces.Repositories
 {
-    public interface IReviewRepository : IBaseRepository<Review>
+    public interface IApplicationRepository : IBaseRepository<Application>
     {
     }
 }

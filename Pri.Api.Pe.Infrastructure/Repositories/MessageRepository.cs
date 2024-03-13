@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pri.Api.Pe.Core.Entities;
-using Pri.Api.Pe.Core.Interfaces;
+using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Infrastructure.Data;
 using System;
 using System.Collections.Generic;

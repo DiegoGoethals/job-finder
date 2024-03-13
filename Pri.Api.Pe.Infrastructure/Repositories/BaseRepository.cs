@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pri.Api.Pe.Core.Entities;
-using Pri.Api.Pe.Core.Interfaces;
+using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Infrastructure.Data;
 
 namespace Pri.Api.Pe.Infrastructure.Repositories
