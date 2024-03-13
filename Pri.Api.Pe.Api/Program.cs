@@ -1,15 +1,26 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Pri.Api.Pe.Core.Entities;
+using Pri.Api.Pe.Core.Interfaces.Repositories;
+using Pri.Api.Pe.Core.Interfaces.Services;
+using Pri.Api.Pe.Core.Services;
 using Pri.Api.Pe.Infrastructure.Data;
+using Pri.Api.Pe.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 // Add database service
 builder.Services.AddDbContext<ApplicationDbContext>
     (options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultDb")));
+
+// Add repositories to the container.
+builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+
+// Add services to the container.
+builder.Services.AddScoped<IJobService, JobService>();
+builder.Services.AddScoped<ISkillService, SkillService>();
 
 // Add identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
