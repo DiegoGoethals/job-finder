@@ -192,5 +192,23 @@ namespace Pri.Api.Pe.Core.Services
                 Errors = new List<string> { "Error handling application" }
             };
         }
+
+        public async Task<ResultModel<IEnumerable<ApplicationStatus>>> GetAllStatusesAsync()
+        {
+            var statuses = await _applicationStatusRepository.GetAllAsync();
+            if (statuses.Any())
+            {
+                return new ResultModel<IEnumerable<ApplicationStatus>>
+                {
+                    Value = statuses,
+                    IsSucces = true
+                };
+            }
+            return new ResultModel<IEnumerable<ApplicationStatus>>
+            {
+                IsSucces = false,
+                Errors = new List<string> { "No statuses found" }
+            };
+        }
     }
 }

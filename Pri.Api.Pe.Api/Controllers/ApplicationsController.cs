@@ -139,6 +139,25 @@ namespace Pri.Api.Pe.Api.Controllers
             return BadRequest(ModelState.Values);
         }
 
+        [HttpGet("statuses")]
+        public async Task<IActionResult> GetAllStatuses()
+        {
+            var result = await _applicationService.GetAllStatusesAsync();
+            if (result.IsSucces)
+            {
+                return Ok(result.Value.Select(s => new ApplicationStatusDto
+                {
+                    Id = s.Id,
+                    Name = s.Name
+                }));
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
         [HttpPut("{id}/status")]
         public async Task<IActionResult> HandleApplication(Guid id, ApplicationStatusDto applicationStatusDto)
         {
