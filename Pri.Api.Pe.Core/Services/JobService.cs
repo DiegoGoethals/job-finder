@@ -136,7 +136,7 @@ namespace Pri.Api.Pe.Core.Services
             };
         }
 
-        public async Task<ResultModel<Job>> UpdateAsync(Guid id, string name, string description, double salary, Guid employerId, IEnumerable<string> skills)
+        public async Task<ResultModel<Job>> UpdateAsync(Guid id, string name, string description, double salary, IEnumerable<string> skills)
         {
             var job = await _jobRepository.GetByIdAsync(id);
             if (job == null)
@@ -151,7 +151,6 @@ namespace Pri.Api.Pe.Core.Services
             job.Name = name;
             job.Description = description;
             job.Salary = salary;
-            job.EmployerId = employerId;
             job.Skills = new List<Skill>();
 
             foreach (var skillName in skills)

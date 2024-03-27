@@ -122,7 +122,7 @@ namespace Pri.Api.Pe.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, JobRequestDto jobRequestDto)
         {
-            var result = await _jobService.UpdateAsync(id, jobRequestDto.Name, jobRequestDto.Description, jobRequestDto.Salary, jobRequestDto.EmployerId, jobRequestDto.Skills);
+            var result = await _jobService.UpdateAsync(id, jobRequestDto.Name, jobRequestDto.Description, jobRequestDto.Salary, jobRequestDto.Skills);
             if (result.IsSucces)
             {
                 return Ok(new JobResponseDto

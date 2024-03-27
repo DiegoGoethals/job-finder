@@ -20,12 +20,14 @@ builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IUserRepository<ApplicationUser>, UserRepository>();
 builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
 builder.Services.AddScoped<IApplicationStatusRepository, ApplicationStatusRepository>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
 // Add services to the container.
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 // Add identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>

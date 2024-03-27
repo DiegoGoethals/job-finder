@@ -39,7 +39,7 @@ namespace Pri.Api.Pe.Api.Controllers
 
         // To do : Check if user is employer role
         [HttpGet("job/{jobId}")]
-        public async Task<IActionResult> GetAll(Guid jobId)
+        public async Task<IActionResult> GetAllByJob(Guid jobId)
         {
             var result = await _applicationService.GetAllByJobAsync(jobId);
             if (result.IsSucces)

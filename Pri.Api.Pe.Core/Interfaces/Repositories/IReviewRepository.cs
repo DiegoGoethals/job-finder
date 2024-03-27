@@ -9,5 +9,7 @@ namespace Pri.Api.Pe.Core.Interfaces.Repositories
 {
     public interface IReviewRepository : IBaseRepository<Review>
     {
+        Task<IEnumerable<Review>> GetByRevieweeIdAsync(Guid revieweeId);
+        Task<IEnumerable<Review>> GetByReviewerIdAsync(Guid reviewerId);
     }
 }
