@@ -9,11 +9,13 @@ namespace Pri.Api.Pe.Core.Services
     {
         private readonly IApplicationRepository _applicationRepository;
         private readonly IJobRepository _jobRepository;
+        private readonly IApplicationStatusRepository _applicationStatusRepository;
 
-        public ApplicationService(IApplicationRepository applicationRepository, IJobRepository jobRepository)
+        public ApplicationService(IApplicationRepository applicationRepository, IJobRepository jobRepository, IApplicationStatusRepository applicationStatusRepository)
         {
             _applicationRepository = applicationRepository;
             _jobRepository = jobRepository;
+            _applicationStatusRepository = applicationStatusRepository;
         }
 
         public async Task<ResultModel<Application>> CreateAsync(Guid jobId, Guid candidateId, double salary)
@@ -33,7 +35,8 @@ namespace Pri.Api.Pe.Core.Services
                 Id = Guid.NewGuid(),
                 JobId = jobId,
                 CandidateId = candidateId,
-                Salary = salary
+                Salary = salary,
+                Status = ApplicationStatus.Pending
             };
 
             if (await _applicationRepository.AddAsync(application))
@@ -154,6 +157,39 @@ namespace Pri.Api.Pe.Core.Services
             {
                 IsSucces = false,
                 Errors = new List<string> { "Error updating application" }
+            };
+        }
+
+        public async Task<ApplicationStatus> MapDtoToEntity(string status)
+        {
+            return await _applicationStatusRepository.GetByNameAsync(status);
+        }
+
+        public async Task<ResultModel<Application>> HandleApplication(Guid id, ApplicationStatus status)
+        {
+            var application = await _applicationRepository.GetByIdAsync(id);
+            var statusExists = _applicationStatusRepository.GetAll().Any(s => s == status);
+            if (application == null || !statusExists)
+            {
+                return new ResultModel<Application>
+                {
+                    IsSucces = false,
+                    Errors = new List<string> { "Application not found" }
+                };
+            }
+            application.Status = status;
+            if (await _applicationRepository.UpdateAsync(application))
+            {
+                return new ResultModel<Application>
+                {
+                    Value = application,
+                    IsSucces = true
+                };
+            }
+            return new ResultModel<Application>
+            {
+                IsSucces = false,
+                Errors = new List<string> { "Error handling application" }
             };
         }
     }

@@ -138,5 +138,26 @@ namespace Pri.Api.Pe.Api.Controllers
             }
             return BadRequest(ModelState.Values);
         }
+
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> HandleApplication(Guid id, ApplicationStatusDto applicationStatusDto)
+        {
+            var entity = await _applicationService.MapDtoToEntity(applicationStatusDto.Name);
+            var result = await _applicationService.HandleApplication(id, entity);
+            if (result.IsSucces)
+            {
+                return Ok(new HandleStatusDto
+                {
+                    Job = result.Value.Job.Name,
+                    JobId = result.Value.Job.Id,
+                    Status = result.Value.Status.Name
+                });
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
     }
 }
