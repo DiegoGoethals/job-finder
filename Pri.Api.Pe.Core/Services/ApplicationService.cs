@@ -36,7 +36,7 @@ namespace Pri.Api.Pe.Core.Services
                 JobId = jobId,
                 CandidateId = candidateId,
                 Salary = salary,
-                Status = ApplicationStatus.Pending
+                Status = _applicationStatusRepository.GetAll().First(s => s.Name == "Pending")
             };
 
             if (await _applicationRepository.AddAsync(application))
