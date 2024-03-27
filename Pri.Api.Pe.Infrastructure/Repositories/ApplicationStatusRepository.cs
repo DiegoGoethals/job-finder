@@ -11,10 +11,5 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
             : base(applicationDbContext, logger)
         {
         }
-
-        public async Task<ApplicationStatus> GetByNameAsync(string name)
-        {
-            return  _table.FirstOrDefault(s => s.Name == name);
-        }
     }
 }

@@ -142,7 +142,7 @@ namespace Pri.Api.Pe.Api.Controllers
         [HttpPut("{id}/status")]
         public async Task<IActionResult> HandleApplication(Guid id, ApplicationStatusDto applicationStatusDto)
         {
-            var entity = await _applicationService.MapDtoToEntity(applicationStatusDto.Name);
+            var entity = await _applicationService.MapDtoToEntity(applicationStatusDto.Id);
             var result = await _applicationService.HandleApplication(id, entity);
             if (result.IsSucces)
             {

@@ -9,6 +9,5 @@ namespace Pri.Api.Pe.Core.Interfaces.Repositories
 {
     public interface IApplicationStatusRepository : IBaseRepository<ApplicationStatus>
     {
-        Task<ApplicationStatus> GetByNameAsync(string name);
     }
 }

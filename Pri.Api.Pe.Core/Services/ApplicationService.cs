@@ -160,9 +160,9 @@ namespace Pri.Api.Pe.Core.Services
             };
         }
 
-        public async Task<ApplicationStatus> MapDtoToEntity(string status)
+        public async Task<ApplicationStatus> MapDtoToEntity(Guid Id)
         {
-            return await _applicationStatusRepository.GetByNameAsync(status);
+            return await _applicationStatusRepository.GetByIdAsync(Id);
         }
 
         public async Task<ResultModel<Application>> HandleApplication(Guid id, ApplicationStatus status)

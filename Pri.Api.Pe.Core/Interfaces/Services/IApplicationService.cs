@@ -12,6 +12,6 @@ namespace Pri.Api.Pe.Core.Interfaces.Services
         Task<ResultModel<Application>> GetByIdAsync(Guid id);
         Task<ResultModel<Application>> UpdateAsync(Guid id, double salary);
         Task<ResultModel<Application>> HandleApplication(Guid id, ApplicationStatus status);
-        Task<ApplicationStatus> MapDtoToEntity(string status);
+        Task<ApplicationStatus> MapDtoToEntity(Guid Id);
     }
 }
