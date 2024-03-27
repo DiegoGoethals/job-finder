@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Infrastructure.Data;
@@ -15,6 +16,20 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
         public ApplicationRepository(ApplicationDbContext applicationDbContext, ILogger<IBaseRepository<Application>> logger)
             : base(applicationDbContext, logger)
         {
+        }
+
+        public async Task<IEnumerable<Application>> GetAllByJobAsync(Guid jobId)
+        {
+            return await _table
+                .Where(t => t.JobId == jobId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Application>> GetAllByCandidateAsync(Guid candidateId)
+        {
+            return await _table
+                .Where(t => t.CandidateId == candidateId)
+                .ToListAsync();
         }
     }
 }

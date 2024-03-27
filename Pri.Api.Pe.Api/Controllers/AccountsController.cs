@@ -47,42 +47,42 @@ namespace Pri.Api.Pe.Api.Controllers
                 {
                     Id = user.Value.Id,
                     UserName = user.Value.UserName,
-                    Token = GenerateJwtToken((ApplicationUser)user.Value)
+                    // Token = GenerateJwtToken((ApplicationUser)user.Value)
                 }
             );
         }
 
-        private string GenerateJwtToken(ApplicationUser user)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(GenerateSecretKey(32));
-            var userRole = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
+        //private string GenerateJwtToken(ApplicationUser user)
+        //{
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes(GenerateSecretKey(32));
+        //    var userRole = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Role, userRole)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Subject = new ClaimsIdentity(new Claim[]
+        //        {
+        //            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        //            new Claim(ClaimTypes.Name, user.UserName),
+        //            new Claim(ClaimTypes.Role, userRole)
+        //        }),
+        //        Expires = DateTime.UtcNow.AddDays(7),
+        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        //    };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
+        //    return tokenHandler.WriteToken(token);
+        //}
 
-        private static string GenerateSecretKey(int keyLength)
-        {
-            byte[] keyBytes = new byte[keyLength];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(keyBytes);
-            }
-            return Convert.ToBase64String(keyBytes);
-        }
+        //private static string GenerateSecretKey(int keyLength)
+        //{
+        //    byte[] keyBytes = new byte[keyLength];
+        //    using (var rng = RandomNumberGenerator.Create())
+        //    {
+        //        rng.GetBytes(keyBytes);
+        //    }
+        //    return Convert.ToBase64String(keyBytes);
+        //}
 
         [HttpPost]
         [Route("register")]

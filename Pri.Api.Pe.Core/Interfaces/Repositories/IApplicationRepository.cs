@@ -9,5 +9,7 @@ namespace Pri.Api.Pe.Core.Interfaces.Repositories
 {
     public interface IApplicationRepository : IBaseRepository<Application>
     {
+        Task<IEnumerable<Application>> GetAllByJobAsync(Guid jobId);
+        Task<IEnumerable<Application>> GetAllByCandidateAsync(Guid candidateId);
     }
 }

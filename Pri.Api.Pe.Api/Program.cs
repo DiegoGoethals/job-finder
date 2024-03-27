@@ -19,11 +19,13 @@ builder.Services.AddDbContext<ApplicationDbContext>
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IUserRepository<ApplicationUser>, UserRepository>();
+builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
 
 // Add services to the container.
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IApplicationService, ApplicationService>();
 
 // Add identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>

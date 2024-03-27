@@ -9,5 +9,7 @@ namespace Pri.Api.Pe.Core.Interfaces.Services
         Task<ResultModel<Job>> DeleteAsync(Guid id);
         Task<ResultModel<IEnumerable<Job>>> GetAllAsync();
         Task<ResultModel<IEnumerable<Job>>> GetBySkills(IEnumerable<string> skills);
+        Task<ResultModel<Job>> GetByIdAsync(Guid id);
+        Task<ResultModel<Job>> UpdateAsync(Guid id, string name, string description, double salary, Guid employerId, IEnumerable<string> skills);
     }
 }

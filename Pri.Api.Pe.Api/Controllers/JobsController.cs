@@ -96,5 +96,49 @@ namespace Pri.Api.Pe.Api.Controllers
             }
             return BadRequest(ModelState.Values);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _jobService.GetByIdAsync(id);
+            if (result.IsSucces)
+            {
+                return Ok(new JobResponseDto
+                {
+                    Id = result.Value.Id,
+                    Name = result.Value.Name,
+                    Description = result.Value.Description,
+                    Salary = result.Value.Salary,
+                    EmployerId = result.Value.EmployerId
+                });
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, JobRequestDto jobRequestDto)
+        {
+            var result = await _jobService.UpdateAsync(id, jobRequestDto.Name, jobRequestDto.Description, jobRequestDto.Salary, jobRequestDto.EmployerId, jobRequestDto.Skills);
+            if (result.IsSucces)
+            {
+                return Ok(new JobResponseDto
+                {
+                    Id = result.Value.Id,
+                    Name = result.Value.Name,
+                    Description = result.Value.Description,
+                    Salary = result.Value.Salary,
+                    EmployerId = result.Value.EmployerId
+                });
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
     }
 }

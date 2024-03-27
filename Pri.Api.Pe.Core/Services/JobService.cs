@@ -117,5 +117,65 @@ namespace Pri.Api.Pe.Core.Services
                 Errors = new List<string> { "No jobs found with the specified skills" }
             };
         }
+
+        public async Task<ResultModel<Job>> GetByIdAsync(Guid id)
+        {
+            var job = await _jobRepository.GetByIdAsync(id);
+            if (job != null)
+            {
+                return new ResultModel<Job>
+                {
+                    Value = job,
+                    IsSucces = true
+                };
+            }
+            return new ResultModel<Job>
+            {
+                IsSucces = false,
+                Errors = new List<string> { "Job not found" }
+            };
+        }
+
+        public async Task<ResultModel<Job>> UpdateAsync(Guid id, string name, string description, double salary, Guid employerId, IEnumerable<string> skills)
+        {
+            var job = await _jobRepository.GetByIdAsync(id);
+            if (job == null)
+            {
+                return new ResultModel<Job>
+                {
+                    IsSucces = false,
+                    Errors = new List<string> { "Job not found" }
+                };
+            }
+
+            job.Name = name;
+            job.Description = description;
+            job.Salary = salary;
+            job.EmployerId = employerId;
+            job.Skills = new List<Skill>();
+
+            foreach (var skillName in skills)
+            {
+                var skill = _skillRepository.GetAll().FirstOrDefault(s => s.Name == skillName);
+                if (skill != null)
+                {
+                    job.Skills.Add(skill);
+                }
+            }
+
+            if (await _jobRepository.UpdateAsync(job))
+            {
+                return new ResultModel<Job>
+                {
+                    Value = job,
+                    IsSucces = true
+                };
+            }
+            return new ResultModel<Job>
+            {
+                IsSucces = false,
+                Errors = new List<string> { "Error updating job" }
+            };
+        }
     }
 }
