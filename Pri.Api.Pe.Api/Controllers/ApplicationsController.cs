@@ -15,6 +15,15 @@ namespace Pri.Api.Pe.Api.Controllers
             _applicationService = applicationService;
         }
 
+        private IActionResult HandleError(IEnumerable<string> errors)
+        {
+            foreach (var error in errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
         // To do : Check if user is employee role
         [HttpPost]
         public async Task<IActionResult> Create(ApplicationRequestDto applicationRequestDto)
@@ -30,11 +39,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     Salary = result.Value.Salary
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         // To do : Check if user is employer role
@@ -52,11 +57,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     Salary = a.Salary
                 }));
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         // To do : check if user is same user as candidate
@@ -68,11 +69,7 @@ namespace Pri.Api.Pe.Api.Controllers
             {
                 return Ok("Application removed!");
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         // To do : Check if user is employee
@@ -90,11 +87,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     Salary = a.Salary
                 }));
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpGet("{id}")]
@@ -111,11 +104,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     Salary = result.Value.Salary
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpPut("{id}")]
@@ -132,11 +121,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     Salary = result.Value.Salary
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpGet("statuses")]
@@ -151,11 +136,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     Name = s.Name
                 }));
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpPut("{id}/status")]
@@ -172,11 +153,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     Status = result.Value.Status.Name
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
     }
 }

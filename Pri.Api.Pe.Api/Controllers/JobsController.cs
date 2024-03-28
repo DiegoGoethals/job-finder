@@ -15,6 +15,15 @@ namespace Pri.Api.Pe.Api.Controllers
             _jobService = jobService;
         }
 
+        private IActionResult HandleError(IEnumerable<string> errors)
+        {
+            foreach (var error in errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
         // To do : Check if user is employer
         [HttpPost]
         public async Task<IActionResult> Create(JobRequestDto jobRequestDto)
@@ -31,11 +40,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     EmployerId = result.Value.EmployerId
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpDelete("{id}")]
@@ -46,11 +51,7 @@ namespace Pri.Api.Pe.Api.Controllers
             {
                 return Ok("Job removed!");
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpGet]
@@ -68,11 +69,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     EmployerId = job.EmployerId
                 }));
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpGet("skills")]
@@ -90,11 +87,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     EmployerId = job.EmployerId
                 }));
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpGet("{id}")]
@@ -112,11 +105,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     EmployerId = result.Value.EmployerId
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpPut("{id}")]
@@ -134,11 +123,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     EmployerId = result.Value.EmployerId
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
     }
 }

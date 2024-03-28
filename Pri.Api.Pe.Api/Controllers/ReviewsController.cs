@@ -15,6 +15,15 @@ namespace Pri.Api.Pe.Api.Controllers
             _reviewService = reviewService;
         }
 
+        private IActionResult HandleError(IEnumerable<string> errors)
+        {
+            foreach (var error in errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(ReviewRequestDto reviewRequestDto)
         {
@@ -30,11 +39,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     RevieweeId = result.Value.RevieweeId
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpPut("{id}")]
@@ -52,11 +57,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     RevieweeId = result.Value.RevieweeId
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpDelete("{id}")]
@@ -67,11 +68,7 @@ namespace Pri.Api.Pe.Api.Controllers
             {
                 return Ok("Review deleted succesfully!");
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpGet("reviewee/{revieweeId}")]
@@ -89,11 +86,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     RevieweeId = review.RevieweeId
                 }));
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpGet("reviewer/{reviewerId}")]
@@ -111,11 +104,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     RevieweeId = review.RevieweeId
                 }));
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
 
         [HttpGet("{id}")]
@@ -133,11 +122,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     RevieweeId = result.Value.RevieweeId
                 });
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-            return BadRequest(ModelState.Values);
+            return HandleError(result.Errors);
         }
     }
 }
