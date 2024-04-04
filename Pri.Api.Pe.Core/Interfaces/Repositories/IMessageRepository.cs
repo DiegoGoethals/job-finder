@@ -9,5 +9,6 @@ namespace Pri.Api.Pe.Core.Interfaces.Repositories
 {
     public interface IMessageRepository : IBaseRepository<Message>
     {
+        Task<IEnumerable<Message>> GetConversationAsync(Guid id1, Guid id2);
     }
 }

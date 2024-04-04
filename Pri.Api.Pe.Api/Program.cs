@@ -21,6 +21,7 @@ builder.Services.AddScoped<IUserRepository<ApplicationUser>, UserRepository>();
 builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
 builder.Services.AddScoped<IApplicationStatusRepository, ApplicationStatusRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
 // Add services to the container.
 builder.Services.AddScoped<IJobService, JobService>();
@@ -28,6 +29,7 @@ builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 
 // Add identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
