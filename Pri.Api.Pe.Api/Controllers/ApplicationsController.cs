@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pri.Api.Pe.Api.Dtos;
 using Pri.Api.Pe.Core.Interfaces.Services;
 
@@ -26,6 +27,7 @@ namespace Pri.Api.Pe.Api.Controllers
 
         // To do : Check if user is employee role
         [HttpPost]
+        [Authorize(Policy = "Employee")]
         public async Task<IActionResult> Create(ApplicationRequestDto applicationRequestDto)
         {
             var result = await _applicationService.CreateAsync(applicationRequestDto.JobId, applicationRequestDto.CandidateId, applicationRequestDto.Salary);
@@ -44,6 +46,7 @@ namespace Pri.Api.Pe.Api.Controllers
 
         // To do : Check if user is employer role
         [HttpGet("job/{jobId}")]
+        [Authorize(Policy = "Employer")]
         public async Task<IActionResult> GetAllByJob(Guid jobId)
         {
             var result = await _applicationService.GetAllByJobAsync(jobId);
@@ -62,6 +65,7 @@ namespace Pri.Api.Pe.Api.Controllers
 
         // To do : check if user is same user as candidate
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Employee")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _applicationService.DeleteAsync(id);
@@ -74,6 +78,7 @@ namespace Pri.Api.Pe.Api.Controllers
 
         // To do : Check if user is employee
         [HttpGet("candidate/{candidateId}")]
+        [Authorize(Policy = "Employee")]
         public async Task<IActionResult> GetAllByCandidate(Guid candidateId)
         {
             var result = await _applicationService.GetAllByCandidateAsync(candidateId);
@@ -91,6 +96,7 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "Employee")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _applicationService.GetByIdAsync(id);
@@ -108,6 +114,7 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "Employee")]
         public async Task<IActionResult> Update(Guid id, ApplicationRequestDto applicationRequestDto)
         {
             var result = await _applicationService.UpdateAsync(id, applicationRequestDto.Salary);
@@ -140,6 +147,7 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpPut("{id}/status")]
+        [Authorize(Policy = "Employer")]
         public async Task<IActionResult> HandleApplication(Guid id, ApplicationStatusDto applicationStatusDto)
         {
             var entity = await _applicationService.MapDtoToEntity(applicationStatusDto.Id);

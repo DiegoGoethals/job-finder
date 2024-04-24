@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Core.Interfaces.Services;
@@ -31,6 +32,12 @@ builder.Services.AddAuthentication(options =>
     ValidIssuer = builder.Configuration["JWTConfiguration:Issuer"],
     IssuerSigningKey =
     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTConfiguration:SecretKey"]))
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Employer", policy => policy.RequireRole("Employer"));
+    options.AddPolicy("Employee", policy => policy.RequireRole("Employee"));
 });
 
 // Add repositories to the container.
