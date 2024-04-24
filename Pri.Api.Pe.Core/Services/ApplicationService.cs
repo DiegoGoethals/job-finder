@@ -67,8 +67,8 @@ namespace Pri.Api.Pe.Core.Services
             }
             return new ResultModel<IEnumerable<Application>>
             {
-                IsSucces = false,
-                Errors = new List<string> { "No applications found" }
+                IsSucces = true,
+                Value = new List<Application> { }
             };
         }
 
@@ -110,8 +110,8 @@ namespace Pri.Api.Pe.Core.Services
             }
             return new ResultModel<IEnumerable<Application>>
             {
-                IsSucces = false,
-                Errors = new List<string> { "No applications found" }
+                IsSucces = true,
+                Value = new List<Application> { }
             };
         }
 

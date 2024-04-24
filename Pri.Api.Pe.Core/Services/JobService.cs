@@ -91,8 +91,8 @@ namespace Pri.Api.Pe.Core.Services
             }
             return new ResultModel<IEnumerable<Job>>
             {
-                IsSucces = false,
-                Errors = new List<string>() { "No jobs found!" }
+                IsSucces = true,
+                Value = new List<Job>()
             };
         }
 
@@ -113,8 +113,8 @@ namespace Pri.Api.Pe.Core.Services
             }
             return new ResultModel<IEnumerable<Job>>
             {
-                IsSucces = false,
-                Errors = new List<string> { "No jobs found with the specified skills" }
+                IsSucces = true,
+                Value = new List<Job>()
             };
         }
 

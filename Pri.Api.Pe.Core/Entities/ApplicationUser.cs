@@ -14,6 +14,7 @@ namespace Pri.Api.Pe.Core.Entities
         public string Fullname => $"{Firstname} {Lastname}";
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
+        public DateTime Birthday { get; set; }
         public ICollection<Application> Applications { get; set; }
         public ICollection<Job> Jobs { get; set; }
         public ICollection<Skill> Skills { get; set; }

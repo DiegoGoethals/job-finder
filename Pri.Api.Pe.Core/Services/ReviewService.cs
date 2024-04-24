@@ -112,8 +112,8 @@ namespace Pri.Api.Pe.Core.Services
             }
             return new ResultModel<IEnumerable<Review>>
             {
-                IsSucces = false,
-                Errors = new List<string> { "No reviews found" }
+                IsSucces = true,
+                Value = new List<Review>()
             };
         }
 
@@ -131,8 +131,8 @@ namespace Pri.Api.Pe.Core.Services
             }
             return new ResultModel<IEnumerable<Review>>
             {
-                IsSucces = false,
-                Errors = new List<string> { "No reviews found" }
+                IsSucces = true,
+                Value = new List<Review>()
             };
         }
 

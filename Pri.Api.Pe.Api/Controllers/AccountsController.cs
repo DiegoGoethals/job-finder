@@ -6,7 +6,7 @@ using Pri.Api.Pe.Core.Interfaces.Services;
 
 namespace Pri.Api.Pe.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
@@ -96,7 +96,10 @@ namespace Pri.Api.Pe.Api.Controllers
                     Email = registrationRequestDto.Email,
                     Firstname = registrationRequestDto.Firstname,
                     Lastname = registrationRequestDto.Lastname,
-                    Skills = new List<Skill>()
+                    Skills = new List<Skill>(),
+                    Created = DateTime.Now,
+                    Updated = DateTime.Now,
+                    Birthday = registrationRequestDto.Birthday
                 };
 
                 var registrationResult = await _accountService.Register(user, registrationRequestDto.Skills);

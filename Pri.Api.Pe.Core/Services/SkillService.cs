@@ -2,11 +2,6 @@
 using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Core.Interfaces.Services;
 using Pri.Api.Pe.Core.Services.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pri.Api.Pe.Core.Services
 {
@@ -57,11 +52,8 @@ namespace Pri.Api.Pe.Core.Services
             }
             return new ResultModel<IEnumerable<Skill>>
             {
-                IsSucces = false,
-                Errors = new List<string>
-                {
-                    "No skills found!"
-                }
+                IsSucces = true,
+                Value = new List<Skill>()
             };
         }
 

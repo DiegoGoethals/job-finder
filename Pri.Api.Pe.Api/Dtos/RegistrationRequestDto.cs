@@ -9,5 +9,6 @@
         public string Lastname { get; set; }
         public string Role { get; set; }
         public IEnumerable<string> Skills { get; set; }
+        public DateTime Birthday { get; set; }
     }
 }
