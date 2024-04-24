@@ -55,12 +55,16 @@ builder.Services.AddScoped<IMessageService, MessageService>();
 
 // Add requirements to the container.
 builder.Services.AddScoped<IAuthorizationHandler, IsEmployerRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, IsEmployeeRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, IsSameCandidateRequirementHandler>();
 
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Employer", policy => policy.RequireRole("Employer"));
     options.AddPolicy("Employee", policy => policy.RequireRole("Employee"));
     options.AddPolicy("IsEmployer", policy => policy.Requirements.Add(new IsEmployerRequirement()));
+    options.AddPolicy("IsEmployee", policy => policy.Requirements.Add(new IsEmployeeRequirement()));
+    options.AddPolicy("IsSameCandidate", policy => policy.Requirements.Add(new IsSameCandidateRequirement()));
 });
 
 // Add identity

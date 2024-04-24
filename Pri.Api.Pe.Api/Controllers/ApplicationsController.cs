@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pri.Api.Pe.Api.Dtos;
-using Pri.Api.Pe.Api.Requirements;
 using Pri.Api.Pe.Core.Interfaces.Services;
 
 namespace Pri.Api.Pe.Api.Controllers
@@ -26,7 +25,6 @@ namespace Pri.Api.Pe.Api.Controllers
             return BadRequest(ModelState.Values);
         }
 
-        // To do : Check if user is employee role
         [HttpPost]
         [Authorize(Policy = "Employee")]
         public async Task<IActionResult> Create(ApplicationRequestDto applicationRequestDto)
@@ -45,7 +43,6 @@ namespace Pri.Api.Pe.Api.Controllers
             return HandleError(result.Errors);
         }
 
-        // To do : Check if user is employer role
         [HttpGet("job/{jobId}")]
         [Authorize(Policy = "Employer")]
         [Authorize(Policy = "IsEmployer")]
@@ -65,9 +62,9 @@ namespace Pri.Api.Pe.Api.Controllers
             return HandleError(result.Errors);
         }
 
-        // To do : check if user is same user as candidate
         [HttpDelete("{id}")]
         [Authorize(Policy = "Employee")]
+        [Authorize(Policy = "IsSameCandidate")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _applicationService.DeleteAsync(id);
@@ -78,9 +75,9 @@ namespace Pri.Api.Pe.Api.Controllers
             return HandleError(result.Errors);
         }
 
-        // To do : Check if user is employee
         [HttpGet("candidate/{candidateId}")]
         [Authorize(Policy = "Employee")]
+        [Authorize(Policy = "IsEmployee")]
         public async Task<IActionResult> GetAllByCandidate(Guid candidateId)
         {
             var result = await _applicationService.GetAllByCandidateAsync(candidateId);
@@ -116,6 +113,7 @@ namespace Pri.Api.Pe.Api.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Policy = "Employee")]
+        [Authorize(Policy = "IsSameCandidate")]
         public async Task<IActionResult> Update(Guid id, ApplicationRequestDto applicationRequestDto)
         {
             var result = await _applicationService.UpdateAsync(id, applicationRequestDto.Salary);

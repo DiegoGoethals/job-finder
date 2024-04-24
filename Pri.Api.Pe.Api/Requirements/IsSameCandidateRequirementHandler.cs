@@ -4,18 +4,18 @@ using System.Security.Claims;
 
 namespace Pri.Api.Pe.Api.Requirements
 {
-    public class IsEmployerRequirementHandler : AuthorizationHandler<IsEmployerRequirement>
+    public class IsSameCandidateRequirementHandler : AuthorizationHandler<IsSameCandidateRequirement>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IJobService _jobService;
+        private readonly IApplicationService _applicationService;
 
-        public IsEmployerRequirementHandler(IJobService jobService, IHttpContextAccessor httpContextAccessor)
+        public IsSameCandidateRequirementHandler(IHttpContextAccessor httpContextAccessor, IApplicationService applicationService)
         {
-            _jobService = jobService;
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _applicationService = applicationService;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, IsEmployerRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, IsSameCandidateRequirement requirement)
         {
             // Check if the user is authenticated
             if (!context.User.Identity.IsAuthenticated)
@@ -39,20 +39,18 @@ namespace Pri.Api.Pe.Api.Requirements
                 return;
             }
 
-            // Obtain the jobId from the requirement
-            var jobId = routeData?.Values["jobId"]?.ToString();
-
-            // Get the employer ID for the job from the database
-            var job = await _jobService.GetByIdAsync(Guid.Parse(jobId));
-            if (!job.IsSucces)
+            // Obtain the userId from the requirement
+            var applicationId = Guid.Parse(routeData?.Values["id"]?.ToString());
+            var application = await _applicationService.GetByIdAsync(applicationId);
+            if (application == null)
             {
                 context.Fail();
                 return;
             }
-            var employerId = job.Value.EmployerId;
+            var candidateId = application.Value.CandidateId;
 
             // Check if claimed user's ID matches user's ID
-            if (userId == employerId)
+            if (userId == candidateId)
             {
                 context.Succeed(requirement);
             }

@@ -1,21 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Pri.Api.Pe.Core.Interfaces.Services;
 using System.Security.Claims;
 
 namespace Pri.Api.Pe.Api.Requirements
 {
-    public class IsEmployerRequirementHandler : AuthorizationHandler<IsEmployerRequirement>
+    public class IsEmployeeRequirementHandler : AuthorizationHandler<IsEmployeeRequirement>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IJobService _jobService;
 
-        public IsEmployerRequirementHandler(IJobService jobService, IHttpContextAccessor httpContextAccessor)
+        public IsEmployeeRequirementHandler(IHttpContextAccessor httpContextAccessor)
         {
-            _jobService = jobService;
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, IsEmployerRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, IsEmployeeRequirement requirement)
         {
             // Check if the user is authenticated
             if (!context.User.Identity.IsAuthenticated)
@@ -39,20 +36,11 @@ namespace Pri.Api.Pe.Api.Requirements
                 return;
             }
 
-            // Obtain the jobId from the requirement
-            var jobId = routeData?.Values["jobId"]?.ToString();
-
-            // Get the employer ID for the job from the database
-            var job = await _jobService.GetByIdAsync(Guid.Parse(jobId));
-            if (!job.IsSucces)
-            {
-                context.Fail();
-                return;
-            }
-            var employerId = job.Value.EmployerId;
+            // Obtain the userId from the requirement
+            var candidateId = Guid.Parse(routeData?.Values["candidateId"]?.ToString());
 
             // Check if claimed user's ID matches user's ID
-            if (userId == employerId)
+            if (userId == candidateId)
             {
                 context.Succeed(requirement);
             }
