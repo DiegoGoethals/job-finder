@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Pri.Api.Pe.Api.Dtos;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Services;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Pri.Api.Pe.Api.Controllers
 {
@@ -13,12 +17,14 @@ namespace Pri.Api.Pe.Api.Controllers
         private readonly IAccountService _accountService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IConfiguration _configuration;
 
-        public AccountsController(IAccountService accountService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountsController(IAccountService accountService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
         {
             _accountService = accountService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -35,49 +41,30 @@ namespace Pri.Api.Pe.Api.Controllers
                 ModelState.AddModelError("", "Wrong credentials!");
                 return BadRequest(ModelState);
             }
-            var user = await _accountService.GetByUserNameAsync(accountRequestDto.UserName);
+            var user = await _userManager.FindByNameAsync(accountRequestDto.UserName);
 
-            return Ok(
-                new AccountResponseDto
-                {
-                    Id = user.Value.Id,
-                    UserName = user.Value.UserName,
-                    // Token = GenerateJwtToken((ApplicationUser)user.Value)
-                }
-            );
-        }
+            var claims = await _userManager.GetClaimsAsync(user);
 
-        //private string GenerateJwtToken(ApplicationUser user)
-        //{
-        //    var tokenHandler = new JwtSecurityTokenHandler();
-        //    var key = Encoding.ASCII.GetBytes(GenerateSecretKey(32));
-        //    var userRole = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
+            var issuer = _configuration.GetValue<string>("JWTConfiguration:Issuer");
+            var audience = _configuration.GetValue<string>("JWTConfiguration:Audience");
+            var expiration = DateTime.Now.AddDays(_configuration.GetValue<int>("JWTConfiguration:ExpirationInDays"));
+            var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("JWTConfiguration:SecretKey"));
+            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
+            var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        //    var tokenDescriptor = new SecurityTokenDescriptor
-        //    {
-        //        Subject = new ClaimsIdentity(new Claim[]
-        //        {
-        //            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        //            new Claim(ClaimTypes.Name, user.UserName),
-        //            new Claim(ClaimTypes.Role, userRole)
-        //        }),
-        //        Expires = DateTime.UtcNow.AddDays(7),
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //    };
+            var token = new JwtSecurityToken(
+                issuer: issuer,
+                audience: audience,
+                notBefore: DateTime.Now,
+                expires: expiration,
+                claims: claims,
+                signingCredentials: signinCredentials
+                );
 
-        //    var token = tokenHandler.CreateToken(tokenDescriptor);
-        //    return tokenHandler.WriteToken(token);
-        //}
+            var serializedToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-        //private static string GenerateSecretKey(int keyLength)
-        //{
-        //    byte[] keyBytes = new byte[keyLength];
-        //    using (var rng = RandomNumberGenerator.Create())
-        //    {
-        //        rng.GetBytes(keyBytes);
-        //    }
-        //    return Convert.ToBase64String(keyBytes);
-        //}
+            return Ok(new AccountResponseDto { Id = user.Id, UserName = user.UserName, Token = serializedToken });
+    }
 
         [HttpPost]
         [Route("register")]
@@ -110,6 +97,24 @@ namespace Pri.Api.Pe.Api.Controllers
                     if (result.Succeeded)
                     {
                         _ = await _userManager.AddToRoleAsync(user, registrationRequestDto.Role);
+
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Role, registrationRequestDto.Role),
+                            new Claim(ClaimTypes.DateOfBirth, user.Birthday.ToString()),
+                            new Claim(ClaimTypes.Name, user.UserName),
+                            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                        };
+
+                        result = await _userManager.AddClaimsAsync(user, claims);
+                        if (!result.Succeeded)
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError("", error.Description);
+                            }
+                            return BadRequest(ModelState);
+                        }
 
                         return CreatedAtAction(nameof(Register), new { id = registrationResult.Value.Id }, new RegistrationResponseDto
                         {

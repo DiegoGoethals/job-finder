@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Core.Interfaces.Services;
 using Pri.Api.Pe.Core.Services;
 using Pri.Api.Pe.Infrastructure.Data;
 using Pri.Api.Pe.Infrastructure.Repositories;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>
     (options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultDb")));
+
+// Add JWT authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+{
+    ValidateIssuer = true,
+    ValidateAudience = true,
+    ValidateLifetime = true,
+    ValidAudience = builder.Configuration["JWTConfiguration:Audience"],
+    ValidIssuer = builder.Configuration["JWTConfiguration:Issuer"],
+    IssuerSigningKey =
+    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTConfiguration:SecretKey"]))
+});
 
 // Add repositories to the container.
 builder.Services.AddScoped<IJobRepository, JobRepository>();
@@ -65,6 +84,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
