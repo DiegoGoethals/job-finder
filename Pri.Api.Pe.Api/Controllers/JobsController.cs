@@ -26,7 +26,6 @@ namespace Pri.Api.Pe.Api.Controllers
             return BadRequest(ModelState.Values);
         }
 
-        // To do : Check if user is employer
         [HttpPost]
         [Authorize(Policy = "Employer")]
         public async Task<IActionResult> Create(JobRequestDto jobRequestDto)

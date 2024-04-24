@@ -13,6 +13,7 @@ namespace Pri.Api.Pe.Core.Interfaces.Services
         Task<ResultModel<Message>> CreateAsync(string content, Guid senderId, Guid receiverId);
         Task<ResultModel<Message>> UpdateAsync(Guid id, string content);
         Task<ResultModel<Message>> DeleteAsync(Guid id);
+        Task<ResultModel<Message>> GetByIdAsync(Guid id);
         Task<ResultModel<IEnumerable<Message>>> GetConversationAsync(Guid id1, Guid id2);
     }
 }

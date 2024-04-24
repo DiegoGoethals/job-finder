@@ -131,5 +131,26 @@ namespace Pri.Api.Pe.Core.Services
                     }
             };
         }
+
+        public async Task<ResultModel<Message>> GetByIdAsync(Guid id)
+        {
+            var message = await _messageRepository.GetByIdAsync(id);
+            if (message == null)
+            {
+                return new ResultModel<Message>
+                {
+                    IsSucces = false,
+                    Errors = new List<string>
+                    {
+                        "Message not found!"
+                    }
+                };
+            }
+            return new ResultModel<Message>
+            {
+                IsSucces = true,
+                Value = message
+            };
+        }
     }
 }
