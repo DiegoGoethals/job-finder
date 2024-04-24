@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Pri.Api.Pe.Api.Requirements;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Core.Interfaces.Services;
@@ -34,12 +36,6 @@ builder.Services.AddAuthentication(options =>
     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTConfiguration:SecretKey"]))
 });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Employer", policy => policy.RequireRole("Employer"));
-    options.AddPolicy("Employee", policy => policy.RequireRole("Employee"));
-});
-
 // Add repositories to the container.
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
@@ -56,6 +52,16 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
+
+// Add requirements to the container.
+builder.Services.AddScoped<IAuthorizationHandler, IsEmployerRequirementHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Employer", policy => policy.RequireRole("Employer"));
+    options.AddPolicy("Employee", policy => policy.RequireRole("Employee"));
+    options.AddPolicy("IsEmployer", policy => policy.Requirements.Add(new IsEmployerRequirement()));
+});
 
 // Add identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>

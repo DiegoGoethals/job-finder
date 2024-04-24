@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pri.Api.Pe.Api.Dtos;
+using Pri.Api.Pe.Api.Requirements;
 using Pri.Api.Pe.Core.Interfaces.Services;
 
 namespace Pri.Api.Pe.Api.Controllers
@@ -47,6 +48,7 @@ namespace Pri.Api.Pe.Api.Controllers
         // To do : Check if user is employer role
         [HttpGet("job/{jobId}")]
         [Authorize(Policy = "Employer")]
+        [Authorize(Policy = "IsEmployer")]
         public async Task<IActionResult> GetAllByJob(Guid jobId)
         {
             var result = await _applicationService.GetAllByJobAsync(jobId);
@@ -147,6 +149,7 @@ namespace Pri.Api.Pe.Api.Controllers
 
         [HttpPut("{id}/status")]
         [Authorize(Policy = "Employer")]
+        [Authorize(Policy = "IsEmployer")]
         public async Task<IActionResult> HandleApplication(Guid id, ApplicationStatusDto applicationStatusDto)
         {
             var entity = await _applicationService.MapDtoToEntity(applicationStatusDto.Id);
