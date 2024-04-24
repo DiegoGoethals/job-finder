@@ -96,7 +96,6 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = "Employee")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _applicationService.GetByIdAsync(id);

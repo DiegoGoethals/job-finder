@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pri.Api.Pe.Api.Dtos;
 using Pri.Api.Pe.Core.Interfaces.Services;
 
@@ -26,6 +27,7 @@ namespace Pri.Api.Pe.Api.Controllers
 
         // To do : Check if user is employer
         [HttpPost]
+        [Authorize(Policy = "Employer")]
         public async Task<IActionResult> Create(JobRequestDto jobRequestDto)
         { 
             var result = await _jobService.CreateAsync(jobRequestDto.Name, jobRequestDto.Description, jobRequestDto.Salary, jobRequestDto.EmployerId, jobRequestDto.Skills);
@@ -44,6 +46,7 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Employer")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _jobService.DeleteAsync(id);
@@ -109,6 +112,7 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "Employer")]
         public async Task<IActionResult> Update(Guid id, JobRequestDto jobRequestDto)
         {
             var result = await _jobService.UpdateAsync(id, jobRequestDto.Name, jobRequestDto.Description, jobRequestDto.Salary, jobRequestDto.Skills);
