@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Pri.Api.Pe.Api.Dtos;
 using Pri.Api.Pe.Core.Interfaces.Services;
 
@@ -43,6 +44,7 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "IsReviewer")]
         public async Task<IActionResult> Update(Guid id, ReviewRequestDto reviewRequestDto)
         {
             var result = await _reviewService.UpdateAsync(id, reviewRequestDto.Rating, reviewRequestDto.Comment);
@@ -61,6 +63,7 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "IsReviewer")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _reviewService.DeleteAsync(id);

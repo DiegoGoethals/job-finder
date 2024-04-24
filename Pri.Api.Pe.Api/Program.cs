@@ -59,6 +59,7 @@ builder.Services.AddScoped<IAuthorizationHandler, IsEmployeeRequirementHandler>(
 builder.Services.AddScoped<IAuthorizationHandler, IsSameCandidateRequirementHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, IsSenderRequirementHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, IsSenderOrReceiverRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, IsReviewerRequirementHandler>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -69,6 +70,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("IsSameCandidate", policy => policy.Requirements.Add(new IsSameCandidateRequirement()));
     options.AddPolicy("IsSender", policy => policy.Requirements.Add(new IsSenderRequirement()));
     options.AddPolicy("IsSenderOrReceiver", policy => policy.Requirements.Add(new IsSenderOrReceiverRequirement()));
+    options.AddPolicy("IsReviewer", policy => policy.Requirements.Add(new IsReviewerRequirement()));
 });
 
 // Add identity

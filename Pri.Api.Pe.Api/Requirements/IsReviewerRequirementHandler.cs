@@ -1,18 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Pri.Api.Pe.Core.Interfaces.Services;
 using System.Security.Claims;
 
 namespace Pri.Api.Pe.Api.Requirements
 {
-    public class IsSenderOrReceiverRequirementHandler : AuthorizationHandler<IsSenderOrReceiverRequirement>
+    public class IsReviewerRequirementHandler : AuthorizationHandler<IsReviewerRequirement>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IReviewService _reviewService;
 
-        public IsSenderOrReceiverRequirementHandler(IHttpContextAccessor httpContextAccessor)
+        public IsReviewerRequirementHandler(IHttpContextAccessor httpContextAccessor, IReviewService reviewService)
         {
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _reviewService = reviewService;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, IsSenderOrReceiverRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, IsReviewerRequirement requirement)
         {
             // Check if the user is authenticated
             if (!context.User.Identity.IsAuthenticated)
@@ -36,10 +39,11 @@ namespace Pri.Api.Pe.Api.Requirements
                 return;
             }
 
-            var senderId = Guid.Parse(routeData?.Values["id1"]?.ToString());
-            var receiverId = Guid.Parse(routeData?.Values["id2"]?.ToString());
+            var reviewId = Guid.Parse(routeData?.Values["id"]?.ToString());
+            var review = await _reviewService.GetByIdAsync(reviewId);
+            var reviewerId = review.Value.ReviewerId;
 
-            if (userId == senderId || userId == receiverId)
+            if (userId == reviewerId)
             {
                 context.Succeed(requirement);
             }
