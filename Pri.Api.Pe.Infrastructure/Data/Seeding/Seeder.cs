@@ -23,6 +23,30 @@ namespace Pri.Api.Pe.Infrastructure.Data.Seeding
                 user.TwoFactorEnabled = false;
             });
 
+            var seedUser = new ApplicationUser
+            {
+                Id = Guid.NewGuid(),
+                UserName = "PriUser",
+                Firstname = "Seed",
+                Lastname = "User",
+                Email = "user@pri.be"
+            };
+
+            var seedAdmin = new ApplicationUser
+            {
+                Id = Guid.NewGuid(),
+                UserName = "PriAdmin",
+                Firstname = "Seed",
+                Lastname = "Admin",
+                Email = "admin@pri.be"
+            };
+
+            var passwordHasherSeed = new PasswordHasher<ApplicationUser>();
+            seedUser.PasswordHash = passwordHasherSeed.HashPassword(seedUser, "Test123?");
+            seedAdmin.PasswordHash = passwordHasherSeed.HashPassword(seedAdmin, "Test123?");
+            users.Add(seedUser);
+            users.Add(seedAdmin);
+
             modelBuilder.Entity<ApplicationUser>().HasData(users);
 
             var employerRole = new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = "Employer", NormalizedName = "EMPLOYER" };
@@ -34,8 +58,17 @@ namespace Pri.Api.Pe.Infrastructure.Data.Seeding
                 ? new IdentityUserRole<Guid> { UserId = employer.Id, RoleId = employerRole.Id }
                 : null;
 
+            var adminUserRole = new IdentityUserRole<Guid> { UserId = seedAdmin.Id, RoleId = employerRole.Id };
+
             var employeeUserRoles = users.Skip(1)
-                .Select(u => new IdentityUserRole<Guid> { UserId = u.Id, RoleId = employeeRole.Id })
+                .Select(u =>
+                {
+                    if (!(u.UserName == "PriAdmin"))
+                    {
+                        return new IdentityUserRole<Guid> { UserId = u.Id, RoleId = employeeRole.Id };
+                    }
+                    return adminUserRole;
+                })
                 .ToList();
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(employeeUserRoles.Concat(new[] { employerUserRole })

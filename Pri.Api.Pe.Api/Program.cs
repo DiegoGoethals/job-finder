@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Pri.Api.Pe.Api.Requirements;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Repositories;
