@@ -10,19 +10,6 @@ namespace Pri.Api.Pe.Infrastructure.Data.Seeding
         {
             var users = GenerateUsers();
 
-            users.ForEach(user =>
-            {
-                var passwordHasher = new PasswordHasher<ApplicationUser>();
-                user.PasswordHash = passwordHasher.HashPassword(user, "seed1234");
-                user.NormalizedUserName = user.UserName.ToUpper();
-                user.NormalizedEmail = user.Email.ToUpper();
-                user.SecurityStamp = Guid.NewGuid().ToString();
-                user.ConcurrencyStamp = Guid.NewGuid().ToString();
-                user.EmailConfirmed = true;
-                user.LockoutEnabled = false;
-                user.TwoFactorEnabled = false;
-            });
-
             var seedUser = new ApplicationUser
             {
                 Id = Guid.NewGuid(),
@@ -41,12 +28,26 @@ namespace Pri.Api.Pe.Infrastructure.Data.Seeding
                 Email = "admin@pri.be"
             };
 
-            var passwordHasherSeed = new PasswordHasher<ApplicationUser>();
-            seedUser.PasswordHash = passwordHasherSeed.HashPassword(seedUser, "Test123?");
-            seedAdmin.PasswordHash = passwordHasherSeed.HashPassword(seedAdmin, "Test123?");
             users.Add(seedUser);
             users.Add(seedAdmin);
 
+            users.ForEach(user =>
+            {
+                var passwordHasher = new PasswordHasher<ApplicationUser>();
+                user.PasswordHash = passwordHasher.HashPassword(user, "seed1234");
+                user.NormalizedUserName = user.UserName.ToUpper();
+                user.NormalizedEmail = user.Email.ToUpper();
+                user.SecurityStamp = Guid.NewGuid().ToString();
+                user.ConcurrencyStamp = Guid.NewGuid().ToString();
+                user.EmailConfirmed = true;
+                user.LockoutEnabled = false;
+                user.TwoFactorEnabled = false;
+            });
+
+            var passwordHasherSeed = new PasswordHasher<ApplicationUser>();
+            seedUser.PasswordHash = passwordHasherSeed.HashPassword(seedUser, "Test123?");
+            seedAdmin.PasswordHash = passwordHasherSeed.HashPassword(seedAdmin, "Test123?");
+            
             modelBuilder.Entity<ApplicationUser>().HasData(users);
 
             var employerRole = new IdentityRole<Guid> { Id = Guid.NewGuid(), Name = "Employer", NormalizedName = "EMPLOYER" };
