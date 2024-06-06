@@ -8,6 +8,10 @@
         token: "",
         emailAdress: "",
         dateOfBirth: new Date().toLocaleDateString("nl-BE"),
+        firstName: "",
+        lastName: "",
+        role: "",
+        selectedSkills: [],
         skills: [],
         jobs: [],
         messages: [],
@@ -38,7 +42,8 @@
         },
         loggedIn: false,
         tokenObject: null,
-        isEmployer: false
+        isEmployer: false,
+        loading: false,
     },
     created: function () {
         if (localStorage.getItem('token') !== null) {
@@ -53,19 +58,17 @@
             this.loggedIn = true;
             this.getSkills();
             this.getJobs();
-            this.getMessages();
-            this.getReviews();
-            this.getApplications();
+            //this.getMessages();
+            //this.getReviews();
+            //this.getApplications();
         }
     },
     methods: {
         getSkills: async function () {
             const url = `${this.baseUrl}skills`;
-            console.log(url);
             this.skills = await axios.get(url)
                 .then(response => {
-                    console.log(response.data.skills);
-                    return response.data.skills;
+                    return response.data;
                 })
                 .catch(error => {
                     console.log(error);
@@ -73,15 +76,66 @@
         },
         getJobs: async function () {
             const url = `${this.baseUrl}jobs`;
-            console.log(url);
             this.jobs = await axios.get(url)
                 .then(response => {
-                    console.log(response.data.jobs);
-                    return response.data.jobs;
+                    return response.data;
                 })
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        submitLogin: async function () {
+            const loginDto = {
+                "username": this.username,
+                "password": this.password
+            };
+            this.loading = true;
+            let token = await axios.post(`${this.baseUrl}auth/login`, loginDto)
+                .then(response => response.data.token)
+                .catch(error => {
+                    console.log(error)
+                });
+            this.loading = false;
+            window.localStorage.setItem('token', token);
+            this.tokenObject = this.decodeToken(token);
+            this.emailAdress = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+            const role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            if (role === "Employer") {
+                this.isEmployer = true;
+            }
+            this.loggedIn = true;
+            this.getSkills();
+            this.getJobs();
+        },
+        registerUser: async function() {
+            const registerDto = {
+                "email": this.username,
+                "password": this.password,
+                "birthday": this.dateOfBirth,
+                "firstname": this.firstName,
+                "lastname": this.lastName,
+                "role": this.role,
+                "skills": this.selectedSkills
+            }
+            await axios.post(`${this.baseUrl}auth/register`, registerDto)
+                .then(response => response)
+                .catch(error => {
+                    console.log(error);
+                })
+            this.username = "";
+            this.password = "";
+            this.dateOfBirth = new Date().toLocaleDateString("nl-BE");
+            this.firstName = "";
+            this.lastName = "";
+            this.role = "";
+            this.selectedSkills = [];
+        },
+        submitLogout: async function () {
+            this.tokenObject = "";
+            window.localStorage.clear();
+            this.loggedIn = false;
+            this.isEmployer = false;
+            this.loading = false;
         },
         decodeToken: function (token) {
             var base64Url = token.split('.')[1];
@@ -90,7 +144,7 @@
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
             return JSON.parse(jsonPayload);
-        }
+        },
     }
 });
 
