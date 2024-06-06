@@ -1,18 +1,17 @@
-html {
-  font-size: 14px;
+.custom-footer {
+    width: 100%;
+    height: fit-content;
+    white-space: nowrap;
+    line-height: 60px;
+    position: static;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
+#forms {
+    flex-grow: 1;
 }

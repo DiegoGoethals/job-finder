@@ -7,7 +7,7 @@
         password: "",
         token: "",
         emailAdress: "",
-        dateOfBirth: new Date().toLocaleDateString("nl-BE"),
+        dateOfBirth: new Date().toLocaleDateString(),
         firstName: "",
         lastName: "",
         role: "",
@@ -44,6 +44,7 @@
         tokenObject: null,
         isEmployer: false,
         loading: false,
+        loginFormVisible: true,
     },
     created: function () {
         if (localStorage.getItem('token') !== null) {
@@ -56,12 +57,12 @@
                this.isEmployer = true;
             }
             this.loggedIn = true;
-            this.getSkills();
             this.getJobs();
             //this.getMessages();
             //this.getReviews();
             //this.getApplications();
         }
+        this.getSkills();
     },
     methods: {
         getSkills: async function () {
@@ -109,8 +110,9 @@
         },
         registerUser: async function() {
             const registerDto = {
-                "email": this.username,
+                "username": this.username,
                 "password": this.password,
+                "eamil": this.email,
                 "birthday": this.dateOfBirth,
                 "firstname": this.firstName,
                 "lastname": this.lastName,
@@ -124,7 +126,8 @@
                 })
             this.username = "";
             this.password = "";
-            this.dateOfBirth = new Date().toLocaleDateString("nl-BE");
+            this.email = "";
+            this.dateOfBirth = new Date().toLocaleDateString();
             this.firstName = "";
             this.lastName = "";
             this.role = "";
@@ -144,6 +147,9 @@
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
             return JSON.parse(jsonPayload);
+        },
+        toggleForms: function () {
+            this.loginFormVisible = !this.loginFormVisible;
         },
     }
 });

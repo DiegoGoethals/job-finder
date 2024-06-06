@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/Pri.Api.Pe.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="d-flex flex-column" style="min-height: 100vh;">
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container-fluid">
@@ -27,33 +27,89 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>
                         </ul>
-                        <div id="loginForm" class="d-flex flex-column">
-                            <form v-if="!loggedIn" v-on:submit.prevent="submitLogin" class="d-flex" role="login">
-                                <input v-model="username" class="form-control me-2" type="text" placeholder="Username" aria-label="Username">
-                                <input v-model="password" class="form-control me-2" type="password" placeholder="password" aria-label="Password">
-                                <button class="btn btn-outline-primary" type="submit">Login</button>
-                            </form>
-                            <div class="d-inline-flex">
-                                <button v-if="loggedIn" v-on:click="submitLogout" class="btn btn-danger align-self-center" type="submit">Logout</button>
-                            </div>
+                        <div class="d-inline-flex">
+                            <button v-if="loggedIn" v-on:click="submitLogout" class="btn btn-danger align-self-center" type="submit">Logout</button>
                         </div>
                     </div>
                 </div>
             </nav>
         </header>
 
+        <div id="forms" class="d-flex flex-column align-items-center flex-grow-1">
+            <form v-if="!loggedIn && loginFormVisible" v-on:submit.prevent="submitLogin" id="loginForm" class="d-flex flex-column align-items-center p-4 bg-light rounded" role="login">
+                <h2 class="mb-4">Login</h2>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input v-model="username" class="form-control mb-3" type="text" placeholder="Username" aria-label="Username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input v-model="password" class="form-control mb-3" type="password" placeholder="Password" aria-label="Password" required>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <button class="btn btn-primary mb-3" type="submit">Login</button>
+                    <button class="btn btn-outline-primary mb-3" v-on:click="toggleForms()" type="button">Register</button>
+                </div>
+            </form>
+            <form v-if="!loggedIn && !loginFormVisible" id="registerForm" v-on:submit.prevent="registerUser" class="d-flex flex-column p-4 bg-light rounded">
+                <h2 class="mb-4">Register</h2>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input v-model="username" class="form-control mb-3" type="text" placeholder="Username" aria-label="Username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input v-model="password" class="form-control mb-3" type="password" placeholder="Password" aria-label="Password" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input v-model="emailAdress" class="form-control mb-3" type="email" placeholder="Email" aria-label="Email" required>
+                </div>
+                <div class="form-group">
+                    <label>First Name</label>
+					<input v-model="firstName" class="form-control mb-3" type="text" placeholder="First Name" aria-label="First Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input v-model="lastName" class="form-control mb-3" type="text" placeholder="Last Name" aria-label="Last Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Date of Birth</label>
+					<input v-model="dateOfBirth" class="form-control mb-3" type="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Function</label>
+                    <select v-model="role" class="form-control mb-3" required>
+						<option value="1">Employer</option>
+						<option value="2">Employee</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Skills</label>
+                    <select v-model="selectedSkills" multiple>
+						<option v-for="skill in skills" v-bind:value="skill.id">{{ skill.name }}</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between w-100">
+                    <button class="btn btn-primary mb-3" type="submit">Register</button>
+                    <button class="btn btn-outline-primary mb-3" v-on:click="toggleForms()">Back to Login</button>
+                </div>
+            </form>
+        </div>
+
         <div class="container">
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
         </div>
+
+        <footer class="border-top custom-footer text-muted mt-auto">
+            <div class="container">
+                &copy; 2024 - Pri.Api.Pe.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
     </div>
-    
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Pri.Api.Pe.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
