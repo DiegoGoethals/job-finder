@@ -143,6 +143,9 @@
         selectJob: function (job) {
             this.selectedJob = job;
         },
+        clearSelection() {
+            this.selectedJob = null;
+        },
         submitLogin: async function () {
             const loginDto = {
                 "username": this.username,
