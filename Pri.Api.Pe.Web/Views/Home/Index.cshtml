@@ -46,15 +46,20 @@
             </div>
         </div>
         <div v-else>
-            <ul class="job-list">
-                <li v-for="job in jobs" :key="job.id" class="job-card">
-                    <div class="job-details">
-                        <h2>{{ job.name }}</h2>
-                        <p>{{ job.description }}</p>
-                        <p>Salary: ${{ job.salary }}</p>
-                    </div>
-                </li>
-            </ul>
+            <div v-if="selectedJob === null">
+                <ul class="job-list">
+                    <li v-for="job in jobs" :key="job.id" class="job-card" v-on:click.prevent="selectJob(job)">
+                        <div class="job-details">
+                            <h2>{{ job.name }}</h2>
+                            <p>{{ job.description }}</p>
+                            <p>Salary: ${{ job.salary }}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div v-else>
+                <h1>{{ selectedJob.name }}</h1>
+            </div>
         </div>
     </div>
 </div>

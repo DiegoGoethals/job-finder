@@ -47,6 +47,7 @@
         loginFormVisible: true,
         addingNewJob: false,
         employerId: "",
+        selectedJob: null,
     },
     created: function () {
         if (localStorage.getItem('token') !== null) {
@@ -138,6 +139,9 @@
             });
             this.loading = false;
             this.getJobsByEmployer();
+        },
+        selectJob: function (job) {
+            this.selectedJob = job;
         },
         submitLogin: async function () {
             const loginDto = {
