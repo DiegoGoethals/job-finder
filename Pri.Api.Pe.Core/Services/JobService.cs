@@ -176,5 +176,26 @@ namespace Pri.Api.Pe.Core.Services
                 Errors = new List<string> { "Error updating job" }
             };
         }
+
+        public async Task<ResultModel<IEnumerable<Job>>> GetAllByEmployerAsync(Guid employerId)
+        {
+            var jobs = await _jobRepository.GetAll().Where(j => j.EmployerId == employerId).ToListAsync();
+            if (jobs != null)
+            {
+                return new ResultModel<IEnumerable<Job>>
+                {
+                    IsSucces = true,
+                    Value = jobs
+                };
+            }
+            return new ResultModel<IEnumerable<Job>>
+            {
+                IsSucces = false,
+                Errors = new List<string>
+                {
+                    "No jobs found for this employer"
+                }
+            };
+        }
     }
 }

@@ -6,7 +6,7 @@
         username: "",
         password: "",
         token: "",
-        emailAdress: "",
+        email: "",
         dateOfBirth: new Date().toLocaleDateString(),
         firstName: "",
         lastName: "",
@@ -50,17 +50,16 @@
         if (localStorage.getItem('token') !== null) {
             this.tokenObject = this.decodeToken(window.localStorage.getItem('token'));
             //get the emailadress
-            this.emailAdress = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+            this.email = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/email"];
             //get the role and store in sessionStorage
             const role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             if (role === "Employer") {
-               this.isEmployer = true;
+                this.isEmployer = true;
+            }
+            else {
+                this.getAllJobs();
             }
             this.loggedIn = true;
-            this.getJobs();
-            //this.getMessages();
-            //this.getReviews();
-            //this.getApplications();
         }
         this.getSkills();
     },
@@ -75,7 +74,7 @@
                     console.log(error);
                 });
         },
-        getJobs: async function () {
+        getAllJobs: async function () {
             const url = `${this.baseUrl}jobs`;
             this.jobs = await axios.get(url)
                 .then(response => {
@@ -84,6 +83,9 @@
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        getJobsByEmployer: async function () {
+
         },
         submitLogin: async function () {
             const loginDto = {
@@ -99,7 +101,7 @@
             this.loading = false;
             window.localStorage.setItem('token', token);
             this.tokenObject = this.decodeToken(token);
-            this.emailAdress = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
+            this.email = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/email"];
             const role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             if (role === "Employer") {
                 this.isEmployer = true;
@@ -112,13 +114,14 @@
             const registerDto = {
                 "username": this.username,
                 "password": this.password,
-                "eamil": this.email,
+                "email": this.email,
                 "birthday": this.dateOfBirth,
                 "firstname": this.firstName,
                 "lastname": this.lastName,
                 "role": this.role,
                 "skills": this.selectedSkills
             }
+            this.loading = true;
             await axios.post(`${this.baseUrl}auth/register`, registerDto)
                 .then(response => response)
                 .catch(error => {
@@ -132,6 +135,8 @@
             this.lastName = "";
             this.role = "";
             this.selectedSkills = [];
+            this.loading = false;
+            this.loginFormVisible = true;
         },
         submitLogout: async function () {
             this.tokenObject = "";

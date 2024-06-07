@@ -11,5 +11,6 @@ namespace Pri.Api.Pe.Core.Interfaces.Services
         Task<ResultModel<IEnumerable<Job>>> GetBySkills(IEnumerable<string> skills);
         Task<ResultModel<Job>> GetByIdAsync(Guid id);
         Task<ResultModel<Job>> UpdateAsync(Guid id, string name, string description, double salary, IEnumerable<string> skills);
+        Task<ResultModel<IEnumerable<Job>>> GetAllByEmployerAsync(Guid employerId);
     }
 }

@@ -131,5 +131,24 @@ namespace Pri.Api.Pe.Api.Controllers
             }
             return HandleError(result.Errors);
         }
+
+        [HttpGet("employer/{employerId}")]
+        [Authorize(Policy = "Employer")]
+        public async Task<IActionResult> GetAllByEmployer(Guid employerId)
+        {
+            var result = await _jobService.GetAllByEmployerAsync(employerId);
+            if (result.IsSucces)
+            {
+                return Ok(result.Value.Select(job => new JobResponseDto
+                {
+                    Id = job.Id,
+                    Name = job.Name,
+                    Description = job.Description,
+                    Salary = job.Salary,
+                    EmployerId = job.EmployerId
+                }));
+            }
+            return HandleError(result.Errors);
+        }
     }
 }
