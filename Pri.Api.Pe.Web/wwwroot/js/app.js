@@ -124,6 +124,21 @@
                 Skills: []
             }
         },
+        deleteJob: async function (jobId) {
+            const url = `${this.baseUrl}jobs/${jobId}`;
+            this.loading = true;
+            await axios.delete(url, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => response.data)
+            .catch(error => {
+                console.log(error);
+            });
+            this.loading = false;
+            this.getJobsByEmployer();
+        },
         submitLogin: async function () {
             const loginDto = {
                 "username": this.username,

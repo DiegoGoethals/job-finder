@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Pri.Api.Pe.Api.Requirements;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Repositories;
 using Pri.Api.Pe.Core.Interfaces.Services;
@@ -74,14 +73,6 @@ builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 
-// Add requirements to the container.
-builder.Services.AddScoped<IAuthorizationHandler, IsEmployerRequirementHandler>();
-builder.Services.AddScoped<IAuthorizationHandler, IsEmployeeRequirementHandler>();
-builder.Services.AddScoped<IAuthorizationHandler, IsSameCandidateRequirementHandler>();
-builder.Services.AddScoped<IAuthorizationHandler, IsSenderRequirementHandler>();
-builder.Services.AddScoped<IAuthorizationHandler, IsSenderOrReceiverRequirementHandler>();
-builder.Services.AddScoped<IAuthorizationHandler, IsReviewerRequirementHandler>();
-
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Employer", policy =>
@@ -93,12 +84,6 @@ builder.Services.AddAuthorization(options =>
     {
         policy.RequireRole("Employee");
     });
-    options.AddPolicy("IsEmployer", policy => policy.Requirements.Add(new IsEmployerRequirement()));
-    options.AddPolicy("IsEmployee", policy => policy.Requirements.Add(new IsEmployeeRequirement()));
-    options.AddPolicy("IsSameCandidate", policy => policy.Requirements.Add(new IsSameCandidateRequirement()));
-    options.AddPolicy("IsSender", policy => policy.Requirements.Add(new IsSenderRequirement()));
-    options.AddPolicy("IsSenderOrReceiver", policy => policy.Requirements.Add(new IsSenderOrReceiverRequirement()));
-    options.AddPolicy("IsReviewer", policy => policy.Requirements.Add(new IsReviewerRequirement()));
 });
 
 builder.Services.AddControllers();

@@ -17,6 +17,7 @@
                         <p>{{ job.description }}</p>
                         <p>Salary: ${{ job.salary }}</p>
                     </div>
+                    <button class="delete-button" v-on:click="deleteJob(job.id)">Delete</button>
                 </li>
             </ul>
             <button v-on:click="addingNewJob = true">Add a new job</button>

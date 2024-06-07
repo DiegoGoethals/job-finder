@@ -45,7 +45,6 @@ namespace Pri.Api.Pe.Api.Controllers
 
         [HttpGet("job/{jobId}")]
         [Authorize(Policy = "Employer")]
-        [Authorize(Policy = "IsEmployer")]
         public async Task<IActionResult> GetAllByJob(Guid jobId)
         {
             var result = await _applicationService.GetAllByJobAsync(jobId);
@@ -64,7 +63,6 @@ namespace Pri.Api.Pe.Api.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Policy = "Employee")]
-        [Authorize(Policy = "IsSameCandidate")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _applicationService.DeleteAsync(id);
@@ -77,7 +75,6 @@ namespace Pri.Api.Pe.Api.Controllers
 
         [HttpGet("candidate/{candidateId}")]
         [Authorize(Policy = "Employee")]
-        [Authorize(Policy = "IsEmployee")]
         public async Task<IActionResult> GetAllByCandidate(Guid candidateId)
         {
             var result = await _applicationService.GetAllByCandidateAsync(candidateId);
@@ -113,7 +110,6 @@ namespace Pri.Api.Pe.Api.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Policy = "Employee")]
-        [Authorize(Policy = "IsSameCandidate")]
         public async Task<IActionResult> Update(Guid id, ApplicationRequestDto applicationRequestDto)
         {
             var result = await _applicationService.UpdateAsync(id, applicationRequestDto.Salary);
@@ -147,7 +143,6 @@ namespace Pri.Api.Pe.Api.Controllers
 
         [HttpPut("{id}/status")]
         [Authorize(Policy = "Employer")]
-        [Authorize(Policy = "IsEmployer")]
         public async Task<IActionResult> HandleApplication(Guid id, ApplicationStatusDto applicationStatusDto)
         {
             var entity = await _applicationService.MapDtoToEntity(applicationStatusDto.Id);

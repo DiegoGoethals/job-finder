@@ -44,7 +44,6 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = "IsSender")]
         public async Task<IActionResult> Update(Guid id, MessageRequestDto messageRequestDto)
         {
             var result = await _messageService.UpdateAsync(id, messageRequestDto.Content);
@@ -63,7 +62,6 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = "IsSender")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _messageService.DeleteAsync(id);
@@ -75,7 +73,6 @@ namespace Pri.Api.Pe.Api.Controllers
         }
 
         [HttpGet("conversation/{id1}/{id2}")]
-        [Authorize(Policy = "IsSenderOrReceiver")]
         public async Task<IActionResult> GetConversation(Guid id1, Guid id2)
         {
             var result = await _messageService.GetConversationAsync(id1, id2);

@@ -1,38 +1,19 @@
-.custom-footer {
-    width: 100%;
-    height: fit-content;
-    white-space: nowrap;
-    line-height: 60px;
-    position: static;
-}
-
-#app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-#forms {
-    flex-grow: 1;
-}
-
-.job-list {
-    list-style: none;
-    padding: 0;
-}
-
 .job-card {
     background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    padding: 20px;
-}
-
-.job-details h2 {
-    margin-top: 0;
-}
-
-.job-details p {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-button {
+    background-color: #ff3333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
 }
