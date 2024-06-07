@@ -53,6 +53,7 @@
                             <h2>{{ jobs.find(job => job.id === application.jobId).name }}</h2>
                             <p>Application status: {{ application.applicationStatus }}</p>
                             <p>Salary: ${{ application.salary }}</p>
+                            <button class="delete-button" v-on:click="deleteApplication(application.id)">Delete</button>
                         </div>
                     </li>
                 </ul>

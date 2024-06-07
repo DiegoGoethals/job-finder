@@ -182,6 +182,21 @@
                 console.log(error);
             });
         },
+        deleteApplication: async function (applicationId) {
+            const url = `${this.baseUrl}applications/${applicationId}`;
+            this.loading = true;
+            await axios.delete(url, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => response.data)
+            .catch(error => {
+                console.log(error);
+            });
+            await this.viewApplicationsHandler();
+            this.loading = false;
+        },
         submitLogin: async function () {
             const loginDto = {
                 "username": this.username,

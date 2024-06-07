@@ -7,6 +7,10 @@
     cursor: pointer;
 }
 
+.delete-button:hover {
+    background-color: #ff6666;
+}
+
 #app {
     font-family: Arial, sans-serif;
     max-width: 800px;
