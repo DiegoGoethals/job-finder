@@ -43,11 +43,15 @@
         addingNewJob: false,
         employerId: "",
         selectedJob: null,
+        loggedInUsername: "",
+        dropdownVisible: false,
     },
     created: function () {
+        this.loading = true;
         if (localStorage.getItem('token') !== null) {
             this.token = localStorage.getItem('token');
             this.tokenObject = this.decodeToken(window.localStorage.getItem('token'));
+            this.loggedInUsername = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
             //get the role and store in sessionStorage
             const role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             if (role === "Employer") {
@@ -61,6 +65,7 @@
             this.loggedIn = true;
         }
         this.getSkills();
+        this.loading = false;
     },
     methods: {
         getSkills: async function () {
@@ -174,6 +179,7 @@
             this.loading = false;
             window.localStorage.setItem('token', token);
             this.tokenObject = this.decodeToken(token);
+            this.loggedInUsername = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
             const role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             if (role === "Employer") {
                 this.isEmployer = true;
@@ -218,6 +224,8 @@
             window.localStorage.clear();
             this.loggedIn = false;
             this.isEmployer = false;
+            this.loggedInUsername = "";
+            this.dropdownVisible = false;
             this.loading = false;
         },
         decodeToken: function (token) {
@@ -230,6 +238,9 @@
         },
         toggleForms: function () {
             this.loginFormVisible = !this.loginFormVisible;
+        },
+        toggleDropdown: function () {
+            this.dropdownVisible = !this.dropdownVisible;
         },
     }
 });

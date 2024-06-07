@@ -24,8 +24,13 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                         </ul>
-                        <div class="d-inline-flex">
-                            <button v-if="loggedIn" v-on:click="submitLogout" class="btn btn-danger align-self-center" type="submit">Logout</button>
+                        <div v-if="loggedIn" class="user-menu">
+                            <button class="user-btn" id="userBtn" v-on:click="toggleDropdown">{{ loggedInUsername }} <span class="arrow-down">&#x25BC;</span></button>
+                            <div v-if="dropdownVisible" class="dropdown-menu" id="dropdownMenu">
+                                <a href="#">Settings</a>
+                                <a href="#">Profile</a>
+                                <button v-on:click="submitLogout()">Logout</button>
+                            </div>
                         </div>
                     </div>
                 </div>
