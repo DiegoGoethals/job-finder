@@ -85,7 +85,7 @@ namespace Pri.Api.Pe.Core.Services
             {
                 return new ResultModel<IEnumerable<Job>>
                 {
-                    Value = jobs,
+                    Value = jobs.OrderBy(j => j.Created),
                     IsSucces = true
                 };
             }
@@ -180,7 +180,7 @@ namespace Pri.Api.Pe.Core.Services
         public async Task<ResultModel<IEnumerable<Job>>> GetAllByEmployerAsync(Guid employerId)
         {
             var jobs = await _jobRepository.GetAllAsync();
-            jobs = jobs.Where(j => j.EmployerId == employerId);
+            jobs = jobs.Where(j => j.EmployerId == employerId).OrderBy(j => j.Created);
             if (jobs != null)
             {
                 return new ResultModel<IEnumerable<Job>>

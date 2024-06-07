@@ -46,7 +46,15 @@
             </div>
         </div>
         <div v-else>
-
+            <ul class="job-list">
+                <li v-for="job in jobs" :key="job.id" class="job-card">
+                    <div class="job-details">
+                        <h2>{{ job.name }}</h2>
+                        <p>{{ job.description }}</p>
+                        <p>Salary: ${{ job.salary }}</p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
