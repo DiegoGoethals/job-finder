@@ -179,13 +179,14 @@ namespace Pri.Api.Pe.Core.Services
 
         public async Task<ResultModel<IEnumerable<Job>>> GetAllByEmployerAsync(Guid employerId)
         {
-            var jobs = await _jobRepository.GetAll().Where(j => j.EmployerId == employerId).ToListAsync();
+            var jobs = await _jobRepository.GetAllAsync();
+            jobs = jobs.Where(j => j.EmployerId == employerId);
             if (jobs != null)
             {
                 return new ResultModel<IEnumerable<Job>>
                 {
                     IsSucces = true,
-                    Value = jobs
+                    Value = jobs.Any() ? jobs : new List<Job>()
                 };
             }
             return new ResultModel<IEnumerable<Job>>

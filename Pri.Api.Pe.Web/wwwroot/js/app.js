@@ -45,16 +45,19 @@
         isEmployer: false,
         loading: false,
         loginFormVisible: true,
+        addingNewJob: false,
+        employerId: "",
     },
     created: function () {
         if (localStorage.getItem('token') !== null) {
+            this.token = localStorage.getItem('token');
             this.tokenObject = this.decodeToken(window.localStorage.getItem('token'));
-            //get the emailadress
-            this.email = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/email"];
             //get the role and store in sessionStorage
             const role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             if (role === "Employer") {
+                this.employerId = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
                 this.isEmployer = true;
+                this.getJobsByEmployer();
             }
             else {
                 this.getAllJobs();
@@ -85,7 +88,41 @@
                 });
         },
         getJobsByEmployer: async function () {
-
+            const url = `${this.baseUrl}jobs/employer/${this.employerId}`
+            this.jobs = await axios.get(url, {
+                    headers: {
+                        Authorization: `Bearer ${this.token}`
+                    }
+                })
+                .then(response => {
+                    return response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        createNewJob: async function () {
+            this.newJob.EmployerId = this.employerId;
+            this.loading = true;
+            await axios.post(`${this.baseUrl}jobs`, this.newJob, {
+                    headers: {
+                        Authorization: `Bearer ${this.token}`
+                    }
+                })
+                .then(response => response.data)
+                .catch(error => {
+                    console.log(error);
+                });
+            this.loading = false;
+            this.getJobsByEmployer();
+            this.addingNewJob = false;
+            this.newJob = {
+                Name: "",
+                Description: "",
+                Salary: 0,
+                EmployerId: "",
+                Skills: []
+            }
         },
         submitLogin: async function () {
             const loginDto = {
@@ -101,14 +138,16 @@
             this.loading = false;
             window.localStorage.setItem('token', token);
             this.tokenObject = this.decodeToken(token);
-            this.email = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/email"];
             const role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             if (role === "Employer") {
                 this.isEmployer = true;
+                this.getJobsByEmployer();
+            }
+            else {
+                this.getAllJobs();
             }
             this.loggedIn = true;
-            this.getSkills();
-            this.getJobs();
+            this.getSkills(); 
         },
         registerUser: async function() {
             const registerDto = {

@@ -11,6 +11,7 @@ using Pri.Api.Pe.Core.Interfaces.Services;
 using Pri.Api.Pe.Core.Services;
 using Pri.Api.Pe.Infrastructure.Data;
 using Pri.Api.Pe.Infrastructure.Repositories;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,15 +26,19 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+})
+.AddJwtBearer(options =>
 {
-    ValidateIssuer = true,
-    ValidateAudience = true,
-    ValidateLifetime = true,
-    ValidAudience = builder.Configuration["JWTConfiguration:Audience"],
-    ValidIssuer = builder.Configuration["JWTConfiguration:Issuer"],
-    IssuerSigningKey =
-    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTConfiguration:SecretKey"]))
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidAudience = builder.Configuration["JWTConfiguration:Audience"],
+        ValidIssuer = builder.Configuration["JWTConfiguration:Issuer"],
+        IssuerSigningKey =
+        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTConfiguration:SecretKey"]))
+    };
 });
 
 builder.Services.AddCors();
@@ -65,8 +70,15 @@ builder.Services.AddScoped<IAuthorizationHandler, IsReviewerRequirementHandler>(
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Employer", policy => policy.RequireRole("Employer"));
-    options.AddPolicy("Employee", policy => policy.RequireRole("Employee"));
+    options.AddPolicy("Employer", policy =>
+        {
+            policy.RequireClaim(ClaimTypes.Role, "Employer");
+        }
+    );
+    options.AddPolicy("Employee", policy =>
+    {
+        policy.RequireClaim(ClaimTypes.Role, "Employee");
+    });
     options.AddPolicy("IsEmployer", policy => policy.Requirements.Add(new IsEmployerRequirement()));
     options.AddPolicy("IsEmployee", policy => policy.Requirements.Add(new IsEmployeeRequirement()));
     options.AddPolicy("IsSameCandidate", policy => policy.Requirements.Add(new IsSameCandidateRequirement()));
