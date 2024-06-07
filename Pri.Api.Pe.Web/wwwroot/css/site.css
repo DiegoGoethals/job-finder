@@ -14,27 +14,42 @@
     padding: 20px;
 }
 
-.job-list {
+.job-list, .applications-list {
     list-style-type: none;
     padding: 0;
 }
 
-.job-card {
+.job-card, .application-card {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 10px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
     cursor: pointer;
 }
 
-    .job-card:hover {
+    .job-card:hover, .application-card:hover {
         background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-.job-details h2 {
+.job-details h2, .application-details h2 {
     margin-top: 0;
+    color: #007bff;
 }
+
+.job-details p, .application-details p {
+    margin: 5px 0;
+    font-size: 1em;
+}
+
+    .job-details p:nth-child(2), .application-details p:nth-child(2) {
+        font-weight: bold;
+    }
+
+    .job-details p:nth-child(3), .application-details p:nth-child(3) {
+        color: #555;
+    }
 
 .selected-job {
     text-align: center;

@@ -46,23 +46,36 @@
             </div>
         </div>
         <div v-else>
-            <div v-if="selectedJob === null">
-                <ul class="job-list">
-                    <li v-for="job in jobs" :key="job.id" class="job-card" v-on:click.prevent="selectJob(job)">
-                        <div class="job-details">
-                            <h2>{{ job.name }}</h2>
-                            <p>{{ job.description }}</p>
-                            <p>Salary: ${{ job.salary }}</p>
+            <div v-if="viewApplications">
+                <ul class="applications-list">
+                    <li v-for="application in applications" :key="application.id" class="application-card">
+                        <div class="application-details">
+                            <h2>{{ jobs.find(job => job.id === application.jobId).name }}</h2>
+                            <p>Application status: {{ application.applicationStatus }}</p>
+                            <p>Salary: ${{ application.salary }}</p>
                         </div>
                     </li>
                 </ul>
             </div>
-            <div v-else class="selected-job">
-                <h1>{{ selectedJob.name }}</h1>
-                <p>{{ selectedJob.description }}</p>
-                <p>Salary: ${{ selectedJob.salary }}</p>
-                <button v-on:click="clearSelection">Back to Job List</button>
-                <button v-on:click="applyForJob">Apply for this job</button>
+            <div v-else>
+                <div v-if="selectedJob === null">
+                    <ul class="job-list">
+                        <li v-for="job in jobs" :key="job.id" class="job-card" v-on:click.prevent="selectJob(job)">
+                            <div class="job-details">
+                                <h2>{{ job.name }}</h2>
+                                <p>{{ job.description }}</p>
+                                <p>Salary: ${{ job.salary }}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div v-else class="selected-job">
+                    <h1>{{ selectedJob.name }}</h1>
+                    <p>{{ selectedJob.description }}</p>
+                    <p>Salary: ${{ selectedJob.salary }}</p>
+                    <button v-on:click="clearSelection">Back to Job List</button>
+                    <button v-on:click="applyForJob">Apply for this job</button>
+                </div>
             </div>
         </div>
     </div>

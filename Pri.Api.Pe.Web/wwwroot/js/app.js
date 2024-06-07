@@ -45,6 +45,7 @@
         selectedJob: null,
         loggedInUsername: "",
         dropdownVisible: false,
+        viewApplications: false,
     },
     created: function () {
         this.loading = true;
@@ -164,6 +165,22 @@
                 console.log(error);
             });
             this.loading = false;
+        },
+        viewApplicationsHandler: async function () {
+            this.viewApplications = true
+            this.dropdownVisible = false;
+            const url = `${this.baseUrl}applications/candidate/${this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]}`;
+            this.applications = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
         },
         submitLogin: async function () {
             const loginDto = {

@@ -27,8 +27,7 @@
                         <div v-if="loggedIn" class="user-menu">
                             <button class="user-btn" id="userBtn" v-on:click="toggleDropdown">{{ loggedInUsername }} <span class="arrow-down">&#x25BC;</span></button>
                             <div v-if="dropdownVisible" class="dropdown-menu" id="dropdownMenu">
-                                <a href="#">Settings</a>
-                                <a href="#">Profile</a>
+                                <button v-if="!isEmployer" v-on:click="viewApplicationsHandler">My Applications</button>
                                 <button v-on:click="submitLogout()">Logout</button>
                             </div>
                         </div>

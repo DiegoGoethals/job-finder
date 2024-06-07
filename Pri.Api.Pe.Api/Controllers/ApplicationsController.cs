@@ -37,7 +37,8 @@ namespace Pri.Api.Pe.Api.Controllers
                     Id = result.Value.Id,
                     JobId = result.Value.JobId,
                     CandidateId = result.Value.CandidateId,
-                    Salary = result.Value.Salary
+                    Salary = result.Value.Salary,
+                    ApplicationStatus = result.Value.Status.Name
                 });
             }
             return HandleError(result.Errors);
@@ -55,7 +56,8 @@ namespace Pri.Api.Pe.Api.Controllers
                     Id = a.Id,
                     JobId = a.JobId,
                     CandidateId = a.CandidateId,
-                    Salary = a.Salary
+                    Salary = a.Salary,
+                    ApplicationStatus = a.Status.Name
                 }));
             }
             return HandleError(result.Errors);
@@ -85,7 +87,8 @@ namespace Pri.Api.Pe.Api.Controllers
                     Id = a.Id,
                     JobId = a.JobId,
                     CandidateId = a.CandidateId,
-                    Salary = a.Salary
+                    Salary = a.Salary,
+                    ApplicationStatus = a.Status.Name
                 }));
             }
             return HandleError(result.Errors);
@@ -102,7 +105,8 @@ namespace Pri.Api.Pe.Api.Controllers
                     Id = result.Value.Id,
                     JobId = result.Value.JobId,
                     CandidateId = result.Value.CandidateId,
-                    Salary = result.Value.Salary
+                    Salary = result.Value.Salary,
+                    ApplicationStatus = result.Value.Status.Name
                 });
             }
             return HandleError(result.Errors);
@@ -120,7 +124,8 @@ namespace Pri.Api.Pe.Api.Controllers
                     Id = result.Value.Id,
                     JobId = result.Value.JobId,
                     CandidateId = result.Value.CandidateId,
-                    Salary = result.Value.Salary
+                    Salary = result.Value.Salary,
+                    ApplicationStatus = result.Value.Status.Name
                 });
             }
             return HandleError(result.Errors);
