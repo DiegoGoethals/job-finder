@@ -103,6 +103,7 @@ namespace Pri.Api.Pe.Api.Controllers
                             new Claim(ClaimTypes.Role, registrationRequestDto.Role),
                             new Claim(ClaimTypes.DateOfBirth, user.Birthday.ToString()),
                             new Claim(ClaimTypes.Name, user.UserName),
+                            new Claim(ClaimTypes.Email, user.Email),
                             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                         };
 

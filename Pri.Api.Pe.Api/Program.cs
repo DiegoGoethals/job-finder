@@ -11,7 +11,6 @@ using Pri.Api.Pe.Core.Interfaces.Services;
 using Pri.Api.Pe.Core.Services;
 using Pri.Api.Pe.Infrastructure.Data;
 using Pri.Api.Pe.Infrastructure.Repositories;
-using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,10 +20,25 @@ builder.Services.AddDbContext<ApplicationDbContext>
     (options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultDb")));
 
+// Add identity
+builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
+{
+    //configure options for testing purposes
+    options.Password.RequiredUniqueChars = 0;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+}).AddEntityFrameworkStores<ApplicationDbContext>()
+     .AddSignInManager<SignInManager<ApplicationUser>>()
+    .AddDefaultTokenProviders();
+
 // Add JWT authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
@@ -72,12 +86,12 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Employer", policy =>
         {
-            policy.RequireClaim(ClaimTypes.Role, "Employer");
+            policy.RequireRole("Employer");
         }
     );
     options.AddPolicy("Employee", policy =>
     {
-        policy.RequireClaim(ClaimTypes.Role, "Employee");
+        policy.RequireRole("Employee");
     });
     options.AddPolicy("IsEmployer", policy => policy.Requirements.Add(new IsEmployerRequirement()));
     options.AddPolicy("IsEmployee", policy => policy.Requirements.Add(new IsEmployeeRequirement()));
@@ -86,24 +100,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("IsSenderOrReceiver", policy => policy.Requirements.Add(new IsSenderOrReceiverRequirement()));
     options.AddPolicy("IsReviewer", policy => policy.Requirements.Add(new IsReviewerRequirement()));
 });
-
-// Add identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
-    {
-        //configure options for testing purposes
-        options.Password.RequiredUniqueChars = 0;
-        options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequireDigit = false;
-        options.Password.RequireLowercase = false;
-        options.Password.RequireUppercase = false;
-        options.Password.RequiredLength = 6;
-    }).AddEntityFrameworkStores<ApplicationDbContext>()
-     .AddSignInManager<SignInManager<ApplicationUser>>()
-    .AddDefaultTokenProviders();
-    // Add services to the container.
-    builder.Services.ConfigureApplicationCookie(options =>
-        options.AccessDeniedPath = "/account/login"
-);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -155,6 +151,17 @@ app.UseCors(options =>
     options.AllowAnyOrigin();
     options.AllowAnyHeader();
     options.AllowAnyMethod();
+});
+
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        // Set the status code to 403 Forbidden
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        // Write a meaningful error message to the response
+        await context.Response.WriteAsync("Access Forbidden");
+    });
 });
 
 app.UseHttpsRedirection();
