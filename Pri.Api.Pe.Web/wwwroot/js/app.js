@@ -24,11 +24,6 @@
             EmployerId: "",
             Skills: []
         },
-        newApplication: {
-            JobId: "",
-            CandidateId: "",
-            Salary: 0
-        },
         newReview: {
             Rating: 0,
             Comment: "",
@@ -143,8 +138,27 @@
         selectJob: function (job) {
             this.selectedJob = job;
         },
-        clearSelection() {
+        clearSelection: function () {
             this.selectedJob = null;
+        },
+        applyForJob: async function () {
+            const applicationDto = {
+                "jobId": this.selectedJob.id,
+                "salary": this.selectedJob.salary,
+                "candidateId": this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
+            };
+            const url = `${this.baseUrl}applications`;
+            this.loading = true;
+            await axios.post(url, applicationDto, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => response.data)
+            .catch(error => {
+                console.log(error);
+            });
+            this.loading = false;
         },
         submitLogin: async function () {
             const loginDto = {
