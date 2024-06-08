@@ -34,5 +34,14 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
                 .Include(t => t.Status)
                 .ToListAsync();
         }
+
+        public async override Task<Application> GetByIdAsync(Guid id)
+        {
+            return await _table
+                .Include(t => t.Status)
+                .Include(t => t.Candidate)
+                .Include(t => t.Job)
+                .FirstOrDefaultAsync(t => t.Id == id);
+        }
     }
 }

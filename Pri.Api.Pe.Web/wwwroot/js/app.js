@@ -17,6 +17,7 @@
         messages: [],
         reviews: [],
         applications: [],
+        applicationStatuses: [],
         newJob: {
             Name: "",
             Description: "",
@@ -46,6 +47,7 @@
         loggedInUsername: "",
         dropdownVisible: false,
         viewApplications: false,
+        selectedApplication: null,
     },
     created: function () {
         this.loading = true;
@@ -65,10 +67,21 @@
             }
             this.loggedIn = true;
         }
+        this.getApplicationStatuses();
         this.getSkills();
         this.loading = false;
     },
     methods: {
+        getApplicationStatuses: async function () {
+            const url = `${this.baseUrl}applications/statuses`;
+            this.applicationStatuses = await axios.get(url)
+                .then(response => {
+                    return response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         getSkills: async function () {
             const url = `${this.baseUrl}skills`;
             this.skills = await axios.get(url)
@@ -141,11 +154,13 @@
             this.loading = false;
             this.getJobsByEmployer();
         },
-        selectJob: function (job) {
+        selectJob: async function (job) {
             this.selectedJob = job;
+            await this.getAppplicationsByJob();
         },
         clearSelection: function () {
             this.selectedJob = null;
+            this.selectedApplication = null;
         },
         applyForJob: async function () {
             const applicationDto = {
@@ -211,6 +226,41 @@
             .catch(error => {
                 console.log(error);
             });
+            this.loading = false;
+        },
+        selectApplication: function (application) {
+            this.selectedApplication = application;
+        },
+        acceptApplication: async function () {
+            const url = `${this.baseUrl}applications/${this.selectedApplication.id}/status`;
+            const dto = this.applicationStatuses.find(status => status.name === "Accepted");
+            this.loading = true;
+            await axios.put(url, dto, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => response.data)
+            .catch(error => {
+                console.log(error);
+            });
+            await this.getAppplicationsByJob();
+            this.loading = false;
+        },
+        rejectApplication: async function () {
+            const url = `${this.baseUrl}applications/${this.selectedApplication.id}/status`;
+            const dto = this.applicationStatuses.find(status => status.name === "Rejected");
+            this.loading = true;
+            await axios.put(url, dto, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+                .then(response => response.data)
+                .catch(error => {
+                    console.log(error);
+                });
+            await this.getAppplicationsByJob();
             this.loading = false;
         },
         submitLogin: async function () {
