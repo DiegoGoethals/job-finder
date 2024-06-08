@@ -51,7 +51,7 @@
                     <li v-for="application in applications" :key="application.id" class="application-card">
                         <div class="application-details">
                             <h2>{{ jobs.find(job => job.id === application.jobId).name }}</h2>
-                            <p>Application status: {{ application.applicationStatus }}</p>
+                            <p>Application status: <span :class="[application.applicationStatus.toLowerCase(), application.applicationStatus]">{{ application.applicationStatus }}</span></p>
                             <p>Salary: ${{ application.salary }}</p>
                             <button class="delete-button" v-on:click="deleteApplication(application.id)">Delete</button>
                         </div>

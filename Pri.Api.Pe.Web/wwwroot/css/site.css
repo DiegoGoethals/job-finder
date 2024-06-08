@@ -55,6 +55,18 @@
         color: #555;
     }
 
+.pending {
+    color: darkorange;
+}
+
+.accepted {
+    color: green;
+}
+
+.rejected {
+    color: red;
+}
+
 .selected-job {
     text-align: center;
 }
