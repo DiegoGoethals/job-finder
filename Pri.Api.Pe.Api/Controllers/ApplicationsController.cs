@@ -56,6 +56,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     Id = a.Id,
                     JobId = a.JobId,
                     CandidateId = a.CandidateId,
+                    CandidateName = a.Candidate.UserName,
                     Salary = a.Salary,
                     ApplicationStatus = a.Status.Name
                 }));
@@ -105,6 +106,7 @@ namespace Pri.Api.Pe.Api.Controllers
                     Id = result.Value.Id,
                     JobId = result.Value.JobId,
                     CandidateId = result.Value.CandidateId,
+                    CandidateName = result.Value.Candidate.UserName,
                     Salary = result.Value.Salary,
                     ApplicationStatus = result.Value.Status.Name
                 });

@@ -22,6 +22,8 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
         {
             return await _table
                 .Where(t => t.JobId == jobId)
+                .Include(t => t.Status)
+                .Include(t => t.Candidate)
                 .ToListAsync();
         }
 

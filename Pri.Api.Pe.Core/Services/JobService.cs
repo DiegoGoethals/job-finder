@@ -85,7 +85,7 @@ namespace Pri.Api.Pe.Core.Services
             {
                 return new ResultModel<IEnumerable<Job>>
                 {
-                    Value = jobs.OrderBy(j => j.Created),
+                    Value = jobs.OrderByDescending(j => j.Created),
                     IsSucces = true
                 };
             }

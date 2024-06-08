@@ -10,17 +10,34 @@
 <div v-else>
     <div v-if="loggedIn">
         <div v-if="isEmployer">
-            <ul class="job-list">
-                <li v-for="job in jobs" :key="job.id" class="job-card">
-                    <div class="job-details">
-                        <h2>{{ job.name }}</h2>
-                        <p>{{ job.description }}</p>
-                        <p>Salary: ${{ job.salary }}</p>
-                    </div>
-                    <button class="delete-button" v-on:click="deleteJob(job.id)">Delete</button>
-                </li>
-            </ul>
-            <button v-on:click="addingNewJob = true">Add a new job</button>
+            <div v-if="selectedJob === null">
+                <ul class="job-list">
+                    <li v-for="job in jobs" :key="job.id" class="job-card" v-on:click.prevent="selectJob(job)">
+                        <div class="job-details">
+                            <h2>{{ job.name }}</h2>
+                            <p>{{ job.description }}</p>
+                            <p>Salary: ${{ job.salary }}</p>
+                        </div>
+                        <button class="delete-button" v-on:click="deleteJob(job.id)">Delete</button>
+                    </li>
+                </ul>
+                <button v-on:click="addingNewJob = true">Add a new job</button>
+            </div>
+            <div v-else class="selected-job">
+                <h1>{{ selectedJob.name }}</h1>
+                <p>{{ selectedJob.description }}</p>
+                <p>Salary: ${{ selectedJob.salary }}</p>
+                <ul class="applications-list">
+                    <li v-for="application in selectedJob.applications" class="application-card">
+                        <div class="application-details">
+                            <h4>{{ application.candidateName }}</h4>
+                            <p>Application status: <span :class="[application.applicationStatus.toLowerCase(), application.applicationStatus]">{{ application.applicationStatus }}</span></p>
+                            <p>Salary: ${{ application.salary }}</p>
+                        </div>
+                    </li>
+                </ul>
+                <button v-on:click="clearSelection">Back to Job List</button>
+            </div>
             <div>
                 <form v-if="addingNewJob" v-on:submit.prevent="createNewJob">
                     <div class="form-group">

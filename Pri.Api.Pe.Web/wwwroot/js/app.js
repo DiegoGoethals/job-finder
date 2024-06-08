@@ -197,6 +197,22 @@
             await this.viewApplicationsHandler();
             this.loading = false;
         },
+        getAppplicationsByJob: async function () {
+            const url = `${this.baseUrl}applications/job/${this.selectedJob.id}`;
+            this.loading = true;
+            this.applications = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+            this.loading = false;
+        },
         submitLogin: async function () {
             const loginDto = {
                 "username": this.username,

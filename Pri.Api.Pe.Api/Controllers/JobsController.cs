@@ -142,7 +142,15 @@ namespace Pri.Api.Pe.Api.Controllers
                     Name = job.Name,
                     Description = job.Description,
                     Salary = job.Salary,
-                    EmployerId = job.EmployerId
+                    EmployerId = job.EmployerId,
+                    Applications = job.Applications.Select(application => new ApplicationResponseDto
+                    {
+                        Id = application.Id,
+                        CandidateId = application.CandidateId,
+                        CandidateName = application.Candidate.UserName,
+                        ApplicationStatus = application.Status.Name,
+                        Salary = application.Salary
+                    }).ToList()
                 }));
             }
             return HandleError(result.Errors);
