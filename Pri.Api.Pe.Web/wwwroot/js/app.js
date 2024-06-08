@@ -49,29 +49,35 @@
         viewApplications: false,
         selectedApplication: null,
     },
-    created: function () {
+    created: async function () {
         this.loading = true;
-        if (localStorage.getItem('token') !== null) {
-            this.token = localStorage.getItem('token');
-            this.tokenObject = this.decodeToken(window.localStorage.getItem('token'));
-            this.loggedInUsername = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-            //get the role and store in sessionStorage
-            const role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-            if (role === "Employer") {
-                this.employerId = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-                this.isEmployer = true;
-                this.getJobsByEmployer();
-            }
-            else {
-                this.getAllJobs();
-            }
-            this.loggedIn = true;
+        const token = localStorage.getItem('token');
+        if (token !== null) {
+            await this.setToken(token);
         }
-        this.getApplicationStatuses();
-        this.getSkills();
+        await this.getApplicationStatuses();
+        await this.getSkills();
         this.loading = false;
     },
     methods: {
+        setToken: async function (token) {
+            this.token = token;
+            this.tokenObject = this.decodeToken(token);
+            this.loggedInUsername = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+            this.role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            this.isEmployer = this.role === "Employer";
+            this.employerId = this.isEmployer ? this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : "";
+            this.loggedIn = true;
+            await this.fetchInitialData();
+        },
+        fetchInitialData: async function () {
+            if (this.isEmployer) {
+                await this.getJobsByEmployer();
+            } else {
+                await this.getAllJobs();
+                await this.getCandidateApplications();
+            }
+        },
         getApplicationStatuses: async function () {
             const url = `${this.baseUrl}applications/statuses`;
             this.applicationStatuses = await axios.get(url)
@@ -181,21 +187,24 @@
             });
             this.loading = false;
         },
-        viewApplicationsHandler: async function () {
-            this.viewApplications = true
-            this.dropdownVisible = false;
+        getCandidateApplications: async function () {
             const url = `${this.baseUrl}applications/candidate/${this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]}`;
             this.applications = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${this.token}`
                 }
             })
-            .then(response => {
-                return response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                .then(response => {
+                    return response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        viewApplicationsHandler: async function () {
+            this.viewApplications = true
+            this.dropdownVisible = false;
+            await this.getCandidateApplications();
         },
         deleteApplication: async function (applicationId) {
             const url = `${this.baseUrl}applications/${applicationId}`;
@@ -264,30 +273,14 @@
             this.loading = false;
         },
         submitLogin: async function () {
-            const loginDto = {
-                "username": this.username,
-                "password": this.password
-            };
+            const loginDto = { "username": this.username, "password": this.password };
             this.loading = true;
-            let token = await axios.post(`${this.baseUrl}auth/login`, loginDto)
+            const token = await axios.post(`${this.baseUrl}auth/login`, loginDto)
                 .then(response => response.data.token)
-                .catch(error => {
-                    console.log(error)
-                });
-            this.loading = false;
+                .catch(error => console.log(error));
+            await this.setToken(token);
             window.localStorage.setItem('token', token);
-            this.tokenObject = this.decodeToken(token);
-            this.loggedInUsername = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-            const role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-            if (role === "Employer") {
-                this.isEmployer = true;
-                this.getJobsByEmployer();
-            }
-            else {
-                this.getAllJobs();
-            }
-            this.loggedIn = true;
-            this.getSkills(); 
+            this.loading = false;
         },
         registerUser: async function() {
             const registerDto = {
@@ -317,13 +310,18 @@
             this.loading = false;
             this.loginFormVisible = true;
         },
-        submitLogout: async function () {
-            this.tokenObject = "";
+        submitLogout: function () {
+            this.token = "";
+            this.tokenObject = null;
             window.localStorage.clear();
             this.loggedIn = false;
             this.isEmployer = false;
             this.loggedInUsername = "";
             this.dropdownVisible = false;
+            this.jobs = [];
+            this.applications = [];
+            this.selectedApplication = null;
+            this.selectedJob = null;
             this.loading = false;
         },
         decodeToken: function (token) {
