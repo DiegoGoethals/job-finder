@@ -348,6 +348,11 @@
         openDeleteModal: function () {
             this.isDeleting = true;
         },
+        closeDeleteModal: function () {
+            this.isDeleting = false;
+            this.selectedJob = null;
+            this.selectedApplication = null;
+        },
     }
 });
 
