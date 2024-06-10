@@ -1,5 +1,5 @@
 .delete-button {
-    background-color: #ff3333;
+    background-color: #ff3333 !important;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -8,7 +8,7 @@
 }
 
 .delete-button:hover {
-    background-color: #c82333;
+    background-color: #c82333 !important;
 }
 
 .delete-modal {

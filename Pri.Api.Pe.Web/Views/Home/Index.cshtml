@@ -44,7 +44,7 @@
                     <h2>{{ selectedApplication.candidateName }}</h2>
                     <p>Requested salary: ${{ selectedApplication.salary }}</p>
                     <button v-on:click.prevent="acceptApplication">Accept application</button>
-                    <button v-on:click.prevent="rejectApplication">Reject application</button>
+                    <button class="delete-button" v-on:click.prevent="rejectApplication">Reject application</button>
                     <button v-on:click="selectedApplication = null">Back to applications</button>
                 </div>
             </div>
