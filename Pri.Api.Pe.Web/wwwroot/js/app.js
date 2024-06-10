@@ -260,6 +260,26 @@
                 console.log(error);
             });
             await this.getAppplicationsByJob();
+
+            //Code for rejecting all other applications
+            for (let application of this.applications) {
+                if (application.id === selectedApplication.id) {
+                    continue;
+               }
+               const url = `${this.baseUrl}applications/${application.id}/status`;
+               const dto = this.applicationStatuses.find(status => status.name === "Rejected");
+               await axios.put(url, dto, {
+                    headers: {
+                        Authorization: `Bearer ${this.token}`
+                    }
+               })
+               .then(response => response.data)
+               .catch(error => {
+                    console.log(error);
+               });
+            }
+            await this.getAppplicationsByJob();
+
             this.loading = false;
         },
         rejectApplication: async function () {
