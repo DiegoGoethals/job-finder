@@ -259,7 +259,6 @@
             .catch(error => {
                 console.log(error);
             });
-            await this.getAppplicationsByJob();
 
             //Code for rejecting all other applications
             for (let application of this.applications) {
