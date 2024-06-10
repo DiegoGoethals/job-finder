@@ -48,6 +48,7 @@
         dropdownVisible: false,
         viewApplications: false,
         selectedApplication: null,
+        isDeleting: false,
     },
     created: async function () {
         this.loading = true;
@@ -157,7 +158,9 @@
             .catch(error => {
                 console.log(error);
             });
+            this.selectedJob = null;
             this.loading = false;
+            this.isDeleting = false;
             this.getJobsByEmployer();
         },
         selectJob: async function (job) {
@@ -185,6 +188,7 @@
             .catch(error => {
                 console.log(error);
             });
+            this.selectedJob = null;
             this.loading = false;
         },
         getCandidateApplications: async function () {
@@ -218,8 +222,10 @@
             .catch(error => {
                 console.log(error);
             });
+            this.selectedApplication = null;
             await this.viewApplicationsHandler();
             this.loading = false;
+            this.isDeleting = false;
         },
         getAppplicationsByJob: async function () {
             const url = `${this.baseUrl}applications/job/${this.selectedJob.id}`;
@@ -322,6 +328,7 @@
             this.applications = [];
             this.selectedApplication = null;
             this.selectedJob = null;
+            this.viewApplications = false;
             this.loading = false;
         },
         decodeToken: function (token) {
@@ -337,6 +344,9 @@
         },
         toggleDropdown: function () {
             this.dropdownVisible = !this.dropdownVisible;
+        },
+        openDeleteModal: function () {
+            this.isDeleting = true;
         },
     }
 });
