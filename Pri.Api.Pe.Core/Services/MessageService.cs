@@ -114,7 +114,7 @@ namespace Pri.Api.Pe.Core.Services
         public async Task<ResultModel<IEnumerable<Message>>> GetConversationAsync(Guid id1, Guid id2)
         {
             var messages = await _messageRepository.GetConversationAsync(id1, id2);
-            if (messages.Any())
+            if (messages != null)
             {
                 return new ResultModel<IEnumerable<Message>>
                 {
@@ -150,6 +150,28 @@ namespace Pri.Api.Pe.Core.Services
             {
                 IsSucces = true,
                 Value = message
+            };
+        }
+
+        public async Task<ResultModel<IEnumerable<ApplicationUser>>> GetAllConversationPartnersAsync(Guid userId)
+        {
+
+           var users = await _messageRepository.GetAllConversationPartnersAsync(userId);
+            if (users != null)
+            {
+                return new ResultModel<IEnumerable<ApplicationUser>>
+                {
+                    IsSucces = true,
+                    Value = users
+                };
+            }
+            return new ResultModel<IEnumerable<ApplicationUser>>
+            {
+                IsSucces = false,
+                Errors = new List<string>
+                    {
+                        "Conversation partners not found!"
+                    }
             };
         }
     }

@@ -20,26 +20,26 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
             _logger = logger;
         }
 
-        public virtual IQueryable<ApplicationUser> GetAll()
+        public IQueryable<ApplicationUser> GetAll()
         {
             return _table.AsQueryable();
         }
 
-        public virtual async Task<IEnumerable<ApplicationUser>> GetAllAsync()
+        public async Task<IEnumerable<ApplicationUser>> GetAllAsync()
         {
             return await _table
                 .ToListAsync();
         }
 
-        public virtual Task<ApplicationUser> GetByIdAsync(Guid id)
+        public async Task<ApplicationUser> GetByIdAsync(Guid id)
         {
-            return _table
+            return await _table
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public virtual Task<ApplicationUser> GetByUserNameAsync(string userName)
+        public async Task<ApplicationUser> GetByUserNameAsync(string userName)
         {
-            return _table
+            return await _table
                 .FirstOrDefaultAsync(t => t.UserName == userName);
         }
 

@@ -37,6 +37,7 @@
             Content: ""
         },
         loggedIn: false,
+        currentUserId: "",
         tokenObject: null,
         isEmployer: false,
         loading: false,
@@ -49,6 +50,8 @@
         viewApplications: false,
         selectedApplication: null,
         isDeleting: false,
+        showMessageScreen: false,
+        conversationPartners: [],
     },
     created: async function () {
         this.loading = true;
@@ -78,6 +81,8 @@
                 await this.getAllJobs();
                 await this.getCandidateApplications();
             }
+            this.currentUserId = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+            await this.getConversationPartners();
         },
         getApplicationStatuses: async function () {
             const url = `${this.baseUrl}applications/statuses`;
@@ -98,6 +103,20 @@
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        getConversationPartners: async function () {
+            const url = `${this.baseUrl}messages/partners/${this.currentUserId}`;
+            this.conversationPartners = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
         },
         getAllJobs: async function () {
             const url = `${this.baseUrl}jobs`;
@@ -175,7 +194,7 @@
             const applicationDto = {
                 "jobId": this.selectedJob.id,
                 "salary": this.selectedJob.salary,
-                "candidateId": this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
+                "candidateId": this.currentUserId,
             };
             const url = `${this.baseUrl}applications`;
             this.loading = true;
@@ -192,7 +211,7 @@
             this.loading = false;
         },
         getCandidateApplications: async function () {
-            const url = `${this.baseUrl}applications/candidate/${this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]}`;
+            const url = `${this.baseUrl}applications/candidate/${this.currentUserId}`;
             this.applications = await axios.get(url, {
                 headers: {
                     Authorization: `Bearer ${this.token}`
@@ -206,7 +225,8 @@
                 });
         },
         viewApplicationsHandler: async function () {
-            this.viewApplications = true
+            this.viewApplications = true;
+            this.showMessageScreen = false;
             this.dropdownVisible = false;
             await this.getCandidateApplications();
         },
@@ -297,6 +317,11 @@
             await this.getAppplicationsByJob();
             this.loading = false;
         },
+        viewMessagesHandler: async function () {
+            this.showMessageScreen = true;
+            this.viewApplications = false;
+            this.dropdownVisible = false;
+        },
         submitLogin: async function () {
             const loginDto = { "username": this.username, "password": this.password };
             this.loading = true;
@@ -342,12 +367,14 @@
             this.loggedIn = false;
             this.isEmployer = false;
             this.loggedInUsername = "";
+            this.currentUserId = "";
             this.dropdownVisible = false;
             this.jobs = [];
             this.applications = [];
             this.selectedApplication = null;
             this.selectedJob = null;
             this.viewApplications = false;
+            this.showMessageScreen = false;
             this.loading = false;
         },
         decodeToken: function (token) {
@@ -374,5 +401,3 @@
         },
     }
 });
-
-

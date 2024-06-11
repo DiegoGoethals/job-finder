@@ -89,5 +89,20 @@ namespace Pri.Api.Pe.Api.Controllers
             }
             return HandleError(result.Errors);
         }
+
+        [HttpGet("partners/{id}")]
+        public async Task<IActionResult> GetPartners(Guid id)
+        {
+            var result = await _messageService.GetAllConversationPartnersAsync(id);
+            if (result.IsSucces)
+            {
+                return Ok(result.Value.Select(x => new AccountResponseDto
+                {
+                    Id = x.Id,
+                    UserName = x.UserName
+                }));
+            }
+            return HandleError(result.Errors);
+        }
     }
 }
