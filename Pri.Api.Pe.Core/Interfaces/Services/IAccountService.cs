@@ -14,5 +14,6 @@ namespace Pri.Api.Pe.Core.Interfaces.Services
         Task<ResultModel<IEnumerable<ApplicationUser>>> GetAllAsync();
         Task<ResultModel<ApplicationUser>> GetByUserNameAsync(string userName);
         Task<ResultModel<ApplicationUser>> Register(ApplicationUser user, IEnumerable<string> skills);
+        Task<ResultModel<ApplicationUser>> GetByIdAsync(Guid userId);
     }
 }

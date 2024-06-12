@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Pri.Api.Pe.Api.Dtos;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Services;
+using Pri.Api.Pe.Core.Services.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -134,6 +135,25 @@ namespace Pri.Api.Pe.Api.Controllers
                 }
             }
             return BadRequest();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            var result = await _accountService.GetByIdAsync(id);
+            if (result.IsSucces)
+            {
+                return Ok(new AccountResponseDto
+                {
+                    Id = result.Value.Id,
+                    UserName = result.Value.UserName
+                });
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+            return BadRequest(ModelState.Values);
         }
     }
 }

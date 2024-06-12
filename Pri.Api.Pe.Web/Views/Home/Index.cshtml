@@ -8,13 +8,14 @@
         <div v-if="showMessageScreen">
             <ul class="partner-list">
                 <li v-for="partner in conversationPartners" :key="partner.id" class="conversation-select" v-on:click="selectConversation(partner.id)">
-                    <p>{{ partner.username }}</p>
+                    <p>{{ partner.userName }}</p>
                 </li>
             </ul>
             <div class="conversation">
                 <ul class="messages">
                     <li v-for="message in messages" :class="{'sender': message.senderId === currentUserId, 'receiver': message.senderId !== currentUserId}">
-
+                        <p>{{  }}</p>
+                        <p>{{ message.content }}</p>
                     </li>
                 </ul>
             </div>
@@ -56,6 +57,7 @@
                         <p>Requested salary: ${{ selectedApplication.salary }}</p>
                         <button v-on:click.prevent="acceptApplication">Accept application</button>
                         <button class="delete-button" v-on:click.prevent="rejectApplication">Reject application</button>
+                        <button v-on:click.prevent="openMessages(selectedApplication.candidateId)">Send message</button>
                         <button v-on:click="selectedApplication = null">Back to applications</button>
                     </div>
                 </div>

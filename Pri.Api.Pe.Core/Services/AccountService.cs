@@ -78,5 +78,23 @@ namespace Pri.Api.Pe.Core.Services
                 Value = user
             };
         }
+
+        public async Task<ResultModel<ApplicationUser>> GetByIdAsync(Guid userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user != null)
+            {
+                return new ResultModel<ApplicationUser>
+                {
+                    IsSucces = true,
+                    Value = user
+                };
+            }
+            return new ResultModel<ApplicationUser>
+            {
+                IsSucces = false,
+                Errors = new List<string> { "User not found" }
+            };
+        }
     }
 }

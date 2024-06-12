@@ -71,6 +71,7 @@
             this.role = this.tokenObject["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             this.isEmployer = this.role === "Employer";
             this.employerId = this.isEmployer ? this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] : "";
+            this.currentUserId = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
             this.loggedIn = true;
             await this.fetchInitialData();
         },
@@ -81,7 +82,6 @@
                 await this.getAllJobs();
                 await this.getCandidateApplications();
             }
-            this.currentUserId = this.tokenObject["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
             await this.getConversationPartners();
         },
         getApplicationStatuses: async function () {
@@ -321,6 +321,23 @@
             this.showMessageScreen = true;
             this.viewApplications = false;
             this.dropdownVisible = false;
+        },
+        openMessages: function (receiverId) {
+            if (!this.conversationPartners.includes(receiverId)) {
+                const url = `${this.baseUrl}auth/${receiverId}`;
+                axios.get(url, {
+                    headers: {
+                        Authorization: `Bearer ${this.token}`
+                    }
+                })
+                .then(response => {
+                    this.conversationPartners.unshift(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            }
+            this.showMessageScreen = true;
         },
         submitLogin: async function () {
             const loginDto = { "username": this.username, "password": this.password };
