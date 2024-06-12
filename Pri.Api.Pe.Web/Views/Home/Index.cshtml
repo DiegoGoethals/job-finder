@@ -7,17 +7,21 @@
     <div v-if="loggedIn">
         <div v-if="showMessageScreen">
             <ul class="partner-list">
-                <li v-for="partner in conversationPartners" :key="partner.id" class="conversation-select" v-on:click="selectConversation(partner.id)">
+                <li v-for="partner in conversationPartners" :key="partner.id" class="conversation-select" v-on:click.prevent="selectConversation(partner.id)">
                     <p>{{ partner.userName }}</p>
                 </li>
             </ul>
             <div class="conversation">
                 <ul class="messages">
                     <li v-for="message in messages" :class="{'sender': message.senderId === currentUserId, 'receiver': message.senderId !== currentUserId}">
-                        <p>{{  }}</p>
+                        <p>{{ message.senderId === currentUserId ? loggedInUserName : conversationPartners.find(partner => partner.id === message.senderId).userName }}</p>
                         <p>{{ message.content }}</p>
                     </li>
                 </ul>
+                <form v-on:submit.prevent="sendMessage">
+                    <input v-model="newMessage.Content" type="text" placeholder="Type your message here" />
+					<button type="submit">Send</button>
+                </form>
             </div>
         </div>
         <div v-else>

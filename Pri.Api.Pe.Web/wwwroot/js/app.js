@@ -322,8 +322,8 @@
             this.viewApplications = false;
             this.dropdownVisible = false;
         },
-        openMessages: function (receiverId) {
-            if (!this.conversationPartners.includes(receiverId)) {
+        openMessages: async function (receiverId) {
+            if (!this.conversationPartners.some(partner => partner.id === receiverId)) {
                 const url = `${this.baseUrl}auth/${receiverId}`;
                 axios.get(url, {
                     headers: {
@@ -337,7 +337,40 @@
                     console.log(error);
                 });
             }
+            await this.selectConversation(receiverId);
             this.showMessageScreen = true;
+        },
+        selectConversation: async function (partnerId) {
+            this.newMessage.ReceiverId = partnerId;
+            const url = `${this.baseUrl}messages/conversation/${this.currentUserId}/${partnerId}`;
+            this.messages = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        sendMessage: async function () {
+            this.newMessage.SenderId = this.currentUserId;
+            const url = `${this.baseUrl}messages`;
+            this.loading = true;
+            await axios.post(url, this.newMessage, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => response.data)
+            .catch(error => {
+                console.log(error);
+            });
+            this.newMessage.Content = "";
+            await this.selectConversation(this.newMessage.ReceiverId);
+            this.loading = false;
         },
         submitLogin: async function () {
             const loginDto = { "username": this.username, "password": this.password };
