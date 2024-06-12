@@ -202,3 +202,111 @@
         .dropdown-menu a:hover, .dropdown-menu button:hover {
             background-color: #f1f1f1;
         }
+
+
+.partner-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 250px;
+    background-color: #ffffff;
+    border-right: 1px solid #ccc;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+    .partner-list .conversation-select {
+        padding: 15px;
+        cursor: pointer;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.3s ease;
+    }
+
+        .partner-list .conversation-select:hover {
+            background-color: #f1f1f1;
+        }
+
+        .partner-list .conversation-select p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+.conversation {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #ffffff;
+    flex-grow: 1;
+}
+
+.messages {
+    list-style-type: none;
+    padding: 20px;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #e5ddd5;
+}
+
+    .messages li {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 60%;
+    }
+
+    .messages .sender {
+        align-self: flex-end;
+        background-color: #dcf8c6;
+    }
+
+    .messages .receiver {
+        align-self: flex-start;
+        background-color: #ffffff;
+    }
+
+    .messages li p:first-child {
+        font-weight: bold;
+        margin: 0 0 5px 0;
+    }
+
+    .messages li p:last-child {
+        margin: 0;
+    }
+
+.conversation form {
+    display: flex;
+    padding: 10px;
+    background-color: #ffffff;
+    border-top: 1px solid #ccc;
+}
+
+    .conversation form input[type="text"] {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        outline: none;
+        font-size: 16px;
+    }
+
+    .conversation form button {
+        margin-left: 10px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #0084ff;
+        color: #ffffff;
+        font-size: 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .conversation form button:hover {
+            background-color: #006bb3;
+        }
+
+.chatbox-container {
+    display: flex;
+    height: 100vh;
+}
