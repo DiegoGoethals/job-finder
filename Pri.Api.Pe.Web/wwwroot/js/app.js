@@ -52,6 +52,7 @@
         isDeleting: false,
         showMessageScreen: false,
         conversationPartners: [],
+        showConversation: false,
     },
     created: async function () {
         this.loading = true;
@@ -354,6 +355,7 @@
             .catch(error => {
                 console.log(error);
             });
+            this.showConversation = true;
         },
         sendMessage: async function () {
             this.newMessage.SenderId = this.currentUserId;

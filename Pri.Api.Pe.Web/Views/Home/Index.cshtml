@@ -12,7 +12,7 @@
                         <p>{{ partner.userName }}</p>
                     </li>
                 </ul>
-                <div class="conversation">
+                <div v-if="showConversation" class="conversation">
                     <ul class="messages">
                         <li v-for="message in messages" :class="{'sender': message.senderId === currentUserId, 'receiver': message.senderId !== currentUserId}">
                             <p>{{ message.senderId === currentUserId ? loggedInUserName : conversationPartners.find(partner => partner.id === message.senderId).userName }}</p>
