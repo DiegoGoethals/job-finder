@@ -15,7 +15,7 @@
                 <div v-if="showConversation" class="conversation">
                     <ul class="messages">
                         <li v-for="message in messages" :class="{'sender': message.senderId === currentUserId, 'receiver': message.senderId !== currentUserId}">
-                            <p>{{ message.senderId === currentUserId ? loggedInUserName : conversationPartners.find(partner => partner.id === message.senderId).userName }}</p>
+                            <p>{{ message.senderId === currentUserId ? loggedInUsername : conversationPartners.find(partner => partner.id === message.senderId).userName }}</p>
                             <p>{{ message.content }}</p>
                         </li>
                     </ul>
@@ -122,6 +122,7 @@
                         <p>Salary: ${{ selectedJob.salary }}</p>
                         <button v-on:click="clearSelection">Back to Job List</button>
                         <button v-on:click="applyForJob">Apply for this job</button>
+                        <button v-on:click="openMessages(selectedJob.employerId)">Send message to employer</button>
                     </div>
                 </div>
             </div>
