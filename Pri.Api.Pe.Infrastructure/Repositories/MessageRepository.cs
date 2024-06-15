@@ -34,6 +34,7 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
                 .Where(x => x.SenderId == userId || x.ReceiverId == userId)
                 .Include(m => m.Sender)
                 .Include(m => m.Receiver)
+                .OrderByDescending(x => x.Created)
                 .ToListAsync();
 
             var conversationPartners = messages
