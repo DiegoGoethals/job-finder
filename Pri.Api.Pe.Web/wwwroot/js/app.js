@@ -56,7 +56,7 @@
     },
     created: async function () {
         this.loading = true;
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (token !== null) {
             await this.setToken(token);
         }
@@ -381,7 +381,7 @@
                 .then(response => response.data.token)
                 .catch(error => console.log(error));
             await this.setToken(token);
-            window.localStorage.setItem('token', token);
+            window.sessionStorage.setItem('token', token);
             this.loading = false;
         },
         registerUser: async function() {
@@ -415,7 +415,7 @@
         submitLogout: function () {
             this.token = "";
             this.tokenObject = null;
-            window.localStorage.clear();
+            window.sessionStorage.clear();
             this.loggedIn = false;
             this.isEmployer = false;
             this.loggedInUsername = "";
