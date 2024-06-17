@@ -4,7 +4,6 @@ using Microsoft.IdentityModel.Tokens;
 using Pri.Api.Pe.Api.Dtos;
 using Pri.Api.Pe.Core.Entities;
 using Pri.Api.Pe.Core.Interfaces.Services;
-using Pri.Api.Pe.Core.Services.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

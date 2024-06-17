@@ -427,6 +427,8 @@
             this.selectedJob = null;
             this.viewApplications = false;
             this.showMessageScreen = false;
+            this.newMessage.SenderId = "";
+            this.newMessage.ReceiverId = "";
             this.loading = false;
         },
         decodeToken: function (token) {
