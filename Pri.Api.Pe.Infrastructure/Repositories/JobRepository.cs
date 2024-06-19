@@ -19,6 +19,7 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
                 .ThenInclude(a => a.Candidate)
                 .Include(j => j.Applications)
                 .ThenInclude(a => a.Status)
+                .Include(j => j.Skills)
                 .ToListAsync();
         }
     }

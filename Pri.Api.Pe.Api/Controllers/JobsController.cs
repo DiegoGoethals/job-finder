@@ -38,7 +38,12 @@ namespace Pri.Api.Pe.Api.Controllers
                     Name = result.Value.Name,
                     Description = result.Value.Description,
                     Salary = result.Value.Salary,
-                    EmployerId = result.Value.EmployerId
+                    EmployerId = result.Value.EmployerId,
+                    Skills = result.Value.Skills.Select(skill => new SkillResponseDto
+                    {
+                        Id = skill.Id,
+                        Name = skill.Name
+                    }).ToList()
                 });
             }
             return HandleError(result.Errors);
@@ -68,7 +73,12 @@ namespace Pri.Api.Pe.Api.Controllers
                     Name = job.Name,
                     Description = job.Description,
                     Salary = job.Salary,
-                    EmployerId = job.EmployerId
+                    EmployerId = job.EmployerId,
+                    Skills = job.Skills.Select(skill => new SkillResponseDto
+                    {
+                        Id = skill.Id,
+                        Name = skill.Name
+                    }).ToList()
                 }));
             }
             return HandleError(result.Errors);
@@ -86,7 +96,12 @@ namespace Pri.Api.Pe.Api.Controllers
                     Name = job.Name,
                     Description = job.Description,
                     Salary = job.Salary,
-                    EmployerId = job.EmployerId
+                    EmployerId = job.EmployerId,
+                    Skills = job.Skills.Select(skill => new SkillResponseDto
+                    {
+                        Id = skill.Id,
+                        Name = skill.Name
+                    }).ToList()
                 }));
             }
             return HandleError(result.Errors);
@@ -104,7 +119,12 @@ namespace Pri.Api.Pe.Api.Controllers
                     Name = result.Value.Name,
                     Description = result.Value.Description,
                     Salary = result.Value.Salary,
-                    EmployerId = result.Value.EmployerId
+                    EmployerId = result.Value.EmployerId,
+                    Skills = result.Value.Skills.Select(skill => new SkillResponseDto
+                    {
+                        Id = skill.Id,
+                        Name = skill.Name
+                    }).ToList()
                 });
             }
             return HandleError(result.Errors);
@@ -123,7 +143,12 @@ namespace Pri.Api.Pe.Api.Controllers
                     Name = result.Value.Name,
                     Description = result.Value.Description,
                     Salary = result.Value.Salary,
-                    EmployerId = result.Value.EmployerId
+                    EmployerId = result.Value.EmployerId,
+                    Skills = result.Value.Skills.Select(skill => new SkillResponseDto
+                    {
+                        Id = skill.Id,
+                        Name = skill.Name
+                    }).ToList()
                 });
             }
             return HandleError(result.Errors);
@@ -150,6 +175,11 @@ namespace Pri.Api.Pe.Api.Controllers
                         CandidateName = application.Candidate.UserName,
                         ApplicationStatus = application.Status.Name,
                         Salary = application.Salary
+                    }).ToList(),
+                    Skills = job.Skills.Select(skill => new SkillResponseDto
+                    {
+                        Id = skill.Id,
+                        Name = skill.Name
                     }).ToList()
                 }));
             }

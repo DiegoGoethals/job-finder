@@ -89,6 +89,11 @@
                                     <h2>{{ job.name }}</h2>
                                     <p>{{ job.description }}</p>
                                     <p>Salary: ${{ job.salary }}</p>
+                                    <ul>
+                                        <li v-for="skill in job.skills" class="skill">
+                                            #{{ skill.name }}
+                                        </li>
+                                    </ul>
                                 </div>
                             </li>
                         </ul>

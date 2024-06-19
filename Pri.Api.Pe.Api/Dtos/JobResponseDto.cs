@@ -8,5 +8,6 @@
         public double Salary { get; set; }
         public Guid EmployerId { get; set; }
         public ICollection<ApplicationResponseDto> Applications { get; set; }
+        public ICollection<SkillResponseDto> Skills { get; set; }
     }
 }
