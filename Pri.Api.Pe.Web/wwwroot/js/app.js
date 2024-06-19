@@ -182,6 +182,22 @@
             this.loading = false;
             this.isDeleting = false;
         },
+        filterJobs: async function () {
+            const url = `${this.baseUrl}jobs/skills?skills=${this.selectedSkills.join('&skills=')}`;
+            this.loading = true;
+            this.jobs = await axios.get(url)
+                .then(response => {
+                    return response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            this.loading = false;
+        },
+        clearFilters: async function () {
+            this.selectedSkills = [];
+            await this.getAllJobs();
+        },
         selectJob: async function (job) {
             this.selectedJob = job;
             await this.getAppplicationsByJob();

@@ -343,3 +343,126 @@
     display: flex;
     height: 100vh;
 }
+
+.filter-bar {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+    .filter-bar select {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-right: 10px;
+        font-size: 16px;
+    }
+
+    .filter-bar button {
+        padding: 8px 16px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .filter-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        .filter-bar button:focus {
+            outline: none;
+            box-shadow: 0 0 3px 2px rgba(0, 123, 255, 0.5);
+        }
+
+    .filter-bar select:focus {
+        outline: none;
+        box-shadow: 0 0 3px 2px rgba(0, 123, 255, 0.5);
+    }
+
+#registerForm {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #f8f9fa; /* Light background for the form */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+    #registerForm h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    #registerForm .form-group {
+        margin-bottom: 15px;
+    }
+
+    #registerForm .form-control {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+        #registerForm .form-control:focus {
+            outline: none;
+            box-shadow: 0 0 3px 2px rgba(0, 123, 255, 0.5);
+        }
+
+    #registerForm select {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+        font-size: 14px;
+        -webkit-appearance: none; /* For Safari */
+        -moz-appearance: none; /* For Firefox */
+        appearance: none; /* For others */
+        background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"><path d="M4 6l4 4 4-4z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 16px;
+        cursor: pointer;
+    }
+
+        #registerForm select[multiple] {
+            background-image: none; /* Remove arrow for multi-select */
+            height: auto;
+        }
+
+    #registerForm .btn {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    #registerForm .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: white;
+    }
+
+        #registerForm .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    #registerForm .btn-outline-primary {
+        border: 1px solid #007bff;
+        color: #007bff;
+    }
+
+        #registerForm .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: white;
+        }
