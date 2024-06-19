@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Pri.Api.Pe.Core\Pri.Api.Pe.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -438,7 +438,7 @@
     }
 
         #registerForm select[multiple] {
-            background-image: none; /* Remove arrow for multi-select */
+            background-image: none;
             height: auto;
         }
 
