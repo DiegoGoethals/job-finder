@@ -162,6 +162,11 @@
         margin: 5px 0;
     }
 
+    .selected-job ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
     .selected-job button {
         margin-top: 20px;
         padding: 10px 20px;

@@ -46,6 +46,11 @@
                         <h1>{{ selectedJob.name }}</h1>
                         <p>{{ selectedJob.description }}</p>
                         <p>Salary: ${{ selectedJob.salary }}</p>
+                        <ul>
+                            <li v-for="skill in selectedJob.skills">
+								{{ skill.name }}
+							</li>
+                        </ul>
                         <ul class="applications-list">
                             <li v-for="application in applications" :key="application.id" class="application-card" v-on:click.prevent="selectApplication(application)">
                                 <div class="application-details">
@@ -102,6 +107,11 @@
                         <h1>{{ selectedJob.name }}</h1>
                         <p>{{ selectedJob.description }}</p>
                         <p>Salary: ${{ selectedJob.salary }}</p>
+                        <ul>
+                            <li v-for="skill in selectedJob.skills"">
+                                {{ skill.name }}
+                            </li>
+                        </ul>
                         <button v-on:click="clearSelection">Back to Job List</button>
                         <button v-on:click="applyForJob">Apply for this job</button>
                         <button v-on:click="openMessages(selectedJob.employerId)">Send message to employer</button>
