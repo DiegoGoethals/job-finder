@@ -152,12 +152,11 @@
                         Authorization: `Bearer ${this.token}`
                     }
                 })
-                .then(response => response.data)
+                .then(response => this.jobs.push(response.data))
                 .catch(error => {
                     console.log(error);
                 });
             this.loading = false;
-            this.getJobsByEmployer();
             this.addingNewJob = false;
             this.newJob = {
                 Name: "",
@@ -175,14 +174,13 @@
                     Authorization: `Bearer ${this.token}`
                 }
             })
-            .then(response => response.data)
+            .then(_ => this.jobs = this.jobs.filter(job => job.id !== jobId))
             .catch(error => {
                 console.log(error);
             });
             this.selectedJob = null;
             this.loading = false;
             this.isDeleting = false;
-            this.getJobsByEmployer();
         },
         selectJob: async function (job) {
             this.selectedJob = job;
