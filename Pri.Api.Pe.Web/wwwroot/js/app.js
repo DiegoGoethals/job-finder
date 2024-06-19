@@ -53,6 +53,7 @@
         showMessageScreen: false,
         conversationPartners: [],
         showConversation: false,
+        loginError: "",
     },
     created: async function () {
         this.loading = true;
@@ -376,10 +377,15 @@
         },
         submitLogin: async function () {
             const loginDto = { "username": this.username, "password": this.password };
+            this.loginError = "";
             this.loading = true;
             const token = await axios.post(`${this.baseUrl}auth/login`, loginDto)
                 .then(response => response.data.token)
-                .catch(error => console.log(error));
+                .catch(error => {
+                    console.log(error);
+                    this.loginError = "Invalid username or password";
+                    this.loading = false;
+                });
             await this.setToken(token);
             window.sessionStorage.setItem('token', token);
             this.loading = false;

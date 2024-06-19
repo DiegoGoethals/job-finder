@@ -53,6 +53,7 @@
                     <button class="btn btn-outline-primary mb-3" v-on:click="toggleForms()" type="button">Register</button>
                 </div>
             </form>
+            <p class="error-message">{{ loginError }}</p>
             <form v-if="!loggedIn && !loginFormVisible" id="registerForm" v-on:submit.prevent="registerUser" class="d-flex flex-column p-4 bg-light rounded">
                 <h2 class="mb-4">Register</h2>
                 <div class="form-group">
