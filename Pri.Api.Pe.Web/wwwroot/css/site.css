@@ -5,6 +5,11 @@
 
 }
 
+.body-container {
+    min-height: 100svh;
+    position: relative;
+}
+
 .delete-button {
     background-color: #ff3333 !important;
     color: #fff;
