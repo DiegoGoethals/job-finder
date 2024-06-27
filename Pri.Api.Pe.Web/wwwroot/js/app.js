@@ -54,6 +54,7 @@
         conversationPartners: [],
         showConversation: false,
         loginError: "",
+        showFilterBar: false,
     },
     created: async function () {
         this.loading = true;

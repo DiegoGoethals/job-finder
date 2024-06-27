@@ -88,12 +88,18 @@
                 </div>
                 <div v-else>
                     <div v-if="selectedJob === null">
-                        <div class="filter-bar">
-                            <select v-model="selectedSkills" multiple>
-                                <option v-for="skill in skills" v-bind:value="skill.name">{{ skill.name }}</option>
-                            </select>
+                        <div v-if="showFilterBar" class="filter-bar">
+                            <div class="custom-select">
+                                <select v-model="selectedSkills" multiple>
+                                    <option v-for="skill in skills" :key="skill.name" :value="skill.name">{{ skill.name }}</option>
+                                </select>
+                            </div>
                             <button v-on:click="filterJobs">Filter</button>
                             <button v-on:click="clearFilters">Clear filters</button>
+                            <button v-on:click="showFilterBar = false">Close filters</button>
+                        </div>
+                        <div v-else>
+                            <button v-on:click="showFilterBar = true">Show filters</button>
                         </div>
                         <ul class="job-list">
                             <li v-for="job in jobs" :key="job.id" class="job-card" v-on:click.prevent="selectJob(job)">
