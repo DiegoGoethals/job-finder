@@ -69,6 +69,7 @@
                         <button v-on:click.prevent="acceptApplication">Accept application</button>
                         <button class="delete-button" v-on:click.prevent="rejectApplication">Reject application</button>
                         <button v-on:click.prevent="openMessages(selectedApplication.candidateId)">Send message</button>
+                        <button v-on:click.prevent="showUserDetailsHandler(selectedApplication.candidateId)">See user details</button>
                         <button v-on:click="selectedApplication = null">Back to applications</button>
                     </div>
                 </div>
@@ -127,6 +128,7 @@
                         </ul>
                         <button v-on:click="clearSelection">Back to Job List</button>
                         <button v-on:click="applyForJob">Apply for this job</button>
+                        <button v-on:click.prevent="showUserDetailsHandler(selectedJob.employerId)">See employer details</button>
                         <button v-on:click="openMessages(selectedJob.employerId)">Send message to employer</button>
                     </div>
                 </div>

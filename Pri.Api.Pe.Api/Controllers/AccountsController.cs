@@ -15,6 +15,7 @@ namespace Pri.Api.Pe.Api.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly IReviewService _reviewService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
@@ -22,9 +23,10 @@ namespace Pri.Api.Pe.Api.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly LinkGenerator _linkGenerator;
 
-        public AccountsController(IAccountService accountService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, IMailService mailService, IHttpContextAccessor httpContextAccessor, LinkGenerator linkGenerator)
+        public AccountsController(IAccountService accountService, IReviewService reviewService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, IMailService mailService, IHttpContextAccessor httpContextAccessor, LinkGenerator linkGenerator)
         {
             _accountService = accountService;
+            _reviewService = reviewService;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
@@ -159,10 +161,23 @@ namespace Pri.Api.Pe.Api.Controllers
             var result = await _accountService.GetByIdAsync(id);
             if (result.IsSucces)
             {
-                return Ok(new AccountResponseDto
+                var reviewsResult = await _reviewService.GetAllByRevieweeIdAsync(id);
+                var reviews = new List<ReviewResponseDto>();
+                if (reviewsResult.IsSucces)
                 {
-                    Id = result.Value.Id,
-                    UserName = result.Value.UserName
+                    reviews = reviewsResult.Value.Select(r => new ReviewResponseDto
+                    {
+                        ReviewerId = r.ReviewerId,
+                        ReviewerName = r.Reviewer.UserName,
+                        Rating = r.Rating,
+                        Comment = r.Comment
+                    }).ToList();
+                }
+                return Ok(new UserDetailsResponseDto
+                {
+                    UserName = result.Value.UserName,
+                    Skills = result.Value.Skills.Any() ? result.Value.Skills.Select(s => s.Name).ToList() : new List<string>(),
+                    Reviews = reviews
                 });
             }
             foreach (var error in result.Errors)

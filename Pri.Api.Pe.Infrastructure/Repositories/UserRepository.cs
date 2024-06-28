@@ -34,6 +34,7 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
         public async Task<ApplicationUser> GetByIdAsync(Guid id)
         {
             return await _table
+                .Include(u => u.Skills)
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 

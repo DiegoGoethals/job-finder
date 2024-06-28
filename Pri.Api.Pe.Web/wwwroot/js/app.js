@@ -55,6 +55,9 @@
         showConversation: false,
         loginError: "",
         showFilterBar: false,
+        showUserDetails: false,
+        userDetailsId: "",
+        userDetails: {},
     },
     created: async function () {
         this.loading = true;
@@ -389,6 +392,24 @@
             this.newMessage.Content = "";
             await this.selectConversation(this.newMessage.ReceiverId);
             this.loading = false;
+        },
+        showUserDetailsHandler: async function (userId) {
+            this.userDetailsId = userId;
+            const url = `${this.baseUrl}auth/${userId}`;
+            this.loading = true;
+            this.userDetails = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+            this.loading = false;
+            this.showUserDetails = true;
         },
         submitLogin: async function () {
             const loginDto = { "username": this.username, "password": this.password };
