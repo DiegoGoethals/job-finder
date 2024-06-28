@@ -26,6 +26,15 @@
                 </div>
             </div>
         </div>
+        <div v-else-if="showUserDetails">
+            <h2>Details of {{ userDetails.userName }}</h2>
+            <ul>
+                <li v-for="skill in userDetails.skills">{{ skill }}</li>
+            </ul>
+            <ul>
+                <li v-for="review in userDetails.reviews">{{ review.reviewerName }}: {{ review.rating }} {{ review.comment }}</li>
+            </ul>
+        </div>
         <div v-else>
             <div v-if="isEmployer">
                 <div v-if="selectedJob === null">
