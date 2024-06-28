@@ -193,7 +193,7 @@ namespace Pri.Api.Pe.Api.Controllers
 
             if (result.Succeeded)
             {
-                return Redirect("https://localhost:7126/");
+                return Redirect("https://localhost:7126/home/confirmemail");
             }
             else
             {

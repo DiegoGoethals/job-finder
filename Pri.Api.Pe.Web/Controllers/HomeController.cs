@@ -23,5 +23,10 @@ namespace Pri.Api.Pe.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult ConfirmEmail()
+        {
+            return View();
+        }
     }
 }
