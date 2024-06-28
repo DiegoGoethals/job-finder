@@ -71,7 +71,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
-builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddTransient<IMailService, MailService>();
 
 builder.Services.AddAuthorization(options =>
 {

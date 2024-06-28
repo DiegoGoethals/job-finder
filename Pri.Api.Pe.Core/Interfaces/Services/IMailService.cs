@@ -11,6 +11,6 @@ namespace Pri.Api.Pe.Core.Interfaces.Services
 {
     public interface IMailService
     {
-        Task<ResultModel<bool>> SendValidationEmail(UserManager<ApplicationUser> userManager, ApplicationUser user, string sender, string apikey);
+        Task<ResultModel<bool>> SendValidationEmail(ApplicationUser user, string link, string sender, string apikey);
     }
 }

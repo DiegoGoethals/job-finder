@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using Pri.Api.Pe.Api.Dtos;
 using Pri.Api.Pe.Core.Entities;
@@ -21,14 +19,18 @@ namespace Pri.Api.Pe.Api.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly IMailService _mailService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly LinkGenerator _linkGenerator;
 
-        public AccountsController(IAccountService accountService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, IMailService mailService)
+        public AccountsController(IAccountService accountService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, IMailService mailService, IHttpContextAccessor httpContextAccessor, LinkGenerator linkGenerator)
         {
             _accountService = accountService;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _mailService = mailService;
+            _httpContextAccessor = httpContextAccessor;
+            _linkGenerator = linkGenerator;
         }
 
         [HttpPost]
@@ -120,8 +122,17 @@ namespace Pri.Api.Pe.Api.Controllers
                             }
                             return BadRequest(ModelState);
                         }
+                        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        var confirmationLink = _linkGenerator.GetUriByAction
+                        (
+                            action: "ValidateEmail",
+                            controller: "Accounts",
+                            scheme: _httpContextAccessor.HttpContext.Request.Scheme,
+                            host: _httpContextAccessor.HttpContext.Request.Host,
+                            values: new { id = user.Id, token }
+                        );
 
-                        await _mailService.SendValidationEmail(_userManager, user, _configuration["Email:Account"], _configuration["Email:ApiKey"]);
+                        await _mailService.SendValidationEmail(user, confirmationLink, _configuration["Email:Account"], _configuration["Email:ApiKey"]);
 
                         return CreatedAtAction(nameof(Register), new { id = registrationResult.Value.Id }, new RegistrationResponseDto
                         {
@@ -161,24 +172,34 @@ namespace Pri.Api.Pe.Api.Controllers
             return BadRequest(ModelState.Values);
         }
 
-        [HttpPost("confirm-email/{id}/{token}")]
+        [HttpGet("confirm-email")]
         public async Task<IActionResult> ValidateEmail(Guid id, string token)
         {
+            if (string.IsNullOrEmpty(token))
+            {
+                ModelState.AddModelError("", "Token is null.");
+                return BadRequest(ModelState);
+            }
+
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
-                ModelState.AddModelError("", "User not found");
+                ModelState.AddModelError("", "User not found.");
                 return BadRequest(ModelState);
             }
-            var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
-            var result = await _userManager.VerifyUserTokenAsync(user, TokenOptions.DefaultProvider, "EmailConfirmation", decodedToken);
-            if (result)
+
+            token = token.Replace(" ", "+");
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            if (result.Succeeded)
             {
-                await _userManager.ConfirmEmailAsync(user, token);
-                return Ok();
+                return Redirect("https://localhost:7126/");
             }
-            ModelState.AddModelError("", "Invalid token");
-            return BadRequest(ModelState);
+            else
+            {
+                ModelState.AddModelError("", "Invalid token.");
+                return BadRequest(ModelState);
+            }
         }
     }
 }
