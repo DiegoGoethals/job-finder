@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using Pri.Api.Pe.Api.Dtos;
 using Pri.Api.Pe.Core.Entities;
@@ -18,13 +20,15 @@ namespace Pri.Api.Pe.Api.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IMailService _mailService;
 
-        public AccountsController(IAccountService accountService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        public AccountsController(IAccountService accountService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, IMailService mailService)
         {
             _accountService = accountService;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _mailService = mailService;
         }
 
         [HttpPost]
@@ -64,7 +68,7 @@ namespace Pri.Api.Pe.Api.Controllers
             var serializedToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             return Ok(new AccountResponseDto { Id = user.Id, UserName = user.UserName, Token = serializedToken });
-    }
+        }
 
         [HttpPost]
         [Route("register")]
@@ -117,6 +121,8 @@ namespace Pri.Api.Pe.Api.Controllers
                             return BadRequest(ModelState);
                         }
 
+                        await _mailService.SendValidationEmail(_userManager, user, _configuration["Email:Account"], _configuration["Email:ApiKey"]);
+
                         return CreatedAtAction(nameof(Register), new { id = registrationResult.Value.Id }, new RegistrationResponseDto
                         {
                             Id = registrationResult.Value.Id,
@@ -153,6 +159,26 @@ namespace Pri.Api.Pe.Api.Controllers
                 ModelState.AddModelError("", error);
             }
             return BadRequest(ModelState.Values);
+        }
+
+        [HttpPost("confirm-email/{id}/{token}")]
+        public async Task<IActionResult> ValidateEmail(Guid id, string token)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User not found");
+                return BadRequest(ModelState);
+            }
+            var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
+            var result = await _userManager.VerifyUserTokenAsync(user, TokenOptions.DefaultProvider, "EmailConfirmation", decodedToken);
+            if (result)
+            {
+                await _userManager.ConfirmEmailAsync(user, token);
+                return Ok();
+            }
+            ModelState.AddModelError("", "Invalid token");
+            return BadRequest(ModelState);
         }
     }
 }
