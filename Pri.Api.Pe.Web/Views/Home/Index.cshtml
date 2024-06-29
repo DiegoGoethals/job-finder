@@ -15,7 +15,10 @@
                 <div v-if="showConversation" class="conversation">
                     <ul class="messages">
                         <li v-for="message in messages" :class="{'sender': message.senderId === currentUserId, 'receiver': message.senderId !== currentUserId}">
-                            <p>{{ message.senderId === currentUserId ? loggedInUsername : conversationPartners.find(partner => partner.id === message.senderId).userName }}</p>
+                            <p v-on:click="() => {
+                                            showUserDetailsHandler(message.senderId)
+                                            showMessageScreen = false
+                            }">{{ message.senderId === currentUserId ? loggedInUsername : conversationPartners.find(partner => partner.id === message.senderId).userName }}</p>
                             <p>{{ message.content }}</p>
                         </li>
                     </ul>
@@ -26,14 +29,28 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="showUserDetails">
-            <h2>Details of {{ userDetails.userName }}</h2>
-            <ul>
-                <li v-for="skill in userDetails.skills">{{ skill }}</li>
-            </ul>
-            <ul>
-                <li v-for="review in userDetails.reviews">{{ review.reviewerName }}: {{ review.rating }} {{ review.comment }}</li>
-            </ul>
+        <div v-else-if="showUserDetails" class="profile-container">
+            <div class="profile-header">
+                <h2>{{ userDetails.userName }}</h2>
+            </div>
+            <div class="profile-body">
+                <div class="profile-section">
+                    <h3>Skills</h3>
+                    <ul class="skills-list">
+                        <li v-for="skill in userDetails.skills" class="skill-item">{{ skill }}</li>
+                    </ul>
+                </div>
+                <div class="profile-section">
+                    <h3>Reviews</h3>
+                    <ul class="reviews-list">
+                        <li v-for="review in userDetails.reviews" class="review-item">
+                            <strong>{{ review.reviewerName }}:</strong>
+                            <span class="review-rating">{{ review.rating }}</span>
+                            <p class="review-comment">{{ review.comment }}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div v-else>
             <div v-if="isEmployer">
