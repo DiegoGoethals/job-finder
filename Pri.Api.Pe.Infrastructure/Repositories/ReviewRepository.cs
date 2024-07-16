@@ -20,7 +20,10 @@ namespace Pri.Api.Pe.Infrastructure.Repositories
 
         public async Task<IEnumerable<Review>> GetByRevieweeIdAsync(Guid revieweeId)
         {
-            return await _table.Where(x => x.RevieweeId == revieweeId).ToListAsync();
+            return await _table.Where(x => x.RevieweeId == revieweeId)
+                .Include(r => r.Reviewer)
+                .Include(r => r.Reviewee)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Review>> GetByReviewerIdAsync(Guid reviewerId)

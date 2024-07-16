@@ -37,7 +37,8 @@ namespace Pri.Api.Pe.Api.Controllers
                     Rating = result.Value.Rating,
                     Comment = result.Value.Comment,
                     ReviewerId = result.Value.ReviewerId,
-                    RevieweeId = result.Value.RevieweeId
+                    RevieweeId = result.Value.RevieweeId,
+                    ReviewerName = result.Value.Reviewer.UserName
                 });
             }
             return HandleError(result.Errors);

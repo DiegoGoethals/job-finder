@@ -49,6 +49,7 @@
                             <p class="review-comment">{{ review.comment }}</p>
                         </li>
                     </ul>
+                    <button v-on:click="addingReview = true">Add Review</button>
                 </div>
             </div>
         </div>
@@ -275,6 +276,30 @@
             <button type="button" class="btn btn-secondary" v-on:click="closeDeleteModal">Cancel</button>
             <button v-if="selectedJob !== null" class="delete-button" v-on:click="deleteJob(selectedJob.id)">Delete</button>
             <button v-if="viewApplications" class="delete-button" v-on:click="deleteApplication(selectedApplication.id)">Delete</button>
+        </div>
+    </div>
+</div>
+
+<div v-if="addingReview" class="delete-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5>Add a review</h5>
+            <button type="button" class="close" v-on:click="addingReview = false">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form v-on:submit.prevent="addReview">
+                <div class="form-group">
+                    <label>Rating</label>
+                    <input v-model="newReview.Rating" type="number" min="0" max="5" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <input v-model="newReview.Comment" type="text" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Add review</button>
+            </form>
         </div>
     </div>
 </div>

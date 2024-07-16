@@ -8,21 +8,25 @@ namespace Pri.Api.Pe.Core.Services
     public class ReviewService : IReviewService
     {
         private readonly IReviewRepository _reviewRepository;
+        private readonly IUserRepository<ApplicationUser> _userRepository;
 
-        public ReviewService(IReviewRepository reviewRepository)
+        public ReviewService(IReviewRepository reviewRepository, IUserRepository<ApplicationUser> userRepository)
         {
             _reviewRepository = reviewRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<ResultModel<Review>> CreateAsync(int rating, string comment, Guid reviewerId, Guid revieweeId)
         {
+            var reviewer = await _userRepository.GetByIdAsync(reviewerId);
             var review = new Review
             {
                 Id = Guid.NewGuid(),
                 Rating = rating,
                 Comment = comment,
                 ReviewerId = reviewerId,
-                RevieweeId = revieweeId
+                RevieweeId = revieweeId,
+                Reviewer = reviewer
             };
 
             if (await _reviewRepository.AddAsync(review))

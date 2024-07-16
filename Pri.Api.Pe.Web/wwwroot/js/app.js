@@ -58,6 +58,7 @@
         showUserDetails: false,
         userDetailsId: "",
         userDetails: {},
+        addingReview: false,
     },
     created: async function () {
         this.loading = true;
@@ -410,6 +411,25 @@
             });
             this.loading = false;
             this.showUserDetails = true;
+        },
+        addReview: async function () {
+            const url = `${this.baseUrl}reviews`;
+            this.newReview.ReviewerId = this.currentUserId;
+            this.newReview.RevieweeId = this.userDetailsId;
+            this.loading = true;
+            await axios.post(url, this.newReview, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then(response => {
+                console.log(response.data);
+                this.userDetails.reviews.push(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+            this.loading = false;
         },
         submitLogin: async function () {
             const loginDto = { "username": this.username, "password": this.password };
